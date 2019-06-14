@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import img from '../../images/signup-image.jpg'
 import { userActions } from '../_actions';
 
 class RegisterPage extends React.Component {
@@ -110,7 +110,7 @@ class RegisterPage extends React.Component {
                             </form>
                         </div>
                         <div className="signup-image">
-                            <figure><img src="images/signup-image.jpg" alt="sing up image"/></figure>
+                            <figure><img src={img} alt="sing up image"/></figure>
                             <a href="#" className="signup-image-link">I am already member</a>
                         </div>
                     </div>

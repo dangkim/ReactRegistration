@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import img from '../../images/hand.jpg'
 //import { userActions } from '../_actions';
 import { campaignActions } from '../_actions';
 
@@ -145,7 +145,7 @@ class HomePage extends React.Component {
                                 </form>
                             </div>
                             <div className="signup-image">
-                                <figure><img src="images/hand.jpg" alt="sing up image"/></figure>
+                                <figure><img src={img} alt="sing up image"/></figure>
                             </div>
                         </div>                        
                     </div>                
