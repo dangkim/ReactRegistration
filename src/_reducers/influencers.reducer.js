@@ -8,7 +8,7 @@ export function influencers(state = {}, action) {
       };
     case infConstants.INF_REGISTER_SUCCESS:
       return {
-        brand: action.brand
+        influencer: action.influencer
       };
     case infConstants.INF_REGISTER_FAILURE:
       return { 
@@ -25,7 +25,7 @@ export function influencers(state = {}, action) {
     case infConstants.INFS_GETALL_FAILURE:
       return { 
         error: action.error
-      };    
+      };
     default:
       return state
   }
