@@ -1,4 +1,4 @@
-import config from 'config';
+import configOrchardCore from 'configOrchardCore';
 import { authHeader } from '../_helpers';
 
 export const brandService = {
@@ -39,7 +39,7 @@ function register(InfluencerType) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(InfluencerType)
     };
-
+    debugger;
     return fetch(`${configOrchardCore.apiUrl}/content`, requestOptions).then(handleContentResponse);
 }
 

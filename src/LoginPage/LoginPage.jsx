@@ -46,7 +46,7 @@ class LoginPage extends React.Component {
                 <div className="signin-content">
                     <div className="signin-image">
                         <figure><img src={img} alt="sign in image"/></figure>
-                        <Link to="/register" className="btn btn-link">Create an account</Link>
+                        <Link to="/registerBrandPage" className="btn btn-link">Create an account</Link>
                     </div>
 
                     <div className="signin-form">

@@ -8,6 +8,9 @@ import { PrivateRoute } from '../_components';
 import { HomePage } from '../HomePage';
 import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
+import { RegisterBrandPage } from '../RegisterBrandPage';
+import { RegisterCampaignPage } from '../RegisterCampaignPage';
+import { RegisterInfluencerPage } from '../RegisterInfluencerPage';
 import css from './app.css';
 
 class App extends React.Component {
@@ -35,6 +38,9 @@ class App extends React.Component {
                                 <PrivateRoute exact path="/" component={HomePage} />
                                 <Route path="/login" component={LoginPage} />
                                 <Route path="/register" component={RegisterPage} />
+                                <Route path="/registerBrandPage" component={RegisterBrandPage} />
+                                <Route path="/registerCampaignPage" component={RegisterCampaignPage} />
+                                <Route path="/registerInfluencerPage" component={RegisterInfluencerPage} />
                             </div>
                         </Router>
                     </div>

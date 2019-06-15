@@ -4,7 +4,7 @@ export function brands(state = {}, action) {
   switch (action.type) {
     case brandConstants.BRAND_REGISTER_REQUEST:
       return {
-        loading: true
+        registering: true
       };
     case brandConstants.BRAND_REGISTER_SUCCESS:
       return {

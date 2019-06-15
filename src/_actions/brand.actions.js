@@ -16,7 +16,7 @@ function register(brandType) {
             .then(
                 brandType => { 
                     dispatch(success());
-                    history.push('/registerBrandPage');
+                    history.push('/registerCampaignPage');
                     dispatch(alertActions.success('Registration successful'));
                 },
                 error => {

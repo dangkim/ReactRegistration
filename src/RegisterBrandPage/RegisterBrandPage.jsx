@@ -1,23 +1,38 @@
-import React from './node_modules/react';
-import { Link } from './node_modules/react-router-dom';
-import { connect } from './node_modules/react-redux';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import img from '../../images/signup-image.jpg'
-import { userActions } from '../_actions';
+import { brandActions } from '../_actions';
 
 class RegisterBrandPage extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            user: {
-                firstName: '',
-                lastName: '',
-                userName: '',
-                email: '',
-                password: ''
-            },
+        // this.state = {
+        //     brand: {
+        //         firstName: '',
+        //         lastName: '',
+        //         brandName: '',
+        //         email: '',
+        //         password: ''
+        //     },
+        //     submitted: false
+        // };
+
+        this.state = {            
+            brand: {
+                //displayText:'',
+                fullName:'',
+                email:'',
+                brandName:'',
+                businessAreas: '',
+                phone: '',
+                password: '',
+                location:''
+            },            
             submitted: false
         };
+        
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,29 +40,87 @@ class RegisterBrandPage extends React.Component {
 
     handleChange(event) {
         const { name, value } = event.target;
-        const { user } = this.state;
+        const { brand } = this.state;
         this.setState({
-            user: {
-                ...user,
+            brand: {
+                ...brand,
                 [name]: value
             }
         });
     }
 
+    // handleSubmit(event) {
+    //     event.preventDefault();
+
+    //     this.setState({ submitted: true });
+    //     const { brand } = this.state;
+    //     const { dispatch } = this.props;
+    //     if (brand.firstName && brand.lastName && brand.brandName && brand.email && brand.password) {
+    //         dispatch(brandActions.register(brand));
+    //     }
+    // }
+
     handleSubmit(event) {
         event.preventDefault();
 
         this.setState({ submitted: true });
-        const { user } = this.state;
+        const { brand } = this.state;
         const { dispatch } = this.props;
-        if (user.firstName && user.lastName && user.userName && user.email && user.password) {
-            dispatch(userActions.register(user));
+        if (brand.fullName
+            && brand.email
+            && brand.brandName
+            && brand.businessAreas
+            && brand.phone
+            && brand.location
+            && brand.password) {
+            const brandType = {
+                ContentItemId:'',
+                ContentItemVersionId:'',
+                ContentType:'Brand',
+                DisplayText: 'Brand ' + brand.brandName,
+                Latest:false,
+                Published:false,
+                ModifiedUtc:null,
+                PublishedUtc:null,
+                CreatedUtc:null,
+                Owner:'admin',
+                Author:null,
+                Brand:{
+                    FullName:{
+                        Text: brand.fullName
+                    },
+                    Email:{
+                        Text: brand.email
+                    },
+                    BrandName:{
+                        Text: brand.brandName
+                    },
+                    BusinessAreas:{
+                        Text: brand.businessAreas
+                    },
+                    Phone:{
+                        Text: brand.phone
+                    },
+                    Password:{
+                        Text: brand.password
+                    },
+                    Location:{
+                        Text: brand.location
+                    }
+                },
+                TitlePart:{
+                    Title: 'Brand' + brand.fullName,
+                }
+            }
+            
+            dispatch(brandActions.register(brandType));
         }
     }
 
     render() {
-        const { brands  } = this.props;
-        const { user, submitted } = this.state;
+        const { brands } = this.props;
+        const { brand, submitted } = this.state;
+
         return (            
             <section className="signup">
                 <div className="container">
@@ -55,54 +128,66 @@ class RegisterBrandPage extends React.Component {
                         <div className="signup-form">
                             <h2 className="form-title">Sign up</h2>
                             <form onSubmit={this.handleSubmit} className="register-form" id="register-form">
-                                <div className={'form-group' + (submitted && !user.firstName ? ' has-error' : '')}>
+                                <div className={'form-group' + (submitted && !brand.fullName ? ' has-error' : '')}>
                                     <label htmlFor="name"><i className="zmdi zmdi-account material-icons-name"></i></label>
-                                    <input type="text" name="firstName" id="firstname" placeholder="Your First Name" value={user.firstName} onChange={this.handleChange}/>
+                                    <input type="text" name="fullName" id="fullName" placeholder="Your Full Name" value={brand.fullName} onChange={this.handleChange}/>
                                     {
-                                        submitted && !user.firstName &&
-                                        <div className="help-block">First Name is required</div>
+                                        submitted && !brand.fullName &&
+                                        <div className="help-block">Full Name is required</div>
                                     }
-                                </div>
-                                <div className={'form-group' + (submitted && !user.lastName ? ' has-error' : '')}>
-                                    <label htmlFor="name"><i className="zmdi zmdi-account material-icons-name"></i></label>
-                                    <input type="text" name="lastName" id="lastname" placeholder="Your Last Name" value={user.lastName} onChange={this.handleChange}/>
-                                    {
-                                        submitted && !user.lastName &&
-                                        <div className="help-block">Last Name is required</div>
-                                    }
-                                </div>
-                                <div className={'form-group' + (submitted && !user.userName ? ' has-error' : '')}>
-                                    <label htmlFor="name"><i className="zmdi zmdi-account material-icons-name"></i></label>
-                                    <input type="text" name="userName" id="username" placeholder="Your User Name" value={user.userName} onChange={this.handleChange}/>
-                                    {
-                                        submitted && !user.userName &&
-                                        <div className="help-block">User Name is required</div>
-                                    }
-                                </div>
+                                </div>                                
                                 <div className="form-group">
                                     <label htmlFor="email"><i className="zmdi zmdi-email"></i></label>
-                                    <input type="email" name="email" id="email" placeholder="Your Email" value={user.email} onChange={this.handleChange}/>
+                                    <input type="email" name="email" id="email" placeholder="Your Email" value={brand.email} onChange={this.handleChange}/>
                                     {
-                                        submitted && !user.email &&
+                                        submitted && !brand.email &&
                                         <div className="help-block">Email is required</div>
                                     }
                                 </div>
+                                <div className={'form-group' + (submitted && !brand.brandName ? ' has-error' : '')}>
+                                    <label htmlFor="name"><i className="zmdi zmdi-account material-icons-branding_watermark"></i></label>
+                                    <input type="text" name="brandName" id="brandname" placeholder="Your brand Name" value={brand.brandName} onChange={this.handleChange}/>
+                                    {
+                                        submitted && !brand.brandName &&
+                                        <div className="help-block">brand Name is required</div>
+                                    }
+                                </div>
+                                <div className={'form-group' + (submitted && !brand.businessAreas ? ' has-error' : '')}>
+                                    <label htmlFor="name"><i className="zmdi zmdi-account material-icons-branding_watermark"></i></label>
+                                    <input type="text" name="businessAreas" id="businessAreas" placeholder="Your Business Areas" value={brand.businessAreas} onChange={this.handleChange}/>
+                                    {
+                                        submitted && !brand.businessAreas &&
+                                        <div className="help-block">Business areas is required</div>
+                                    }
+                                </div>
+                                <div className={'form-group' + (submitted && !brand.phone ? ' has-error' : '')}>
+                                    <label htmlFor="name"><i className="zmdi zmdi-account material-icons-branding_watermark"></i></label>
+                                    <input type="text" name="phone" id="phone" placeholder="Your Phone" value={brand.phone} onChange={this.handleChange}/>
+                                    {
+                                        submitted && !brand.phone &&
+                                        <div className="help-block">Phone is required</div>
+                                    }
+                                </div>                                
                                 <div className="form-group">
                                     <label htmlFor="pass"><i className="zmdi zmdi-lock"></i></label>
-                                    <input type="password" id="password" placeholder="Password" name="password" value={user.password} onChange={this.handleChange}/>
+                                    <input type="password" id="password" placeholder="Password" name="password" value={brand.password} onChange={this.handleChange}/>
                                     {
-                                        submitted && !user.password &&
+                                        submitted && !brand.password &&
                                         <div className="help-block">Password is required</div>
                                     }
                                 </div>
-                                <div className="form-group">
-                                    <input type="checkbox" name="agree-term" id="agree-term" className="agree-term" />
-                                    <label htmlFor="agree-term" className="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" className="term-service">Terms of service</a></label>
+                                <div className={'form-group' + (submitted && !brand.location ? ' has-error' : '')}>
+                                    <label htmlFor="name"><i className="zmdi zmdi-account material-icons-branding_watermark"></i></label>
+                                    <input type="text" name="location" id="location" placeholder="Your Location" value={brand.location} onChange={this.handleChange}/>
+                                    {
+                                        submitted && !brand.location &&
+                                        <div className="help-block">Location is required</div>
+                                    }
                                 </div>
                                 <div className="form-group form-button">
                                     <input type="submit" name="signup" id="signup" className="form-submit" value="Register"/>
                                     {
-                                        registering && 
+                                        brands.registering && 
                                         <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                                     }
                                     <Link to="/login" className="btn btn-link">Cancel</Link>
@@ -121,7 +206,7 @@ class RegisterBrandPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { brands } = state.brands;
+    const { brands } = state;
     return {
         brands
     };
