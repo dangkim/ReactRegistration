@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import img from '../../images/signup-image.jpg'
 import { userActions } from '../_actions';
 
-class RegisterPage extends React.Component {
+class RegisterInfluencerPage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -46,7 +46,7 @@ class RegisterPage extends React.Component {
     }
 
     render() {
-        const { registering  } = this.props;
+        const { influencers  } = this.props;
         const { user, submitted } = this.state;
         return (            
             <section className="signup">
@@ -121,11 +121,11 @@ class RegisterPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { registering } = state.registration;
+    const { influencers } = state.influencers;
     return {
-        registering
+        influencers
     };
 }
 
-const connectedRegisterPage = connect(mapStateToProps)(RegisterPage);
-export { connectedRegisterPage as RegisterPage };
+const connectedRegisterInfluencerPage = connect(mapStateToProps)(RegisterInfluencerPage);
+export { connectedRegisterInfluencerPage as RegisterInfluencerPage };

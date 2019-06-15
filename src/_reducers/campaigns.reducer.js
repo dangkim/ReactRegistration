@@ -1,6 +1,6 @@
 import { campaignConstants } from '../_constants';
 
-export function CAMs(state = {}, action) {
+export function campaigns(state = {}, action) {
   switch (action.type) {
     case campaignConstants.CAM_REGISTER_REQUEST:
       return {
