@@ -1,54 +1,64 @@
-import configOrchardCore from 'configOrchardCore';
+import config from 'config';
 import { authHeader } from '../_helpers';
 
-export const campaignService = {
+export const influencerService = {
     register,
-    getAll
+    getAll,
 };
 
-function register(campaignType) {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(campaignType)
-    };
-
-    return fetch(`${configOrchardCore.apiUrl}/content`, requestOptions).then(handleContentResponse);
-}
-
 function getAll() {
-    const GET_ALL_COMPAIGN = `
+    const GET_ALL_INFS = `
     {
-        campaigns{
-          title:displayText,
-          bag {
+        influencer {
+            title: displayText,
+            contentItemId,
+            description,
+            createdUtc,
+            fanpage,
+            bag{
             contentItems {
-              ... on Campaign {
-                title:displayText,
-                campaignName,
-                campaignTarget,
-                currency,
-                budget,
-                fromAge,
-                toAge,
-                fromDate,
-                toDate,
-                gender,
-                productInfo,
-                modifiedUtc
-              }
+                ... on AgeDemorgraphic {
+                title: displayText,
+                demoGraphicsName,
+                percentage
+                }
+                ... on Networks {
+                title: displayText,
+                icon {
+                    paths
+                    urls
+                }
+                }
+                ... on Rates {
+                price,
+                title: displayText,
+                icon {
+                    paths
+                    urls
+                }
+                }
             }
-          }
+            }
         }
-      }
+    }
     `;
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/graphql' },
-        body: GET_ALL_COMPAIGN
+        body: GET_ALL_INFS
     };
 
     return fetch(`${configOrchardCore.apiUrl}/graphql`, requestOptions).then(handleGraphResponse);
+}
+
+function register(InfluencerType) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(InfluencerType)
+    };
+
+    return fetch(`${configOrchardCore.apiUrl}/content`, requestOptions).then(handleContentResponse);
 }
 
 function handleGraphResponse(response) {

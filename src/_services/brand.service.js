@@ -1,54 +1,46 @@
-import configOrchardCore from 'configOrchardCore';
+import config from 'config';
 import { authHeader } from '../_helpers';
 
-export const campaignService = {
+export const brandService = {
     register,
-    getAll
+    getAll,
 };
 
-function register(campaignType) {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(campaignType)
-    };
-
-    return fetch(`${configOrchardCore.apiUrl}/content`, requestOptions).then(handleContentResponse);
-}
-
 function getAll() {
-    const GET_ALL_COMPAIGN = `
+    const GET_ALL_BRAND = `
     {
-        campaigns{
-          title:displayText,
-          bag {
-            contentItems {
-              ... on Campaign {
-                title:displayText,
-                campaignName,
-                campaignTarget,
-                currency,
-                budget,
-                fromAge,
-                toAge,
-                fromDate,
-                toDate,
-                gender,
-                productInfo,
-                modifiedUtc
-              }
+        {
+            brand {
+                title: displayText,
+                contentItemId,
+                brandName,
+                businessAreas,
+                fullName,
+                email,
+                location,
+                phone,
+                createdUtc,
             }
           }
-        }
-      }
+    }
     `;
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/graphql' },
-        body: GET_ALL_COMPAIGN
+        body: GET_ALL_BRAND
     };
 
     return fetch(`${configOrchardCore.apiUrl}/graphql`, requestOptions).then(handleGraphResponse);
+}
+
+function register(InfluencerType) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(InfluencerType)
+    };
+
+    return fetch(`${configOrchardCore.apiUrl}/content`, requestOptions).then(handleContentResponse);
 }
 
 function handleGraphResponse(response) {
