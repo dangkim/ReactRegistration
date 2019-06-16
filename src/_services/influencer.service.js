@@ -1,4 +1,4 @@
-import config from 'config';
+import configOrchardCore from 'configOrchardCore';
 import { authHeader } from '../_helpers';
 
 export const influencerService = {
@@ -15,6 +15,9 @@ function getAll() {
             description,
             createdUtc,
             fanpage,
+          	photo {
+              urls
+            },
             bag{
             contentItems {
                 ... on AgeDemorgraphic {
@@ -25,7 +28,6 @@ function getAll() {
                 ... on Networks {
                 title: displayText,
                 icon {
-                    paths
                     urls
                 }
                 }
@@ -33,7 +35,6 @@ function getAll() {
                 price,
                 title: displayText,
                 icon {
-                    paths
                     urls
                 }
                 }
@@ -64,7 +65,7 @@ function register(InfluencerType) {
 function handleGraphResponse(response) {
     return response.json().then(text => {
         const data = text.data;
-        debugger;
+        //debugger;
         
         if (!response.ok) {
             if (response.status === 401) {

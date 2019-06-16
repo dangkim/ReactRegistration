@@ -1,5 +1,5 @@
 import { infConstants } from '../_constants';
-import { infService } from '../_services';
+import { influencerService } from '../_services';
 import { alertActions } from '.';
 import { history } from '../_helpers';
 
@@ -12,7 +12,7 @@ function register(infType) {
     return dispatch => {
         dispatch(request(infType));
 
-        infService.register(infType)
+        influencerService.register(infType)
             .then(
                 infType => { 
                     dispatch(success());
@@ -35,7 +35,7 @@ function getAll() {
     return dispatch => {
         dispatch(request());
 
-        userService.getAll()
+        influencerService.getAll()
             .then(
                 influencers => dispatch(success(influencers)),
                 error => dispatch(failure(error.toString()))

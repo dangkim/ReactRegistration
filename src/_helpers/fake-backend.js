@@ -128,7 +128,7 @@ export function configureFakeBackend() {
                 }
 
                 if (url.endsWith('/api/graphql') && opts.method === 'POST') {
-                    debugger;
+                    //debugger;
                     realFetch(url, opts).then(response => resolve(response));
                     return;
                 }
