@@ -72,7 +72,7 @@ class RegisterCampaignPage extends Component {
     };
 
     componentDidMount() {
-        debugger;
+        //debugger;
         this.props.dispatch(infActions.getAll());
     }
 
@@ -220,45 +220,56 @@ class RegisterCampaignPage extends Component {
                                         <Link to="/login" className="btn btn-link">Cancel</Link>
                                     </div>                                    
                                 </form>
-                            </div>
-                            {/* <div className="signup-image">
-                                <figure><img src={img} alt="sing up image"/></figure>
-                            </div> */}                          
+                            </div>                    
                         </div>
                     </div>
                 }
                 {
                     isInfluencer &&
                     <div className="containerForm">
-                    <h2 className="form-title" style={{textAlign:'center'}}>Influencers</h2>
-                    <div className="row">
-                        {
-                            influencers.items && influencers.items.influencer.map((item, key) =>
+                        <h2 className="form-title" style={{textAlign:'center'}}>Influencers</h2>
+                        <div className="row">
                             {
-                                
-                                const imgSrc = 'https://localhost:44300' + item.photo.urls[0] + '?&width=240&height=240&rmode=';
-                                debugger;
-                                return (
-                                <div key={key} className="col-sm-4">
-                                    <div className="team-member">
-                                        <img className="mx-auto rounded-circle" src={imgSrc} alt=""/>
-                                        <h4>{item.title}</h4>
-                                        <p className="text-muted">{item.description}</p>                                
+                                influencers.items && influencers.items.influencer.map((item, key) =>
+                                {
+                                    const imgSrc = 'https://localhost:44300' + item.photo.urls[0] + '?&width=240&height=240&rmode=';
+                                    return (
+                                    <div key={key} className="col-sm-4">
+                                        <div className="team-member">
+                                            <img className="mx-auto rounded-circle" src={imgSrc} alt=""/>
+                                            <h6>{item.title}</h6>
+                                            <p>{item.description}</p>
+                                            {
+                                                item.bag.contentItems.map((child, key) =>
+                                                {
+                                                    return (
+                                                    <div key={key} className="row">
+                                                        <p className='col-sm-6'>{child.demoGraphicsName? child.demoGraphicsName: ''}</p><p className='col-sm-6'>{child.percentage? child.percentage: ''}</p>
+                                                        <p className='col-sm-6'>{child.price? child.title: ''}</p><p className='col-sm-6'>{child.price? child.price: ''}</p>
+                                                    </div>
+                                                    )
+                                                }
+                                                )
+                                            }
+                                            <div className="form-group">
+                                            <input type="checkbox" name="agree-term" id="agree-term" className="agree-term" />
+                                            <label htmlFor="agree-term" className="label-agree-term"><span><span></span></span>Select</label>
+                                        </div>
+                                        </div>                                        
                                     </div>
-                                </div>
-                            )
+                                )
+                                }
+                                )
+                            }                            
+                        </div>
+                        <div className="form-group form-button">
+                            <input type="submit" name="register" id="register" className="form-submit" value="Register"/>
+                            {
+                                loggingIn &&
+                                <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                             }
-                            )
-                        }
-                    </div>
-                    <div className="form-group form-button">
-                                        <input type="submit" name="register" id="register" className="form-submit" value="Register"/>
-                                        {
-                                            loggingIn &&
-                                            <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                                        }
-                                        <Link to="/login" className="btn btn-link">Cancel</Link>
-                                    </div> 
+                            <Link to="/login" className="btn btn-link">Cancel</Link>
+                        </div> 
                     </div>
                 }
             </section>     
