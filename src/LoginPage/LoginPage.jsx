@@ -42,7 +42,7 @@ class LoginPage extends React.Component {
         const { userName, password, submitted } = this.state;
         return (            
             <section className="sign-in">
-                <div className="container">
+                <div className="containerForm">
                 <div className="signin-content">
                     <div className="signin-image">
                         <figure><img src={img} alt="sign in image"/></figure>

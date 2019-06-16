@@ -123,7 +123,7 @@ class RegisterBrandPage extends React.Component {
 
         return (            
             <section className="signup">
-                <div className="container">
+                <div className="containerForm">
                     <div className="signup-content">
                         <div className="signup-form">
                             <h2 className="form-title">Sign up</h2>
@@ -196,7 +196,8 @@ class RegisterBrandPage extends React.Component {
                         </div>
                         <div className="signup-image">
                             <figure><img src={img} alt="sing up image"/></figure>
-                            <a href="#" className="signup-image-link">I am already member</a>
+                            {/* <a href="#" className="signup-image-link">I am already member</a> */}
+                            <Link to="/registerCampaignPage" className="signup-image-link">I am already member</Link>
                         </div>
                     </div>
                 </div>
