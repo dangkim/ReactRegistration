@@ -6,6 +6,7 @@ import { history } from '../_helpers';
 export const infActions = {
     register,
     getAll,
+    getBrandFromBrandPage
 };
 
 function register(infType) {
@@ -29,6 +30,25 @@ function register(infType) {
     function request(influencer) { return { type: infConstants.INF_REGISTER_REQUEST, influencer } }
     function success(influencer) { return { type: infConstants.INF_REGISTER_SUCCESS, influencer } }
     function failure(error) { return { type: infConstants.INF_REGISTER_FAILURE, error } }
+}
+
+function getBrandFromBrandPage(brand) {
+    return dispatch => {
+        dispatch(request());
+        if(brand)
+        {
+            dispatch(success(brand));
+        }
+        else{
+            const error = "cannot get from brand";
+            dispatch(failure(error.toString()));
+            dispatch(alertActions.error(error.toString()));
+        }
+    };
+
+    function request() { return { type: infConstants.INFS_FROMBRAND_REQUEST } }
+    function success(brand) { return { type: infConstants.INFS_FROMBRAND_SUCCESS, brand } }
+    function failure(error) { return { type: infConstants.INFS_FROMBRAND_FAILURE,  error} }
 }
 
 function getAll() {

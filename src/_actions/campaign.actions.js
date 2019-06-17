@@ -5,7 +5,9 @@ import { history } from '../_helpers';
 
 export const campaignActions = {
     register,
-    getAll
+    getAll,
+    getAllLocation,
+    getAllInteresting
 };
 
 function register(campaignType) {
@@ -45,4 +47,36 @@ function getAll() {
     function request() { return { type: campaignConstants.CAMS_GETALL_REQUEST } }
     function success(campaigns) { return { type: campaignConstants.CAMS_GETALL_SUCCESS, campaigns } }
     function failure(error) { return { type: campaignConstants.CAMS_GETALL_FAILURE, error } }
+}
+
+function getAllLocation() {
+    return dispatch => {
+        dispatch(request());
+
+        campaignService.getAllLocation()
+            .then(
+                locations => dispatch(success(locations)),
+                error => dispatch(failure(error.toString()))
+            );
+    };
+
+    function request() { return { type: campaignConstants.LOCATION_GETALL_REQUEST } }
+    function success(locations) { return { type: campaignConstants.LOCATION_GETALL_SUCCESS, locations } }
+    function failure(error) { return { type: campaignConstants.LOCATION_GETALL_FAILURE, error } }
+}
+
+function getAllInteresting() {
+    return dispatch => {
+        dispatch(request());
+
+        campaignService.getAllInteresting()
+            .then(
+                interestings => dispatch(success(interestings)),
+                error => dispatch(failure(error.toString()))
+            );
+    };
+
+    function request() { return { type: campaignConstants.INTERESTING_GETALL_REQUEST } }
+    function success(interestings) { return { type: campaignConstants.INTERESTING_GETALL_SUCCESS, interestings } }
+    function failure(error) { return { type: campaignConstants.INTERESTING_GETALL_FAILURE, error } }
 }

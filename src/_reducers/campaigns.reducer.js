@@ -26,6 +26,30 @@ export function campaigns(state = {}, action) {
       return { 
         error: action.error
       };
+    case campaignConstants.LOCATION_GETALL_REQUEST:
+      return {
+        loading: true
+      };
+    case campaignConstants.LOCATION_GETALL_SUCCESS:
+      return {
+        locations: action.locations
+      };
+    case campaignConstants.LOCATION_GETALL_FAILURE:
+      return { 
+        error: action.error
+      };
+    case campaignConstants.INTERESTING_GETALL_REQUEST:
+      return {
+        loading: true
+      };
+    case campaignConstants.INTERESTING_GETALL_SUCCESS:
+      return {
+        interestings: action.interestings
+      };
+    case campaignConstants.INTERESTING_GETALL_FAILURE:
+      return { 
+        error: action.error
+      };
     default:
       return state
   }

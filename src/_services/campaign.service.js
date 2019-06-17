@@ -3,7 +3,9 @@ import { authHeader } from '../_helpers';
 
 export const campaignService = {
     register,
-    getAll
+    getAll,
+    getAllInteresting,
+    getAllLocation
 };
 
 function register(campaignType) {
@@ -46,6 +48,46 @@ function getAll() {
         method: 'POST',
         headers: { 'Content-Type': 'application/graphql' },
         body: GET_ALL_COMPAIGN
+    };
+
+    return fetch(`${configOrchardCore.apiUrl}/graphql`, requestOptions).then(handleGraphResponse);
+}
+
+function getAllInteresting() {
+    const GET_ALL_INTERESTING = `
+    {
+        interestingList {
+        contentItemId,
+        contentItemVersionId,
+        contentType,
+        interesting
+      }
+    }
+    `;
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/graphql' },
+        body: GET_ALL_INTERESTING
+    };
+
+    return fetch(`${configOrchardCore.apiUrl}/graphql`, requestOptions).then(handleGraphResponse);
+}
+
+function getAllLocation() {
+    const GET_ALL_LOCATION = `
+    {
+        locations{
+        contentItemId,
+        contentItemVersionId,
+        contentType,
+        location
+      }
+    }
+    `;
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/graphql' },
+        body: GET_ALL_LOCATION
     };
 
     return fetch(`${configOrchardCore.apiUrl}/graphql`, requestOptions).then(handleGraphResponse);

@@ -14,9 +14,13 @@ function register(brandType) {
 
         brandService.register(brandType)
             .then(
-                brandType => { 
+                brand => { 
                     dispatch(success());
-                    history.push('/registerCampaignPage');
+                    //history.push('/registerCampaignPage');
+                    history.push({
+                        pathname: '/registerCampaignPage',
+                        state: { brand: brand }
+                      })
                     dispatch(alertActions.success('Registration successful'));
                 },
                 error => {

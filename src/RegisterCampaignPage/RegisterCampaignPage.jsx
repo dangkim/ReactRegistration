@@ -24,7 +24,14 @@ class RegisterCampaignPage extends Component {
                 toDate:'',
                 productInfo:'',
                 budget:'',
-                currency:''
+                currency:'',
+                // fullName:'',
+                // email:'',
+                // brandName:'',
+                // businessAreas:'',
+                // phone:'',
+                // password:'',
+                // location:'',
             },
             job: {
                 jobName:'',
@@ -41,7 +48,7 @@ class RegisterCampaignPage extends Component {
             isInfluencerStep:false,
             isJobStep:false,
             isChecked: false,
-            checkedItems: new Map(),
+            checkedInfluencers: new Map(),
         };
 
         this.handleCampaignChange = this.handleCampaignChange.bind(this);
@@ -83,9 +90,21 @@ class RegisterCampaignPage extends Component {
         event.preventDefault();
 
         this.setState({ submitted: true });
-        const { campaign } = this.state;
-        const { dispatch } = this.props;
-        if (campaign.campaignName && campaign.campaignDate && campaign.title && campaign.html) {
+        const { campaign, 
+                job, 
+                selectedOptionLocation,
+                selectedOptionInteresting,
+                selectedOptionJobCategory,
+                checkedInfluencers } = this.state;
+        const { dispatch, brand } = this.props;
+        if (campaign.campaignName && 
+            campaign.campaignDate && 
+            campaign.title && 
+            campaign.html &&
+            job.jobDescription &&
+            job.jobHashTag &&
+            job.jobKeyword &&
+            job.jobName) {
             
             debugger;
             dispatch(campaignActions.register(campaign));
@@ -142,12 +161,17 @@ class RegisterCampaignPage extends Component {
         //debugger;
         const item = event.target.name;
         const isChecked = event.target.checked;
-        this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }));       
+        this.setState(prevState => ({ checkedInfluencers: prevState.checkedInfluencers.set(item, isChecked) }));       
     };
 
     componentDidMount() {
         //debugger;
-        this.props.dispatch(infActions.getAll());
+        const { dispatch } = this.props;
+        //const { brand } = this.props.location.state;
+        //dispatch(infActions.getBrandFromBrandPage(brand));
+        dispatch(campaignActions.getAll());
+        dispatch(campaignActions.getAllLocation());
+        dispatch(campaignActions.getAllInteresting());
     }
 
     // handleDeletecampaign(id) {
@@ -155,7 +179,7 @@ class RegisterCampaignPage extends Component {
     // }
 
     render() {
-        const { loggingIn, influencers } = this.props;
+        const { loggingIn, influencers, brand } = this.props;
         const { submitted,
             campaign,
             job,
@@ -165,7 +189,7 @@ class RegisterCampaignPage extends Component {
             isFormStep,
             isInfluencerStep,
             isJobStep,
-            checkedItems  } = this.state;
+            checkedInfluencers  } = this.state;
         const jobCategories = [
             { value: 'Share Link', label: 'Share Link' },
             { value: 'Post Photo', label: 'Post Photo' },
@@ -181,7 +205,7 @@ class RegisterCampaignPage extends Component {
             { value: 'sport', label: 'Sport' },
             { value: 'fashion', label: 'Fashion' },
             { value: 'music', label: 'Music' },
-            { value: 'healty', label: 'Healty' },
+            { value: 'healthy', label: 'Healthy' },
         ];
 
         //debugger;
@@ -343,7 +367,7 @@ class RegisterCampaignPage extends Component {
                                             <div className="form-group">
                                             <input onChange={this.handleCheckBoxChange} 
                                                 id={item.contentItemId} 
-                                                checked={this.state.checkedItems.get(item.contentItemId) ? this.state.checkedItems.get(item.contentItemId) : false } 
+                                                checked={this.state.checkedInfluencers.get(item.contentItemId) ? this.state.checkedInfluencers.get(item.contentItemId) : false } 
                                                 type="checkbox" 
                                                 name={item.contentItemId} 
                                                 className="agree-term" 
@@ -461,11 +485,10 @@ class RegisterCampaignPage extends Component {
 
 function mapStateToProps(state) {
     const { campaigns, influencers } = state;
-    //const { campaign, loggingIn } = authentication;
+    const { brand } = influencers;
     return {
-        //campaign,
-        //campaigns,
         //loggingIn,
+        campaigns,
         influencers
     };
 }

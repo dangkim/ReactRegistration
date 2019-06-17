@@ -198,6 +198,13 @@ class RegisterBrandPage extends React.Component {
                             <figure><img src={img} alt="sing up image"/></figure>
                             {/* <a href="#" className="signup-image-link">I am already member</a> */}
                             <Link to="/registerCampaignPage" className="signup-image-link">I am already member</Link>
+                            {/* <Link to={{
+                                pathname: '/registerCampaignPage',
+                                state: {
+                                    brands: brands
+                                }
+                                }}>Tyler McGinnis
+                            </Link> */}
                         </div>
                     </div>
                 </div>
