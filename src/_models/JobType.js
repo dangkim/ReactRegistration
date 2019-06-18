@@ -6,27 +6,27 @@ export function createJobs(job, selectedOptionJobCategory) {
       {         
           debugger;       
           const jobCategory = {
-                                ContentItemId: item.value.contentItemId,
-                                ContentItemVersionId: item.value.contentItemVersionId,
-                                ContentType: item.value.contentType,
-                                DisplayText: item.value.description,
-                                Latest: item.value.latest,
-                                Published: item.value.published,
-                                ModifiedUtc: item.value.modifiedUtc,
-                                PublishedUtc: item.value.publishedUtc,
-                                CreatedUtc: item.value.createdUtc,
-                                Owner: item.value.owner,
-                                Author: item.value.author,
+                                ContentItemId: item.contentItemId,
+                                ContentItemVersionId: item.contentItemVersionId,
+                                ContentType: item.contentType,
+                                DisplayText: item.description,
+                                Latest: item.latest,
+                                Published: item.published,
+                                ModifiedUtc: item.modifiedUtc,
+                                PublishedUtc: item.publishedUtc,
+                                CreatedUtc: item.createdUtc,
+                                Owner: item.owner,
+                                Author: item.author,
                                 JobCategory: {
                                   icon: {
                                     Paths: []
                                   },
                                   Description: {
-                                    Text: item.value.description
+                                    Text: item.description
                                   }
                                 },
                                 TitlePart: {
-                                  Title: item.value.description
+                                  Title: item.description
                                 }
                               };
           contentItems.push(jobCategory);

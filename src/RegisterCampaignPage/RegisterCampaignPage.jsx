@@ -7,6 +7,7 @@ import { campaignActions, infActions, brandActions } from '../_actions';
 import Select from 'react-select';
 import {createJobs} from './../_models/JobType';
 import {config} from 'config';
+import { history } from '../_helpers';
 
 class RegisterCampaignPage extends Component {
 
@@ -44,6 +45,7 @@ class RegisterCampaignPage extends Component {
             selectedOptionLocation: null,
             selectedOptionInteresting: null,
             selectedOptionJobCategory: null,
+            selectedInfluencers: [],
             submitted: false,
             isFormStep:true,
             isInfluencerStep:false,
@@ -96,10 +98,11 @@ class RegisterCampaignPage extends Component {
                 selectedOptionLocation,
                 selectedOptionInteresting,
                 selectedOptionJobCategory,
+                selectedInfluencers,
                 checkedInfluencers } = this.state;
         const { dispatch, brands } = this.props;
         const brand = brands.brand;
-        debugger;
+
         if (campaign.campaignName && 
             campaign.campaignTarget && 
             campaign.fromDate &&
@@ -117,18 +120,17 @@ class RegisterCampaignPage extends Component {
             job.jobName &&
             checkedInfluencers.size > 0) {
             
-            debugger;
-            
+           
             const jobsLocal = createJobs(job, selectedOptionJobCategory);
             
-            //dispatch(infActions.registerJobs(jobsLocal));
+            debugger;
 
             dispatch(campaignActions.register(campaign,
                                                 jobsLocal,
                                                 selectedOptionLocation,
                                                 selectedOptionInteresting,
                                                 brand,
-                                                checkedInfluencers));
+                                                selectedInfluencers));
         }
     }
 
@@ -174,10 +176,28 @@ class RegisterCampaignPage extends Component {
         console.log(`Option selected:`, selectedOptionJobCategory);
     };
 
-    handleCheckBoxChange (event) {
+    handleCheckBoxChange(event) {
+
+        const { influencers } = this.props;
+        const { selectedInfluencers } = this.state;
+        const selectedInfluencersLocal = selectedInfluencers;
+
         const item = event.target.name;
         const isChecked = event.target.checked;
+
         this.setState(prevState => ({ checkedInfluencers: prevState.checkedInfluencers.set(item, isChecked) }));       
+        
+        influencers.items.influencer.map((item, key) =>
+        {
+            if(item.contentItemId === event.target.name && isChecked == true){
+                selectedInfluencersLocal.push(item);
+            }
+            else if(item.contentItemId === event.target.name && isChecked == false){
+                selectedInfluencersLocal.splice(selectedInfluencersLocal.indexOf(item), 1 );
+            }
+        });
+
+        this.setState({selectedInfluencers:selectedInfluencersLocal})
     };
 
     componentDidMount() {
@@ -198,7 +218,6 @@ class RegisterCampaignPage extends Component {
             history.push('/registerBrandPage');
         }
         
-        
     }
 
     // handleDeletecampaign(id) {
@@ -206,6 +225,7 @@ class RegisterCampaignPage extends Component {
     // }
 
     render() {
+
         const { loggingIn, influencers, brands, campaigns, locations, interestings, jobCategories} = this.props;
         const { submitted,
             campaign,
@@ -218,33 +238,9 @@ class RegisterCampaignPage extends Component {
             isJobStep,
             checkedInfluencers  } = this.state;
 
-        var localLocations = [
-        ];
-
         var localJobCategories = [
         ];
         
-        const localInterestings = [
-        ];
-
-        if(locations.locations)
-        {
-            locations.locations.map((item, key) => 
-            {                
-                const location = {value: item, label: item.location};
-                localLocations.push(location);
-            })
-        }
-
-        if(interestings.interestings)
-        {
-            interestings.interestings.map((item, key) => 
-            {                
-                const interesting = {value: item, label: item.interesting};
-                localInterestings.push(interesting);
-            })
-        }
-
         if(jobCategories.jobCategories)
         {
             jobCategories.jobCategories.map((item, key) => 
@@ -335,11 +331,13 @@ class RegisterCampaignPage extends Component {
                                                 onChange={this.handleOptionLocationChange}
                                                 isMulti
                                                 placeholder="Locations..."
-                                                options={localLocations}
+                                                getOptionLabel={(obj) => obj.location}
+                                                getOptionValue={(obj) => obj.contentItemId}
+                                                options={locations.locations}
                                             />
                                         </div>
                                     </div>
-                                    <div className={"row" + (submitted && !selectedOptionInteresting ? ' has-error' : '')}>
+                                    <div className={"row" + (submitted && !selectedOptionInteresting ? ' has-error' : '')} style={{marginBottom: '25px', paddingTop:'10px'}}>
                                         <div className='col-sm-12'>
                                             <label htmlFor="name"><i className="zmdi zmdi-account material-icons-name"></i></label>
                                             <Select
@@ -347,7 +345,9 @@ class RegisterCampaignPage extends Component {
                                                 onChange={this.handleOptionInterestingChange}
                                                 isMulti
                                                 placeholder="Interestings..."
-                                                options={localInterestings}
+                                                getOptionLabel={(obj) => obj.interesting}
+                                                getOptionValue={(obj) => obj.contentItemId}
+                                                options={interestings.interestings}
                                             />
                                         </div>
                                     </div>
@@ -496,7 +496,9 @@ class RegisterCampaignPage extends Component {
                                                 onChange={this.handleOptionJobCategoryChange}
                                                 isMulti
                                                 placeholder="Job Category..."
-                                                options={localJobCategories}
+                                                getOptionLabel={(obj) => obj.description}
+                                                getOptionValue={(obj) => obj.contentItemId}
+                                                options={jobCategories.jobCategories}
                                             />
                                         </div>
                                     </div>

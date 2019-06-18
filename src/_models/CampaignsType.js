@@ -3,7 +3,7 @@ export function createCampaigns(campaign,
   selectedOptionLocation,
   selectedOptionInteresting,
   brand,
-  checkedInfluencers) {
+  selectedInfluencers) {
 
   var campaignsContentItems = [];
   var contentLocationItems = [];
@@ -13,8 +13,7 @@ export function createCampaigns(campaign,
   if(selectedOptionLocation)
   {
     selectedOptionLocation.map((item, key) => 
-    {         
-        debugger;       
+    {           
         const location = {
           ContentItemId: item.contentItemId,
           ContentItemVersionId: item.contentItemVersionId,
@@ -36,17 +35,16 @@ export function createCampaigns(campaign,
             Title: item.location
           }
         };
-        contentInterestingItems.push(location);
+        contentLocationItems.push(location);
     });
 
-    campaignsContentItems.push(contentInterestingItems);
+    campaignsContentItems.push(contentLocationItems);
   }
 
   if(selectedOptionInteresting)
   {
     selectedOptionInteresting.map((item, key) => 
-    {         
-        debugger;       
+    {          
         const interesting = {
           ContentItemId: item.contentItemId,
           ContentItemVersionId: item.contentItemVersionId,
@@ -68,18 +66,23 @@ export function createCampaigns(campaign,
             Title: item.interesting
           }
         };
-        contentLocationItems.push(interesting);
+        contentInterestingItems.push(interesting);
     });
 
-    campaignsContentItems.push(contentLocationItems);
+    campaignsContentItems.push(contentInterestingItems);
   }
 
-  if(checkedInfluencers)
+  if(selectedInfluencers)
   {
-    influencers = checkedInfluencers.map((influencer, key) => 
-    {   
-      influencer.BagPart.ContentItems.push(jobs);
-    })
+    selectedInfluencers.forEach(function(influencer, key) {
+      debugger;
+      influencer.bag.contentItems.push(jobs);
+      //console.log(key + ' = ' + value);
+    });
+    // influencers = selectedInfluencers.map((influencer, key) => 
+    // {   
+    //   influencer.BagPart.ContentItems.push(jobs);
+    // })
 
     campaignsContentItems.push(influencers);
   }
@@ -88,7 +91,7 @@ export function createCampaigns(campaign,
     ContentItemId: campaign.contentItemId,
     ContentItemVersionId: null,
     ContentType: 'Campaign',
-    DisplayText: brand.brandName,
+    DisplayText: brand.BrandName,
     Latest: false,
     Published: false,
     ModifiedUtc: campaign.modifiedUtc,
@@ -153,25 +156,25 @@ export function createCampaigns(campaign,
     Author: 'admin',
     Campaigns: {
       FullName: {
-        Text: brand.fullName
+        Text: brand.FullName
       },
       Email: {
-        Text: brand.email
+        Text: brand.Email
       },
       BrandName: {
-        Text: brand.brandName
+        Text: brand.BrandName
       },
       BusinessAreas: {
-        Text: brand.businessAreas
+        Text: brand.BusinessAreas
       },
       Phone: {
-        Text: brand.phone
+        Text: brand.Phone
       },
       Password: {
-        Text: brand.password
+        Text: brand.Password
       },
       Location: {
-        Text: brand.location
+        Text: brand.Location
       }
     },
     AutoroutePart: {
@@ -184,7 +187,7 @@ export function createCampaigns(campaign,
       ]
     },
     TitlePart: {
-      Title: brand.brandName
+      Title: brand.BrandName
     }
   }
 
