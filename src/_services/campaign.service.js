@@ -70,7 +70,7 @@ function getAllInteresting() {
         body: GET_ALL_INTERESTING
     };
 
-    return fetch(`${configOrchardCore.apiUrl}/graphql`, requestOptions).then(handleGraphResponse);
+    return fetch(`${configOrchardCore.apiUrl}/graphql`, requestOptions).then(handleGraphInterestingResponse);
 }
 
 function getAllLocation() {
@@ -90,13 +90,33 @@ function getAllLocation() {
         body: GET_ALL_LOCATION
     };
 
-    return fetch(`${configOrchardCore.apiUrl}/graphql`, requestOptions).then(handleGraphResponse);
+    return fetch(`${configOrchardCore.apiUrl}/graphql`, requestOptions).then(handleGraphLocationResponse);
 }
 
-function handleGraphResponse(response) {
+function handleGraphLocationResponse(response) {
     return response.json().then(text => {
-        const data = text.data;
-        debugger;
+        const data = text.data.locations;
+        //debugger;
+        
+        if (!response.ok) {
+            if (response.status === 401) {
+                // auto logout if 401 response returned from api
+                logout();
+                location.reload(true);
+            }
+
+            const error = (data && data.message) || response.statusText;
+            return Promise.reject(error);
+        }
+
+        return data;
+    });
+}
+
+function handleGraphInterestingResponse(response) {
+    return response.json().then(text => {
+        const data = text.data.interestingList;
+        //debugger;
         
         if (!response.ok) {
             if (response.status === 401) {

@@ -39,13 +39,13 @@ function getAll() {
 
         userService.getAll()
             .then(
-                campaigns => dispatch(success(campaigns)),
+                campaign => dispatch(success(campaign)),
                 error => dispatch(failure(error.toString()))
             );
     };
 
     function request() { return { type: campaignConstants.CAMS_GETALL_REQUEST } }
-    function success(campaigns) { return { type: campaignConstants.CAMS_GETALL_SUCCESS, campaigns } }
+    function success(campaign) { return { type: campaignConstants.CAMS_GETALL_SUCCESS, campaign } }
     function failure(error) { return { type: campaignConstants.CAMS_GETALL_FAILURE, error } }
 }
 

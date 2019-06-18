@@ -38,6 +38,18 @@ export function influencers(state = {}, action) {
       return { 
         error: action.error
       };
+    case infConstants.JOB_REGISTER_REQUEST:
+      return {
+        loading: true
+      };
+    case infConstants.JOB_REGISTER_SUCCESS:
+      return {
+        jobs: action.jobs
+      };
+    case infConstants.JOB_REGISTER_FAILURE:
+      return { 
+        error: action.error
+      };
     default:
       return state
   }

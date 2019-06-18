@@ -5,6 +5,7 @@ import img from '../../images/hand.jpg'
 //import { campaignActions } from '../_actions';
 import { campaignActions, infActions } from '../_actions';
 import Select from 'react-select';
+import {createJobs} from './../_models/JobType';
 import {config} from 'config';
 
 class RegisterCampaignPage extends Component {
@@ -53,7 +54,7 @@ class RegisterCampaignPage extends Component {
 
         this.handleCampaignChange = this.handleCampaignChange.bind(this);
         this.handleJobChange = this.handleJobChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSubmitJobs = this.handleSubmitJobs.bind(this);
         this.handleOptionLocationChange = this.handleOptionLocationChange.bind(this);
         this.handleOptionInterestingChange = this.handleOptionInterestingChange.bind(this);
         this.handleOptionJobCategoryChange = this.handleOptionJobCategoryChange.bind(this);
@@ -86,7 +87,7 @@ class RegisterCampaignPage extends Component {
         });
     }
 
-    handleSubmit(event) {
+    handleSubmitJobs(event) {
         event.preventDefault();
 
         this.setState({ submitted: true });
@@ -97,17 +98,27 @@ class RegisterCampaignPage extends Component {
                 selectedOptionJobCategory,
                 checkedInfluencers } = this.state;
         const { dispatch, brand } = this.props;
-        if (campaign.campaignName && 
-            campaign.campaignDate && 
-            campaign.title && 
-            campaign.html &&
-            job.jobDescription &&
+        // if (campaign.campaignName && 
+        //     campaign.campaignDate && 
+        //     campaign.title && 
+        //     campaign.html &&
+        //     job.jobDescription &&
+        //     job.jobHashTag &&
+        //     job.jobKeyword &&
+        //     job.jobName) {
+            
+        //     debugger;
+        //     dispatch(campaignActions.register(campaign));
+        // }
+
+        if (job.jobDescription &&
             job.jobHashTag &&
             job.jobKeyword &&
             job.jobName) {
-            
             debugger;
-            dispatch(campaignActions.register(campaign));
+            const jobs = createJobs(job, selectedOptionJobCategory);
+            
+            dispatch(infActions.registerJobs(jobs));
         }
     }
 
@@ -169,9 +180,11 @@ class RegisterCampaignPage extends Component {
         const { dispatch } = this.props;
         //const { brand } = this.props.location.state;
         //dispatch(infActions.getBrandFromBrandPage(brand));
-        dispatch(campaignActions.getAll());
+        //dispatch(campaignActions.getAll());
+        dispatch(infActions.getAll());
         dispatch(campaignActions.getAllLocation());
         dispatch(campaignActions.getAllInteresting());
+        dispatch(infActions.getAllJobCategories());
     }
 
     // handleDeletecampaign(id) {
@@ -179,7 +192,7 @@ class RegisterCampaignPage extends Component {
     // }
 
     render() {
-        const { loggingIn, influencers, brand } = this.props;
+        const { loggingIn, influencers, brand, campaigns, locations, interestings, jobCategories } = this.props;
         const { submitted,
             campaign,
             job,
@@ -190,25 +203,43 @@ class RegisterCampaignPage extends Component {
             isInfluencerStep,
             isJobStep,
             checkedInfluencers  } = this.state;
-        const jobCategories = [
-            { value: 'Share Link', label: 'Share Link' },
-            { value: 'Post Photo', label: 'Post Photo' },
-            { value: 'Video', label: 'Video' },
-            { value: 'Live Stream', label: 'Live Stream' }
-        ];
-        const locations = [
-            { value: 'Đà Nẵng', label: 'Đà Nẵng' },
-            { value: 'THPCM', label: 'THPCM' },
-            { value: 'Hà Nội', label: 'Hà Nội' },
-        ];
-        const interestings = [
-            { value: 'sport', label: 'Sport' },
-            { value: 'fashion', label: 'Fashion' },
-            { value: 'music', label: 'Music' },
-            { value: 'healthy', label: 'Healthy' },
+
+        var localLocations = [
         ];
 
-        //debugger;
+        var localJobCategories = [
+        ];
+        
+        const localInterestings = [
+        ];
+
+        if(locations.locations)
+        {
+            locations.locations.map((item, key) => 
+            {                
+                const location = {value: item.location, label: item.location};
+                localLocations.push(location);
+            })
+        }
+
+        if(interestings.interestings)
+        {
+            interestings.interestings.map((item, key) => 
+            {                
+                const interesting = {value: item.interesting, label: item.interesting};
+                localInterestings.push(interesting);
+            })
+        }
+
+        if(jobCategories.jobCategories)
+        {
+            jobCategories.jobCategories.map((item, key) => 
+            {                
+                const jobCategory = {value: item, label: item.description};
+                localJobCategories.push(jobCategory);
+            })
+        }
+
         return (
             <section className="signup">
                 {
@@ -290,7 +321,7 @@ class RegisterCampaignPage extends Component {
                                                 onChange={this.handleOptionLocationChange}
                                                 isMulti
                                                 placeholder="Locations..."
-                                                options={locations}
+                                                options={localLocations}
                                             />
                                         </div>
                                     </div>
@@ -302,7 +333,7 @@ class RegisterCampaignPage extends Component {
                                                 onChange={this.handleOptionInterestingChange}
                                                 isMulti
                                                 placeholder="Interestings..."
-                                                options={interestings}
+                                                options={localInterestings}
                                             />
                                         </div>
                                     </div>
@@ -402,7 +433,7 @@ class RegisterCampaignPage extends Component {
                         <div className="signup-content">
                             <div className="signup-form" style={{width: '100%'}}>
                                 <h2 className="form-title">Create Job</h2>
-                                <form onSubmit={this.handleSubmit} className="register-form" id="register-form">
+                                <form onSubmit={this.handleSubmitJobs} className="register-form" id="register-form">
                                     <div className={'form-group row' + (submitted && !job.jobName ? ' has-error' : '')}>
                                         <div className='col-sm-12'>
                                             <label htmlFor="jobName"><i className="zmdi zmdi-account material-icons-name"></i></label>
@@ -451,7 +482,7 @@ class RegisterCampaignPage extends Component {
                                                 onChange={this.handleOptionJobCategoryChange}
                                                 isMulti
                                                 placeholder="Job Category..."
-                                                options={jobCategories}
+                                                options={localJobCategories}
                                             />
                                         </div>
                                     </div>
@@ -484,10 +515,14 @@ class RegisterCampaignPage extends Component {
 }
 
 function mapStateToProps(state) {
-    const { campaigns, influencers } = state;
+    //debugger;
+    const { campaigns, influencers, locations, interestings, jobCategories } = state;
     const { brand } = influencers;
     return {
         //loggingIn,
+        jobCategories,
+        interestings,
+        locations,
         campaigns,
         influencers
     };
