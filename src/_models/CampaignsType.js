@@ -134,7 +134,7 @@ export function createCampaign(campaign,
         {
           const demorgraphic = {
             ContentItemId: item.contentItemId,
-            ContentItemVersionId: item.contentItemVersionId,
+            ContentItemVersionId: '',
             ContentType: 'AgeDemorgraphic',
             DisplayText: item.displayText,
             Latest: item.latest,
@@ -175,8 +175,8 @@ export function createCampaign(campaign,
             Author: 'admin',
             Networks: {
               Icon: {
-                Paths: item.photo.paths,
-                Urls: item.photo.urls
+                Paths: item.icon.paths,
+                Urls: item.icon.urls
               }
             },
             TitlePart: {
@@ -202,8 +202,8 @@ export function createCampaign(campaign,
             Author: 'admin',
             Rates: {
               Icon: {
-                Paths: item.photo.paths,
-                Urls: item.photo.urls
+                Paths: item.icon.paths,
+                Urls: item.icon.urls
               },
               Price: {
                 Value: item.price

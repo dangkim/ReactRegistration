@@ -12,25 +12,38 @@ function getAll() {
     const GET_ALL_INFS = `
     {
         influencer {
-          contentItemId,
-          contentItemVersionId,
-          contentType,
-          displayText,
-          latest,
-          published,
-          modifiedUtc,
-          publishedUtc,
-          createdUtc,
-          description,
-          fanpage,
-          owner,
-          author
-            photo {
-              urls
-            },
-            bag{
-            contentItems {
-                ... on AgeDemorgraphic {
+        contentItemId,
+        contentItemVersionId,
+        contentType,
+        displayText,
+        latest,
+        published,
+        modifiedUtc,
+        publishedUtc,
+        createdUtc,
+        description,
+        fanpage,
+        owner,
+        author
+        photo {
+        urls
+        },
+        bag{
+          contentItems {
+            ... on AgeDemorgraphic {
+                  contentItemId,
+                  contentType,
+                  displayText,
+                  latest,
+                  published,
+                  modifiedUtc,
+                  publishedUtc,
+                  createdUtc,
+                  author,
+                  demoGraphicsName,
+                  percentage,
+                  }
+            ... on Networks {
                 contentItemId,
                 contentType,
                 displayText,
@@ -39,28 +52,13 @@ function getAll() {
                 modifiedUtc,
                 publishedUtc,
                 createdUtc,
-                owner,
-                author,
-                demoGraphicsName,
-                percentage,
-                }
-                ... on Networks {
-                contentItemId,
-                contentType,
-                displayText,
-                latest,
-                published,
-                modifiedUtc,
-                publishedUtc,
-                createdUtc,
-                owner,
                 author,
                 icon {
                   paths,
-                    urls
+                  urls
                 }
                 }
-                ... on Rates {                
+            ... on Rates {                
                 contentItemId,
                 contentType,
                 displayText,
@@ -69,7 +67,6 @@ function getAll() {
                 modifiedUtc,
                 publishedUtc,
                 createdUtc,
-                owner,
                 author,
                 price,
                 icon {
@@ -78,8 +75,8 @@ function getAll() {
                 }
                 }
             }
-            }
-        }
+          }
+      }
     }
     `;
 
