@@ -1,7 +1,8 @@
 import { campaignConstants } from '../_constants';
-import { campaignService } from '../_services';
+import { campaignService, influencerService } from '../_services';
 import { alertActions } from '.';
 import { history } from '../_helpers';
+import {createCampaigns} from '../_models/CampaignsType';
 
 export const campaignActions = {
     register,
@@ -10,27 +11,60 @@ export const campaignActions = {
     getAllInteresting
 };
 
-function register(campaignType) {
+function register(campaign,
+                jobsLocal,
+                selectedOptionLocation,
+                selectedOptionInteresting,
+                brand,
+                checkedInfluencers) {
     return dispatch => {
-        dispatch(request(campaignType));
 
-        campaignService.register(campaignType)
+        dispatch(request());
+
+        influencerService.registerJobs(jobsLocal)
             .then(
-                campaignType => { 
-                    dispatch(success());
-                    history.push('/registerCampaignPage');
-                    dispatch(alertActions.success('Registration successful'));
+                jobsType => {
+                    const campaignsLocal = createCampaigns(campaign,
+                                                    jobsType,
+                                                    selectedOptionLocation,
+                                                    selectedOptionInteresting,
+                                                    brand,
+                                                    checkedInfluencers);
+                    campaignService.register(campaignsLocal)
+                    .then(
+                        campaignType => { 
+                            dispatch(success());
+                            history.push('/registerCampaignPage');
+                            dispatch(alertActions.success('Registration successful'));
+                        },
+                        error => {
+                            dispatch(failure(error.toString()));
+                            dispatch(alertActions.error(error.toString()));
+                        }
+                    );
+
+                    //dispatch(success());
+                    //history.push('/registerCampaignPage');
+                    dispatch(alertActions.success('Registration Job Successful'));
                 },
                 error => {
                     dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));
                 }
-            );
+        );
+
+        // dispatch(request(campaignType));
+
+        
     };
 
-    function request(user) { return { type: campaignConstants.CAM_REGISTER_REQUEST, user } }
-    function success(user) { return { type: campaignConstants.CAM_REGISTER_SUCCESS, user } }
-    function failure(error) { return { type: campaignConstants.CAM_REGISTER_FAILURE, error } }
+    function request() { return { type: campaignConstants.CAM_REGISTER_SUCCESS } }
+    function success(jobs) { return { type: campaignConstants.CAM_REGISTER_SUCCESS, jobs } }
+    function failure(error) { return { type: campaignConstants.CAM_REGISTER_SUCCESS, error } }
+
+    // function request(user) { return { type: campaignConstants.CAM_REGISTER_REQUEST, user } }
+    // function success(user) { return { type: campaignConstants.CAM_REGISTER_SUCCESS, user } }
+    // function failure(error) { return { type: campaignConstants.CAM_REGISTER_FAILURE, error } }
 }
 
 function getAll() {

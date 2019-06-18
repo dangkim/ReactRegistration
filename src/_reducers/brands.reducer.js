@@ -26,6 +26,18 @@ export function brands(state = {}, action) {
       return { 
         error: action.error
       };
+    case brandConstants.FROM_BRAND_REQUEST:
+      return { 
+        loading: true
+      };
+    case brandConstants.FROM_BRAND_SUCCESS:
+      return { 
+        brand: action.brand
+      };
+    case brandConstants.FROM_BRAND_FAILURE:
+      return { 
+        error: action.error
+      };
     default:
       return state
   }

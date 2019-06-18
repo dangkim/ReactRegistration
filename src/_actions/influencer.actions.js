@@ -6,7 +6,6 @@ import { history } from '../_helpers';
 export const infActions = {
     register,
     getAll,
-    getBrandFromBrandPage,
     getAllJobCategories,
     registerJobs
 };
@@ -36,7 +35,7 @@ function register(infType) {
 
 function registerJobs(jobsType) {
     return dispatch => {
-        dispatch(request(jobsType));
+        dispatch(request());
 
         influencerService.registerJobs(jobsType)
             .then(
@@ -49,31 +48,12 @@ function registerJobs(jobsType) {
                     dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));
                 }
-            );
+        );
     };
 
     function request() { return { type: infConstants.JOB_REGISTER_REQUEST } }
     function success(jobs) { return { type: infConstants.JOB_REGISTER_SUCCESS, jobs } }
     function failure(error) { return { type: infConstants.JOB_REGISTER_FAILURE, error } }
-}
-
-function getBrandFromBrandPage(brand) {
-    return dispatch => {
-        dispatch(request());
-        if(brand)
-        {
-            dispatch(success(brand));
-        }
-        else{
-            const error = "cannot get from brand";
-            dispatch(failure(error.toString()));
-            dispatch(alertActions.error(error.toString()));
-        }
-    };
-
-    function request() { return { type: infConstants.INFS_FROMBRAND_REQUEST } }
-    function success(brand) { return { type: infConstants.INFS_FROMBRAND_SUCCESS, brand } }
-    function failure(error) { return { type: infConstants.INFS_FROMBRAND_FAILURE,  error} }
 }
 
 function getAll() {

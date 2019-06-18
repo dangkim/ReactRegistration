@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import img from '../../images/hand.jpg'
 //import { campaignActions } from '../_actions';
-import { campaignActions, infActions } from '../_actions';
+import { campaignActions, infActions, brandActions } from '../_actions';
 import Select from 'react-select';
 import {createJobs} from './../_models/JobType';
 import {config} from 'config';
@@ -97,43 +97,49 @@ class RegisterCampaignPage extends Component {
                 selectedOptionInteresting,
                 selectedOptionJobCategory,
                 checkedInfluencers } = this.state;
-        const { dispatch, brand } = this.props;
-        // if (campaign.campaignName && 
-        //     campaign.campaignDate && 
-        //     campaign.title && 
-        //     campaign.html &&
-        //     job.jobDescription &&
-        //     job.jobHashTag &&
-        //     job.jobKeyword &&
-        //     job.jobName) {
-            
-        //     debugger;
-        //     dispatch(campaignActions.register(campaign));
-        // }
-
-        if (job.jobDescription &&
+        const { dispatch, brands } = this.props;
+        const brand = brands.brand;
+        debugger;
+        if (campaign.campaignName && 
+            campaign.campaignTarget && 
+            campaign.fromDate &&
+            campaign.toDate &&
+            campaign.fromAge &&
+            campaign.toAge &&
+            campaign.productInfo &&
+            campaign.gender &&
+            campaign.budget &&
+            selectedOptionLocation &&
+            selectedOptionInteresting &&
+            job.jobDescription &&
             job.jobHashTag &&
             job.jobKeyword &&
-            job.jobName) {
-            debugger;
-            const jobs = createJobs(job, selectedOptionJobCategory);
+            job.jobName &&
+            checkedInfluencers.size > 0) {
             
-            dispatch(infActions.registerJobs(jobs));
+            debugger;
+            
+            const jobsLocal = createJobs(job, selectedOptionJobCategory);
+            
+            //dispatch(infActions.registerJobs(jobsLocal));
+
+            dispatch(campaignActions.register(campaign,
+                                                jobsLocal,
+                                                selectedOptionLocation,
+                                                selectedOptionInteresting,
+                                                brand,
+                                                checkedInfluencers));
         }
     }
 
     handleInfluencerStep(event) {
         event.preventDefault();
         this.setState({isFormStep:false, isInfluencerStep:true, isJobStep:false});
-        //const { dispatch } = this.props;
-        //dispatch(infActions.getAll());
     }
 
     handleJobStep(event) {
         event.preventDefault();
         this.setState({isFormStep:false, isInfluencerStep:false, isJobStep:true});
-        //const { dispatch } = this.props;
-        //dispatch(infActions.getAll());
     }
 
     handleBackStep(event) {
@@ -169,22 +175,30 @@ class RegisterCampaignPage extends Component {
     };
 
     handleCheckBoxChange (event) {
-        //debugger;
         const item = event.target.name;
         const isChecked = event.target.checked;
         this.setState(prevState => ({ checkedInfluencers: prevState.checkedInfluencers.set(item, isChecked) }));       
     };
 
     componentDidMount() {
-        //debugger;
+        debugger;
         const { dispatch } = this.props;
-        //const { brand } = this.props.location.state;
-        //dispatch(infActions.getBrandFromBrandPage(brand));
-        //dispatch(campaignActions.getAll());
-        dispatch(infActions.getAll());
-        dispatch(campaignActions.getAllLocation());
-        dispatch(campaignActions.getAllInteresting());
-        dispatch(infActions.getAllJobCategories());
+        if(this.props.location.state)
+        {
+            const { brand } = this.props.location.state;
+            dispatch(brandActions.getBrandFromBrandPage(brand));
+            //dispatch(campaignActions.getAll());
+            dispatch(infActions.getAll());
+            dispatch(campaignActions.getAllLocation());
+            dispatch(campaignActions.getAllInteresting());
+            dispatch(infActions.getAllJobCategories());
+        }
+        else
+        {
+            history.push('/registerBrandPage');
+        }
+        
+        
     }
 
     // handleDeletecampaign(id) {
@@ -192,7 +206,7 @@ class RegisterCampaignPage extends Component {
     // }
 
     render() {
-        const { loggingIn, influencers, brand, campaigns, locations, interestings, jobCategories } = this.props;
+        const { loggingIn, influencers, brands, campaigns, locations, interestings, jobCategories} = this.props;
         const { submitted,
             campaign,
             job,
@@ -217,7 +231,7 @@ class RegisterCampaignPage extends Component {
         {
             locations.locations.map((item, key) => 
             {                
-                const location = {value: item.location, label: item.location};
+                const location = {value: item, label: item.location};
                 localLocations.push(location);
             })
         }
@@ -226,7 +240,7 @@ class RegisterCampaignPage extends Component {
         {
             interestings.interestings.map((item, key) => 
             {                
-                const interesting = {value: item.interesting, label: item.interesting};
+                const interesting = {value: item, label: item.interesting};
                 localInterestings.push(interesting);
             })
         }
@@ -313,7 +327,7 @@ class RegisterCampaignPage extends Component {
                                             }
                                         </div>                                        
                                     </div>
-                                    <div className="row" style={{marginBottom: '25px', paddingTop:'10px'}}>
+                                    <div className={"row" + (submitted && !selectedOptionLocation ? ' has-error' : '')} style={{marginBottom: '25px', paddingTop:'10px'}}>
                                         <div className='col-sm-12'>
                                             <label htmlFor="name"><i className="zmdi zmdi-account material-icons-name"></i></label>
                                             <Select
@@ -325,7 +339,7 @@ class RegisterCampaignPage extends Component {
                                             />
                                         </div>
                                     </div>
-                                    <div className="row" style={{marginBottom: '25px', paddingTop:'10px'}}>
+                                    <div className={"row" + (submitted && !selectedOptionInteresting ? ' has-error' : '')}>
                                         <div className='col-sm-12'>
                                             <label htmlFor="name"><i className="zmdi zmdi-account material-icons-name"></i></label>
                                             <Select
@@ -516,10 +530,12 @@ class RegisterCampaignPage extends Component {
 
 function mapStateToProps(state) {
     //debugger;
-    const { campaigns, influencers, locations, interestings, jobCategories } = state;
-    const { brand } = influencers;
+    const { campaigns, influencers, locations, interestings, jobCategories, jobs, brands } = state;
+    //const { brand } = influencers;
     return {
         //loggingIn,
+        brands,
+        jobs,
         jobCategories,
         interestings,
         locations,

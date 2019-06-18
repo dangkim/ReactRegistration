@@ -25,19 +25,7 @@ export function influencers(state = {}, action) {
     case infConstants.INFS_GETALL_FAILURE:
       return { 
         error: action.error
-      };
-    case infConstants.INFS_FROMBRAND_REQUEST:
-      return { 
-        loading: true
-      };
-    case infConstants.INFS_FROMBRAND_SUCCESS:
-      return { 
-        brand: action.brand
-      };
-    case infConstants.INFS_FROMBRAND_FAILURE:
-      return { 
-        error: action.error
-      };
+      };    
     case infConstants.JOB_REGISTER_REQUEST:
       return {
         loading: true

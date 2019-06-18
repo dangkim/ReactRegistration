@@ -120,7 +120,7 @@ class RegisterBrandPage extends React.Component {
     render() {
         const { brands } = this.props;
         const { brand, submitted } = this.state;
-
+        
         return (            
             <section className="signup">
                 <div className="containerForm">
