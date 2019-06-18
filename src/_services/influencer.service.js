@@ -12,31 +12,68 @@ function getAll() {
     const GET_ALL_INFS = `
     {
         influencer {
-            title: displayText,
-            contentItemId,
-            description,
-            createdUtc,
-            fanpage,
-          	photo {
+          contentItemId,
+          contentItemVersionId,
+          contentType,
+          displayText,
+          latest,
+          published,
+          modifiedUtc,
+          publishedUtc,
+          createdUtc,
+          description,
+          fanpage,
+          owner,
+          author
+            photo {
               urls
             },
             bag{
             contentItems {
                 ... on AgeDemorgraphic {
-                title: displayText,
+                contentItemId,
+                contentType,
+                displayText,
+                latest,
+                published,
+                modifiedUtc,
+                publishedUtc,
+                createdUtc,
+                owner,
+                author,
                 demoGraphicsName,
-                percentage
+                percentage,
                 }
                 ... on Networks {
-                title: displayText,
+                contentItemId,
+                contentType,
+                displayText,
+                latest,
+                published,
+                modifiedUtc,
+                publishedUtc,
+                createdUtc,
+                owner,
+                author,
                 icon {
+                  paths,
                     urls
                 }
                 }
-                ... on Rates {
+                ... on Rates {                
+                contentItemId,
+                contentType,
+                displayText,
+                latest,
+                published,
+                modifiedUtc,
+                publishedUtc,
+                createdUtc,
+                owner,
+                author,
                 price,
-                title: displayText,
                 icon {
+                  paths,
                     urls
                 }
                 }
@@ -166,7 +203,6 @@ function handleContentResponse(response) {
 function handleContentJobsResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
-        debugger;
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api

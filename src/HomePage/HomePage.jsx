@@ -49,11 +49,11 @@ class HomePage extends React.Component {
                 DisplayText:campaign.campaignName,
                 Latest:false,
                 Published:false,
-                ModifiedUtc:null,
-                PublishedUtc:null,
-                CreatedUtc:null,
-                Owner:null,
-                Author:null,
+                ModifiedUtc:'',
+                PublishedUtc:'',
+                CreatedUtc:'',
+                Owner:'admin',
+                Author:'admin',
                 Campaign:{
                     CampaignName:{
                         Text: campaign.campaignName

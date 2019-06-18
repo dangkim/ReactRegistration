@@ -84,7 +84,7 @@ class RegisterBrandPage extends React.Component {
                 PublishedUtc:null,
                 CreatedUtc:null,
                 Owner:'admin',
-                Author:null,
+                Author:'admin',
                 Brand:{
                     FullName:{
                         Text: brand.fullName
@@ -109,7 +109,7 @@ class RegisterBrandPage extends React.Component {
                     }
                 },
                 TitlePart:{
-                    Title: 'Brand' + brand.fullName,
+                    Title: 'Brand ' + brand.brandName,
                 }
             }
             

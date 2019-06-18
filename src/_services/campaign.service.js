@@ -60,9 +60,17 @@ function getAllInteresting() {
         contentItemId,
         contentItemVersionId,
         contentType,
+        displayText,
+        latest,
+        published,
+        modifiedUtc,
+        publishedUtc,
+        createdUtc,
+        owner,
+        author,
         interesting
+        }
       }
-    }
     `;
     const requestOptions = {
         method: 'POST',
@@ -80,6 +88,14 @@ function getAllLocation() {
         contentItemId,
         contentItemVersionId,
         contentType,
+        displayText,
+        latest,
+        published,
+        modifiedUtc,
+        publishedUtc,
+        createdUtc,
+        owner,
+        author,
         location
       }
     }

@@ -26,14 +26,7 @@ class RegisterCampaignPage extends Component {
                 toDate:'',
                 productInfo:'',
                 budget:'',
-                currency:'',
-                // fullName:'',
-                // email:'',
-                // brandName:'',
-                // businessAreas:'',
-                // phone:'',
-                // password:'',
-                // location:'',
+                currency:''
             },
             job: {
                 jobName:'',
@@ -118,19 +111,17 @@ class RegisterCampaignPage extends Component {
             job.jobHashTag &&
             job.jobKeyword &&
             job.jobName &&
-            checkedInfluencers.size > 0) {
-            
+            checkedInfluencers.size > 0) {            
            
             const jobsLocal = createJobs(job, selectedOptionJobCategory);
             
-            debugger;
-
             dispatch(campaignActions.register(campaign,
                                                 jobsLocal,
                                                 selectedOptionLocation,
                                                 selectedOptionInteresting,
                                                 brand,
                                                 selectedInfluencers));
+            this.setState({ isFormStep: true, isInfluencerStep: false, isJobStep: false });    
         }
     }
 
@@ -201,7 +192,6 @@ class RegisterCampaignPage extends Component {
     };
 
     componentDidMount() {
-        debugger;
         const { dispatch } = this.props;
         if(this.props.location.state)
         {
@@ -395,7 +385,7 @@ class RegisterCampaignPage extends Component {
                                     <div key={key} className="col-sm-4">
                                         <div className="team-member">
                                             <img className="mx-auto rounded-circle" src={imgSrc} alt=""/>
-                                            <h6>{item.title}</h6>
+                                            <h6>{item.displayText}</h6>
                                             <p>{item.description}</p>
                                             {
                                                 item.bag.contentItems.map((child, key) =>
@@ -403,7 +393,7 @@ class RegisterCampaignPage extends Component {
                                                     return (
                                                     <div key={key} className="row">
                                                         <p className='col-sm-6'>{child.demoGraphicsName? child.demoGraphicsName: ''}</p><p className='col-sm-6'>{child.percentage? child.percentage: ''}</p>
-                                                        <p className='col-sm-6'>{child.price? child.title: ''}</p><p className='col-sm-6'>{child.price? child.price: ''}</p>
+                                                        <p className='col-sm-6'>{child.price? child.displayText: ''}</p><p className='col-sm-6'>{child.price? child.price: ''}</p>
                                                     </div>
                                                     )
                                                 }

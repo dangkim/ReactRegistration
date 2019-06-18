@@ -1,14 +1,68 @@
-export function createCampaigns(campaign,
+export function createCampaigns(brand, compaignType) {
+
+    const campaignsType = {
+    ContentItemId: '',
+    ContentItemVersionId: '',
+    ContentType: 'Campaigns',
+    DisplayText: brand.Brand.BrandName.Text,
+    Latest: true,
+    Published: false,
+    ModifiedUtc: '',
+    PublishedUtc: '',
+    CreatedUtc: '',
+    Owner: 'admin',
+    Author: 'admin',
+    Campaigns: {
+      FullName: {
+        Text: brand.Brand.FullName.Text
+      },
+      Email: {
+        Text: brand.Brand.Email.Text
+      },
+      BrandName: {
+        Text: brand.Brand.BrandName.Text
+      },
+      BusinessAreas: {
+        Text: brand.Brand.BusinessAreas.Text
+      },
+      Phone: {
+        Text: brand.Brand.Phone.Text
+      },
+      Password: {
+        Text: brand.Brand.Password.Text
+      },
+      Location: {
+        Text: brand.Brand.Location.Text
+      }
+    },
+    AutoroutePart: {
+      Path: null,
+      SetHomepage: false
+    },
+    BagPart: {
+      ContentItems: [
+        compaignType
+      ]
+    },
+    TitlePart: {
+      Title: brand.TitlePart.Title
+    }
+  }
+  debugger;
+  return campaignsType;
+}
+
+export function createCampaign(campaign,
   jobs,
   selectedOptionLocation,
   selectedOptionInteresting,
   brand,
   selectedInfluencers) {
 
-  var campaignsContentItems = [];
+  var campaignContentItems = [];
   var contentLocationItems = [];
   var contentInterestingItems = [];
-  var influencers = null;
+  var influencers = [];
 
   if(selectedOptionLocation)
   {
@@ -35,16 +89,14 @@ export function createCampaigns(campaign,
             Title: item.location
           }
         };
-        contentLocationItems.push(location);
+        campaignContentItems.push(location);
     });
-
-    campaignsContentItems.push(contentLocationItems);
   }
 
   if(selectedOptionInteresting)
-  {
+  {    
     selectedOptionInteresting.map((item, key) => 
-    {          
+    {
         const interesting = {
           ContentItemId: item.contentItemId,
           ContentItemVersionId: item.contentItemVersionId,
@@ -66,37 +118,158 @@ export function createCampaigns(campaign,
             Title: item.interesting
           }
         };
-        contentInterestingItems.push(interesting);
+        campaignContentItems.push(interesting);
     });
-
-    campaignsContentItems.push(contentInterestingItems);
   }
 
   if(selectedInfluencers)
   {
     selectedInfluencers.forEach(function(influencer, key) {
-      debugger;
-      influencer.bag.contentItems.push(jobs);
-      //console.log(key + ' = ' + value);
-    });
-    // influencers = selectedInfluencers.map((influencer, key) => 
-    // {   
-    //   influencer.BagPart.ContentItems.push(jobs);
-    // })
 
-    campaignsContentItems.push(influencers);
+      const contentItems = [];
+
+      influencer.bag.contentItems.forEach(function(item, key) {
+
+        if(item.contentType==='AgeDemorgraphic')
+        {
+          const demorgraphic = {
+            ContentItemId: item.contentItemId,
+            ContentItemVersionId: item.contentItemVersionId,
+            ContentType: 'AgeDemorgraphic',
+            DisplayText: item.displayText,
+            Latest: item.latest,
+            Published: item.published,
+            ModifiedUtc: item.modifiedUtc,
+            PublishedUtc: item.publishedUtc,
+            CreatedUtc: item.createdUtc,
+            Owner: 'admin',
+            Author: 'admin',
+            AgeDemorgraphic: {
+              Percentage: {
+                Text: item.percentage
+              },
+              DemoGraphicsName: {
+                Text: item.demoGraphicsName
+              }
+            },
+            TitlePart: {
+              Title: item.displayText
+            }
+          }
+          contentItems.push(demorgraphic);
+        }
+
+        if(item.contentType==='Networks')
+        {
+          const networks = {
+            ContentItemId: item.contentItemId,
+            ContentItemVersionId: '',
+            ContentType: 'Networks',
+            DisplayText: item.displayText,
+            Latest: item.latest,
+            Published: item.published,
+            ModifiedUtc: item.modifiedUtc,
+            PublishedUtc: item.publishedUtc,
+            CreatedUtc: item.createdUtc,
+            Owner: 'admin',
+            Author: 'admin',
+            Networks: {
+              Icon: {
+                Paths: item.photo.paths,
+                Urls: item.photo.urls
+              }
+            },
+            TitlePart: {
+              Title: item.displayText
+            }
+          }
+          contentItems.push(networks);
+        }
+
+        if(item.contentType==='Rates')
+        {
+          const rates = {
+            ContentItemId: item.contentItemId,
+            ContentItemVersionId: '',
+            ContentType: 'Rates',
+            DisplayText: item.displayText,
+            Latest: item.latest,
+            Published: item.published,
+            ModifiedUtc: item.modifiedUtc,
+            PublishedUtc: item.publishedUtc,
+            CreatedUtc: item.createdUtc,
+            Owner: 'admin',
+            Author: 'admin',
+            Rates: {
+              Icon: {
+                Paths: item.photo.paths,
+                Urls: item.photo.urls
+              },
+              Price: {
+                Value: item.price
+              }
+            },
+            TitlePart: {
+              Title: item.displayText
+            }
+          }
+
+          contentItems.push(rates);
+        }
+
+      })
+
+      contentItems.push(jobs);
+
+      //influencer.bag.contentItems.push(jobs);
+      debugger;
+      const influencerLocal = {
+        ContentItemId: influencer.contentItemId,
+        ContentItemVersionId: influencer.contentItemVersionId,
+        ContentType: 'Influencer',
+        DisplayText: influencer.displayText,
+        Latest: true,
+        Published: false,
+        ModifiedUtc: influencer.modifiedUtc,
+        PublishedUtc: influencer.publishedUtc,
+        CreatedUtc: influencer.createdUtc,
+        Owner: 'admin',
+        Author: 'admin',
+        Influencer: {
+          Description: {
+            Text: influencer.description
+          },
+          Photo: {
+            Paths: influencer.photo.paths,
+            Urls: influencer.photo.urls
+          },
+          Fanpage: {
+            Text: influencer.fanpage
+          }
+        },
+        BagPart: {
+          ContentItems: contentItems
+        },
+        TitlePart: {
+          Title: influencer.displayText
+        }
+      }
+
+      campaignContentItems.push(influencerLocal);
+    });
+    
   }
 
   const compaignType = {
-    ContentItemId: campaign.contentItemId,
-    ContentItemVersionId: null,
+    ContentItemId: '',
+    ContentItemVersionId: '',
     ContentType: 'Campaign',
-    DisplayText: brand.BrandName,
-    Latest: false,
+    DisplayText: "Campaign " + brand.Brand.BrandName.Text,
+    Latest: true,
     Published: false,
-    ModifiedUtc: campaign.modifiedUtc,
-    PublishedUtc: campaign.publishedUtc,
-    CreatedUtc: campaign.createdUtc,
+    ModifiedUtc: '',
+    PublishedUtc: '',
+    CreatedUtc: '',
     Owner: 'admin',
     Author: 'admin',
     Campaign: {
@@ -135,61 +308,16 @@ export function createCampaigns(campaign,
       }
     },
     TitlePart: {
-      Title: "Campaign" + brand.brandName,
+      Title: "Campaign " + brand.Brand.BrandName.Text,
     },
     BagPart: {
-      ContentItems: campaignsContentItems
+      ContentItems: campaignContentItems
     }
   }
 
-  const campaignsType = {
-    ContentItemId: '',
-    ContentItemVersionId: '',
-    ContentType: 'Campaigns',
-    DisplayText: brand.brandName,
-    Latest: true,
-    Published: false,
-    ModifiedUtc: '',
-    PublishedUtc: '',
-    CreatedUtc: '',
-    Owner: 'admin',
-    Author: 'admin',
-    Campaigns: {
-      FullName: {
-        Text: brand.FullName
-      },
-      Email: {
-        Text: brand.Email
-      },
-      BrandName: {
-        Text: brand.BrandName
-      },
-      BusinessAreas: {
-        Text: brand.BusinessAreas
-      },
-      Phone: {
-        Text: brand.Phone
-      },
-      Password: {
-        Text: brand.Password
-      },
-      Location: {
-        Text: brand.Location
-      }
-    },
-    AutoroutePart: {
-      Path: null,
-      SetHomepage: false
-    },
-    BagPart: {
-      ContentItems: [
-        compaignType
-      ]
-    },
-    TitlePart: {
-      Title: brand.BrandName
-    }
-  }
+  var myJSON = JSON.stringify(compaignType);
 
-  return campaignsType;
+  debugger;
+
+  return compaignType;
 }

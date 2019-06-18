@@ -4,7 +4,7 @@ export function createJobs(job, selectedOptionJobCategory) {
     {
       selectedOptionJobCategory.map((item, key) => 
       {         
-          debugger;       
+          //debugger;       
           const jobCategory = {
                                 ContentItemId: item.contentItemId,
                                 ContentItemVersionId: item.contentItemVersionId,
@@ -35,7 +35,7 @@ export function createJobs(job, selectedOptionJobCategory) {
     
     const JobsType = {
       ContentItemId: '',
-      ContentItemVersionId: null,
+      ContentItemVersionId: '',
       ContentType: 'Jobs',
       DisplayText: job.jobName,
       Latest: true,
@@ -44,7 +44,7 @@ export function createJobs(job, selectedOptionJobCategory) {
       PublishedUtc: '',
       CreatedUtc: '',
       Owner: 'admin',
-      Author: null,
+      Author: 'admin',
       Jobs: {
         Name: {
           Text: job.jobName

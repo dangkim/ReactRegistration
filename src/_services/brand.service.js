@@ -33,11 +33,11 @@ function getAll() {
     return fetch(`${configOrchardCore.apiUrl}/graphql`, requestOptions).then(handleGraphResponse);
 }
 
-function register(InfluencerType) {
+function register(brandType) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(InfluencerType)
+        body: JSON.stringify(brandType)
     };
     return fetch(`${configOrchardCore.apiUrl}/content`, requestOptions).then(handleContentResponse);
 }
@@ -45,7 +45,6 @@ function register(InfluencerType) {
 function handleGraphResponse(response) {
     return response.json().then(text => {
         const data = text.data;
-        debugger;
         
         if (!response.ok) {
             if (response.status === 401) {

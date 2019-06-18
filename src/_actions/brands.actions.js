@@ -17,8 +17,6 @@ function register(brandType) {
             .then(
                 brand => { 
                     dispatch(success());
-                    //history.push('/registerCampaignPage');
-                    debugger;
                     history.push({
                         pathname: '/registerCampaignPage',
                         state: { brand: brand }

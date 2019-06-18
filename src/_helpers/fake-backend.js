@@ -122,7 +122,7 @@ export function configureFakeBackend() {
                 }
                 
                 if (url.endsWith('/api/content') && opts.method === 'POST') {
-                    debugger;
+                    //debugger;
                     realFetch(url, opts).then(response => resolve(response));
                     return;
                 }
