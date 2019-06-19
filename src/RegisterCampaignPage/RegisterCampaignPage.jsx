@@ -6,7 +6,8 @@ import img from '../../images/hand.jpg'
 import { campaignActions, infActions, brandActions } from '../_actions';
 import Select from 'react-select';
 import {createJobs} from './../_models/JobType';
-import {config} from 'config';
+//import {configContent} from 'configContent';
+
 import { history } from '../_helpers';
 
 class RegisterCampaignPage extends Component {
@@ -380,7 +381,8 @@ class RegisterCampaignPage extends Component {
                             {
                                 influencers.items && influencers.items.influencer.map((item, key) =>
                                 {
-                                    const imgSrc = 'https://localhost:44300' + item.photo.urls[0] + '?&width=240&height=240&rmode=';
+                                    var configContent = require('configContent')
+                                    const imgSrc = configContent.apiUrl + item.photo.urls[0] + '?&width=240&height=240&rmode=';
                                     return (
                                     <div key={key} className="col-sm-4">
                                         <div className="team-member">

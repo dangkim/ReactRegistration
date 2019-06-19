@@ -70,11 +70,11 @@ module.exports = {
     },
     externals: {
         // global app config object
-        config: JSON.stringify({
-            apiUrl: 'https://localhost:44300'
+        configContent: JSON.stringify({
+            apiUrl: 'http://kevinnguyen-001-site1.dtempurl.com/'
         }),
         configOrchardCore: JSON.stringify({
-            apiUrl: 'https://localhost:44300/api'
+            apiUrl: 'http://kevinnguyen-001-site1.dtempurl.com/api'
         })
     }
 }
