@@ -71,10 +71,10 @@ module.exports = {
     externals: {
         // global app config object
         configContent: JSON.stringify({
-            apiUrl: 'http://kevinnguyen-001-site1.dtempurl.com/'
+            apiUrl: 'http://ec2-54-169-165-94.ap-southeast-1.compute.amazonaws.com'
         }),
         configOrchardCore: JSON.stringify({
-            apiUrl: 'http://kevinnguyen-001-site1.dtempurl.com/api'
+            apiUrl: 'http://ec2-54-169-165-94.ap-southeast-1.compute.amazonaws.com/api'
         })
     }
 }
