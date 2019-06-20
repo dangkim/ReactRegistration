@@ -18,8 +18,8 @@ function register(infType) {
             .then(
                 infType => { 
                     dispatch(success());
-                    history.push('/registerInfluencerPage');
-                    dispatch(alertActions.success('Registration successful'));
+                    history.push('/Login');
+                    dispatch(alertActions.success('Registration Influencer successful'));
                 },
                 error => {
                     dispatch(failure(error.toString()));

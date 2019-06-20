@@ -35,7 +35,7 @@ function register(campaign,
                             campaignService.register(campaignsLocal)
                             .then(campaignsType => {
                                     dispatch(success());
-                                    history.push('/registerCampaignPage');
+                                    history.push('/registerBrandPage');
                                     dispatch(alertActions.success('Registration Campaigns Successful'));
                                 }),
                                 error => {

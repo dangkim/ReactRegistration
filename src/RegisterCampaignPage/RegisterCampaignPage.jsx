@@ -217,7 +217,7 @@ class RegisterCampaignPage extends Component {
 
     render() {
 
-        const { loggingIn, influencers, brands, campaigns, locations, interestings, jobCategories} = this.props;
+        const { influencers, brands, campaigns, locations, interestings, jobCategories} = this.props;
         const { submitted,
             campaign,
             job,
@@ -362,10 +362,6 @@ class RegisterCampaignPage extends Component {
                                     </div>                                    
                                     <div className="form-group form-button">
                                         <input type="submit" name="nextStep" id="nextStep" className="form-submit" value="Next Step"/>
-                                        {
-                                            loggingIn &&
-                                            <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                                        }
                                         <Link to="/login" className="btn btn-link">Cancel</Link>
                                     </div>                                    
                                 </form>
@@ -381,54 +377,48 @@ class RegisterCampaignPage extends Component {
                             {
                                 influencers.items && influencers.items.influencer.map((item, key) =>
                                 {
-                                    var configContent = require('configContent')
-                                    const imgSrc = configContent.apiUrl + item.photo.urls[0] + '?&width=240&height=240&rmode=';
-                                    return (
-                                    <div key={key} className="col-sm-4">
-                                        <div className="team-member">
-                                            <img className="mx-auto rounded-circle" src={imgSrc} alt=""/>
-                                            <h6>{item.displayText}</h6>
-                                            <p>{item.description}</p>
-                                            {
-                                                item.bag.contentItems.map((child, key) =>
+                                    if(item.bag && item.photo && item.description){
+                                        var configContent = require('configContent')
+                                        const imgSrc = configContent.apiUrl + item.photo.urls[0] + '?&width=240&height=240&rmode=';
+                                        return (
+                                        <div key={key} className="col-sm-4">
+                                            <div className="team-member">
+                                                <img className="mx-auto rounded-circle" src={imgSrc} alt=""/>
+                                                <h6>{item.displayText}</h6>
+                                                <p>{item.description}</p>
                                                 {
-                                                    return (
-                                                    <div key={key} className="row">
-                                                        <p className='col-sm-6'>{child.demoGraphicsName? child.demoGraphicsName: ''}</p><p className='col-sm-6'>{child.percentage? child.percentage: ''}</p>
-                                                        <p className='col-sm-6'>{child.price? child.displayText: ''}</p><p className='col-sm-6'>{child.price? child.price: ''}</p>
-                                                    </div>
+                                                    item.bag.contentItems.map((child, key) =>
+                                                    {
+                                                        return (
+                                                        <div key={key} className="row">
+                                                            <p className='col-sm-6'>{child.demoGraphicsName? child.demoGraphicsName: ''}</p><p className='col-sm-6'>{child.percentage? child.percentage: ''}</p>
+                                                            <p className='col-sm-6'>{child.price? child.displayText: ''}</p><p className='col-sm-6'>{child.price? child.price: ''}</p>
+                                                        </div>
+                                                        )
+                                                    }
                                                     )
                                                 }
-                                                )
-                                            }
-                                            <div className="form-group">
-                                            <input onChange={this.handleCheckBoxChange} 
-                                                id={item.contentItemId} 
-                                                checked={this.state.checkedInfluencers.get(item.contentItemId) ? this.state.checkedInfluencers.get(item.contentItemId) : false } 
-                                                type="checkbox" 
-                                                name={item.contentItemId} 
-                                                className="agree-term" 
-                                            />
-                                            <label htmlFor={item.contentItemId} className="label-agree-term"><span><span></span></span>Select</label>
+                                                <div className="form-group">
+                                                <input onChange={this.handleCheckBoxChange} 
+                                                    id={item.contentItemId} 
+                                                    checked={this.state.checkedInfluencers.get(item.contentItemId) ? this.state.checkedInfluencers.get(item.contentItemId) : false } 
+                                                    type="checkbox" 
+                                                    name={item.contentItemId} 
+                                                    className="agree-term" 
+                                                />
+                                                <label htmlFor={item.contentItemId} className="label-agree-term"><span><span></span></span>Select</label>
+                                            </div>
+                                            </div>                                        
                                         </div>
-                                        </div>                                        
-                                    </div>
-                                )
+                                    )
+                                    }
                                 }
                                 )
                             }                            
                         </div>
                         <div className="form-group form-button">
                             <input type="button" onClick={this.handleJobStep} name="job" id="job" className="form-submit" value="Last Step"/>
-                            {
-                                loggingIn &&
-                                <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                            }
                             <input type="button" onClick={this.handleBackStep} name="backinf" id="backinf" className="form-submit" value="Back"/>
-                            {
-                                loggingIn &&
-                                <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                            }
                             {/* <Link to="/login" className="btn btn-link">Cancel</Link> */}
                         </div> 
                     </div>
@@ -503,14 +493,10 @@ class RegisterCampaignPage extends Component {
                                     <div className="form-group form-button">
                                         <input type="submit" name="register" id="register" className="form-submit" value="Register"/>
                                         {
-                                            loggingIn &&
+                                            campaigns.loading &&
                                             <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                                         }
                                         <input type="button" onClick={this.handleBackStep} name="backinf" id="backinf" className="form-submit" value="Back"/>
-                                        {
-                                            loggingIn &&
-                                            <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                                        } 
                                     </div>                                                                   
                                 </form>
                             </div>                    

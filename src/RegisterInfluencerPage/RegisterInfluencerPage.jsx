@@ -1,20 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import img from '../../images/signup-image.jpg'
-import { userActions } from '../_actions';
+import img from '../../images/influencer1.jpg'
+import { userActions, infActions } from '../_actions';
 
 class RegisterInfluencerPage extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            user: {
-                firstName: '',
-                lastName: '',
-                userName: '',
-                email: '',
-                password: ''
+            influencer: {
+                fullName: '',
+                phone: '',
+                fanpage: '',
             },
             submitted: false
         };
@@ -25,10 +23,10 @@ class RegisterInfluencerPage extends React.Component {
 
     handleChange(event) {
         const { name, value } = event.target;
-        const { user } = this.state;
+        const { influencer } = this.state;
         this.setState({
-            user: {
-                ...user,
+            influencer: {
+                ...influencer,
                 [name]: value
             }
         });
@@ -36,63 +34,78 @@ class RegisterInfluencerPage extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-
+        
         this.setState({ submitted: true });
-        const { user } = this.state;
         const { dispatch } = this.props;
-        if (user.firstName && user.lastName && user.userName && user.email && user.password) {
-            dispatch(userActions.register(user));
+        const { influencer } = this.state;
+        
+        //const { influencers } = this.props;
+        if (influencer.fullName && influencer.phone && influencer.fanpage) {
+
+            const InfluencerType = {
+                ContentItemId:'',
+                ContentItemVersionId:'',
+                ContentType:'Influencer',
+                DisplayText: influencer.fullName,
+                Latest:false,
+                Published:false,
+                ModifiedUtc:null,
+                PublishedUtc:null,
+                CreatedUtc:null,
+                Owner:'admin',
+                Author:'admin',
+                Influencer:{
+                    FullName:{
+                        Text: influencer.fullName
+                    },
+                    Phone:{
+                        Text: influencer.phone
+                    },
+                    Fanpage:{
+                        Text: influencer.fanpage
+                    }                    
+                },
+                TitlePart:{
+                    Title: influencer.fullName,
+                }
+            }
+
+            dispatch(infActions.register(InfluencerType));
         }
     }
 
     render() {
         const { influencers  } = this.props;
-        const { user, submitted } = this.state;
+        const { submitted, influencer } = this.state;
         return (            
             <section className="signup">
-                <div className="container">
+                <div className="containerForm">
                     <div className="signup-content">
                         <div className="signup-form">
                             <h2 className="form-title">Sign up</h2>
                             <form onSubmit={this.handleSubmit} className="register-form" id="register-form">
-                                <div className={'form-group' + (submitted && !user.firstName ? ' has-error' : '')}>
-                                    <label htmlFor="name"><i className="zmdi zmdi-account material-icons-name"></i></label>
-                                    <input type="text" name="firstName" id="firstname" placeholder="Your First Name" value={user.firstName} onChange={this.handleChange}/>
+                                <div className={'form-group' + (submitted && !influencer.phone ? ' has-error' : '')}>
+                                    <label htmlFor="fullName"><i className="zmdi zmdi-account material-icons-branding_watermark"></i></label>
+                                    <input type="text" name="fullName" id="fullName" placeholder="Your Full Name" value={influencer.fullName} onChange={this.handleChange}/>
                                     {
-                                        submitted && !user.firstName &&
-                                        <div className="help-block">First Name is required</div>
+                                        submitted && !influencer.fullName &&
+                                        <div className="help-block">Full Name is required</div>
                                     }
                                 </div>
-                                <div className={'form-group' + (submitted && !user.lastName ? ' has-error' : '')}>
-                                    <label htmlFor="name"><i className="zmdi zmdi-account material-icons-name"></i></label>
-                                    <input type="text" name="lastName" id="lastname" placeholder="Your Last Name" value={user.lastName} onChange={this.handleChange}/>
+                                <div className={'form-group' + (submitted && !influencer.phone ? ' has-error' : '')}>
+                                    <label htmlFor="name"><i className="zmdi zmdi-account material-icons-branding_watermark"></i></label>
+                                    <input type="text" name="phone" id="phone" placeholder="Your Phone" value={influencer.phone} onChange={this.handleChange}/>
                                     {
-                                        submitted && !user.lastName &&
-                                        <div className="help-block">Last Name is required</div>
+                                        submitted && !influencer.phone &&
+                                        <div className="help-block">Phone is required</div>
                                     }
                                 </div>
-                                <div className={'form-group' + (submitted && !user.userName ? ' has-error' : '')}>
-                                    <label htmlFor="name"><i className="zmdi zmdi-account material-icons-name"></i></label>
-                                    <input type="text" name="userName" id="username" placeholder="Your User Name" value={user.userName} onChange={this.handleChange}/>
+                                <div className={'form-group' + (submitted && !influencer.fanpage ? ' has-error' : '')}>
+                                    <label htmlFor="name"><i className="zmdi zmdi-account material-icons-branding_watermark"></i></label>
+                                    <input type="text" name="fanpage" id="fanpage" placeholder="Your Fan Page" value={influencer.fanpage} onChange={this.handleChange}/>
                                     {
-                                        submitted && !user.userName &&
-                                        <div className="help-block">User Name is required</div>
-                                    }
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="email"><i className="zmdi zmdi-email"></i></label>
-                                    <input type="email" name="email" id="email" placeholder="Your Email" value={user.email} onChange={this.handleChange}/>
-                                    {
-                                        submitted && !user.email &&
-                                        <div className="help-block">Email is required</div>
-                                    }
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="pass"><i className="zmdi zmdi-lock"></i></label>
-                                    <input type="password" id="password" placeholder="Password" name="password" value={user.password} onChange={this.handleChange}/>
-                                    {
-                                        submitted && !user.password &&
-                                        <div className="help-block">Password is required</div>
+                                        submitted && !influencer.fanpage &&
+                                        <div className="help-block">Fan Page is required</div>
                                     }
                                 </div>
                                 <div className="form-group">
@@ -102,7 +115,7 @@ class RegisterInfluencerPage extends React.Component {
                                 <div className="form-group form-button">
                                     <input type="submit" name="signup" id="signup" className="form-submit" value="Register"/>
                                     {
-                                        registering && 
+                                        influencers.loading && 
                                         <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                                     }
                                     <Link to="/login" className="btn btn-link">Cancel</Link>
@@ -111,7 +124,7 @@ class RegisterInfluencerPage extends React.Component {
                         </div>
                         <div className="signup-image">
                             <figure><img src={img} alt="sing up image"/></figure>
-                            <a href="#" className="signup-image-link">I am already member</a>
+                            <Link to="/RegisterBrandPage" className="signup-image-link">You are Brand</Link>
                         </div>
                     </div>
                 </div>
@@ -121,7 +134,7 @@ class RegisterInfluencerPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { influencers } = state.influencers;
+    const { influencers } = state;
     return {
         influencers
     };
