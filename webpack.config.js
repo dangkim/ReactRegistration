@@ -1,6 +1,7 @@
 const path = require('path')
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 module.exports = {
     entry: './src/index.jsx',
     mode: 'development',
@@ -18,40 +19,50 @@ module.exports = {
                 loader: 'babel-loader'
             },
             {
-                test: /\.css$/,
-                use: [
+              test: /\.(sa|sc|c)ss$/,
+              use: [
                   {
-                    loader: MiniCssExtractPlugin.loader,
-                    options: {
-                      // you can specify a publicPath here
-                      // by default it uses publicPath in webpackOptions.output
-                      //publicPath: '../',
-                      //hmr: process.env.NODE_ENV === 'development',
-                    },
+                      loader: MiniCssExtractPlugin.loader
                   },
-                  'css-loader',
-                ],
-              },
-            // {
-            //     test:/\.css$/,
-            //     use:['style-loader','css-loader']
-            // },
-            {
-                test: /\.(woff|woff2|eot|ttf|otf)$/, 
-                use: [
-                'file-loader'
+                  {
+                      loader: "css-loader",
+                  },
+                  // {
+                  //     loader: "postcss-loader"
+                  // },
+                  // {
+                  //     loader: "sass-loader",
+                  //     options: {
+                  //         implementation: require("sass")
+                  //     }
+                  // }
                 ]
+            },              
+            {
+              // Now we apply rule for images
+              test: /\.(png|jpe?g|gif|svg)$/,
+              use: [
+                      {
+                        // Using file-loader for these files
+                        loader: "file-loader",
+        
+                        // In options we can set different things like format
+                        // and directory to save
+                        options: {
+                          outputPath: 'images'
+                        }
+                      }
+                    ]
             },
             {
-                test: /\.(png|jpg|gif|svg)$/,
+                test: /\.(woff|woff2|ttf|otf|eot)$/,
                 use: [
-                  {
-                    loader: 'file-loader?name=/images/[name].[ext]',
-                    // options: {
-                    //   name: '[name].[hash:8].[ext]',
-                    //   outputPath: 'assets/'
-                    // }
-                  }
+                    {
+                        loader: "file-loader",
+                        options: {
+                            outputPath: 'fonts'
+                        }
+                    }
                 ]
             }
         ]
@@ -63,7 +74,7 @@ module.exports = {
             filename: '[name].css',
             chunkFilename: '[id].css',
           }),
-        new HtmlWebpackPlugin({template: './src/index.html'})
+        new HtmlWebpackPlugin({template: './src/index.html'}),
     ],
     devServer: {
         historyApiFallback: true

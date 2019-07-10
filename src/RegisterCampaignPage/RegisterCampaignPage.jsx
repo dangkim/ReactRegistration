@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import img from '../../images/hand.jpg'
+import img from '../assets/images/hand.jpg'
 //import { campaignActions } from '../_actions';
 import { campaignActions, infActions, brandActions } from '../_actions';
 import Select from 'react-select';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import img from '../../images/signup-image.jpg'
+import img from '../assets/images/signup-image.jpg'
 import { brandActions } from '../_actions';
 
 class RegisterBrandPage extends React.Component {

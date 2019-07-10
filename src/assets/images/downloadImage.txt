@@ -1,0 +1,10 @@
+https://demo.dashboardpack.com/architectui-html-pro/assets/images/vline.gif
+https://demo.dashboardpack.com/architectui-html-pro/assets/images/icons.gif
+https://demo.dashboardpack.com/architectui-html-pro/assets/images/loading.gif
+https://demo.dashboardpack.com/architectui-html-pro/assets/images/icons-rtl.gif
+https://demo.dashboardpack.com/architectui-html-pro/assets/images/vline-rtl.gif
+https://demo.dashboardpack.com/architectui-html-pro/assets/images/icons-rtl.gif
+https://demo.dashboardpack.com/architectui-html-pro/assets/images/logo-inverse.png
+https://demo.dashboardpack.com/architectui-html-pro/assets/images/logo.png
+https://demo.dashboardpack.com/architectui-html-pro/assets/images/ionicons.svg
+https://demo.dashboardpack.com/architectui-html-pro/assets/images/ajax-loader.gif

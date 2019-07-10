@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import img from '../../images/signin-image.jpg'
+import img from '../assets/images/signin-image.jpg'
 import { userActions } from '../_actions';
 
 class LoginPage extends React.Component {

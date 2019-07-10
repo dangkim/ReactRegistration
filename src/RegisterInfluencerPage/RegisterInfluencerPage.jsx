@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import img from '../../images/influencer1.jpg'
+import img from '../assets/images/influencer1.jpg'
 import { userActions, infActions } from '../_actions';
 
 class RegisterInfluencerPage extends React.Component {
