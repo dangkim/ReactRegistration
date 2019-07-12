@@ -1,6 +1,20 @@
 const path = require('path')
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const WebpackAssetsManifest = require('webpack-assets-manifest');
+
+// const manifest = new WebpackAssetsManifest({
+//     output: 'manifest.json',
+//     transform(assets, manifest) { 
+//       // You can call the customize hook if you need to.
+//       const { key, value } = manifest.hooks.customize.call({
+//         key: 'gcm_sender_id',
+//         value: '103953800507',
+//       });
+  
+//       assets[ key ] = value;
+//     },
+// });
 
 module.exports = {
     entry: './src/index.jsx',
@@ -75,6 +89,28 @@ module.exports = {
             chunkFilename: '[id].css',
           }),
         new HtmlWebpackPlugin({template: './src/index.html'}),
+        new WebpackAssetsManifest({
+            output: 'manifest.json',
+            transform(assets, manifest) {
+              // Attach new properties to `assets` or return something else.
+              // Just be sure it can be JSON stringified.
+          
+            //   const { name, version } = require('./package.json');
+          
+            //   assets.package = {
+            //     name,
+            //     version,
+            //   };
+          
+              // You can call the customize hook if you need to.
+              const { key, value } = manifest.hooks.customize.call({
+                key: 'gcm_sender_id',
+                value: '103953800507',
+              });
+          
+              assets[ key ] = value;
+            },
+          }),
     ],
     devServer: {
         historyApiFallback: true
