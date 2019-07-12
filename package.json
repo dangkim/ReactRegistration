@@ -11,6 +11,8 @@
     "start": "webpack-dev-server --open"
   },
   "dependencies": {
+    "@devexpress/dx-react-core": "^2.0.0",
+    "@devexpress/dx-react-grid": "^2.0.0",
     "@khanacademy/react-multi-select": "^0.3.3",
     "babel-preset-latest": "^6.24.1",
     "css-loader": "^3.0.0",
