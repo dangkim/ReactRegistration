@@ -1,8 +1,12 @@
 import configContent from 'configContent';
+import configOrchardCore from 'configOrchardCore';
 import { authHeader } from '../_helpers';
+
+var qs = require('qs');
 
 export const userService = {
     login,
+    getToken,
     logout,
     register,
     getAll,
@@ -10,6 +14,27 @@ export const userService = {
     update,
     delete: _delete
 };
+
+const client_id = 'kolviet';
+const client_secret = 'kolviet';
+const grant_type = 'password';
+
+function getToken(username, password) {
+    debugger;
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: qs.stringify({
+            grant_type: grant_type,
+            username: username,
+            password: password,
+            client_id: client_id,
+            client_secret: client_secret
+        })
+    };
+
+    return fetch(`${configContent.apiUrl}connect/token`, requestOptions).then(handleTokenResponse);
+}
 
 function login(userName, password) {
     const requestOptions = {
@@ -95,5 +120,23 @@ function handleResponse(response) {
         }
 
         return data;
+    });
+}
+
+function handleTokenResponse(response) {
+    return response.text().then(text => {
+        const token = 'Bearer' + token;
+        if (!response.ok) {
+            if (response.status === 401) {
+                // auto logout if 401 response returned from api
+                logout();
+                location.reload(true);
+            }
+
+            const error = (data && data.message) || response.statusText;
+            return Promise.reject(error);
+        }
+        localStorage.setItem('token', token);
+        return token;
     });
 }

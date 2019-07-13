@@ -13,6 +13,7 @@
   "dependencies": {
     "@devexpress/dx-react-core": "^2.0.0",
     "@devexpress/dx-react-grid": "^2.0.0",
+    "@devexpress/dx-react-grid-bootstrap4": "^2.0.0",
     "@khanacademy/react-multi-select": "^0.3.3",
     "babel-preset-latest": "^6.24.1",
     "css-loader": "^3.0.0",
@@ -23,6 +24,8 @@
     "image-webpack-loader": "^5.0.0",
     "mdbreact": "^4.16.0",
     "mini-css-extract-plugin": "^0.7.0",
+    "open-iconic": "^1.1.1",
+    "qs": "^6.7.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.5",

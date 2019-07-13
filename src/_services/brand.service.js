@@ -30,7 +30,7 @@ function getAll() {
         body: GET_ALL_BRAND
     };
 
-    return fetch(`${configOrchardCore.apiUrl}/graphql`, requestOptions).then(handleGraphResponse);
+    return fetch(`${configOrchardCore.apiUrl}graphql`, requestOptions).then(handleGraphResponse);
 }
 
 function register(brandType) {
@@ -39,7 +39,7 @@ function register(brandType) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(brandType)
     };
-    return fetch(`${configOrchardCore.apiUrl}/content`, requestOptions).then(handleContentResponse);
+    return fetch(`${configOrchardCore.apiUrl}content`, requestOptions).then(handleContentResponse);
 }
 
 function handleGraphResponse(response) {

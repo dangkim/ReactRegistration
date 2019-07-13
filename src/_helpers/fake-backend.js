@@ -121,12 +121,21 @@ export function configureFakeBackend() {
                     return;
                 }
                 
+                //Edit content
+                if (url.endsWith('/connect/token') && opts.method === 'POST') {
+                    debugger;
+                    realFetch(url, opts).then(response => resolve(response));
+                    return;
+                }
+
+                //Edit content
                 if (url.endsWith('/api/content') && opts.method === 'POST') {
                     //debugger;
                     realFetch(url, opts).then(response => resolve(response));
                     return;
                 }
 
+                // query data by using graph
                 if (url.endsWith('/api/graphql') && opts.method === 'POST') {
                     //debugger;
                     realFetch(url, opts).then(response => resolve(response));

@@ -10,6 +10,7 @@ import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
 import { RegisterBrandPage } from '../RegisterBrandPage';
 import { RegisterCampaignPage } from '../RegisterCampaignPage';
+import { DashBoardPage } from '../DashBoardPage';
 import { RegisterInfluencerPage } from '../RegisterInfluencerPage';
 import { messaging } from "../init-fcm";
 import { compose, lifecycle, withHandlers, withState } from "recompose";
@@ -54,6 +55,7 @@ class App extends React.Component {
                                 <Route path="/register" component={RegisterPage} />
                                 <Route path="/registerBrandPage" component={RegisterBrandPage} />
                                 <Route path="/registerCampaignPage" component={RegisterCampaignPage} />
+                                <Route path="/dashboardPage" component={DashBoardPage} />
                                 <Route path="/registerInfluencerPage" component={RegisterInfluencerPage} />
                             </div>
                         </Router>

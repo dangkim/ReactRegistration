@@ -5,11 +5,34 @@ import { history } from '../_helpers';
 
 export const userActions = {
     login,
+    getToken,
     logout,
     register,
     getAll,
     delete: _delete
 };
+
+function getToken(userName, password) {
+    return dispatch => {
+        dispatch(request({ userName }));
+
+        userService.getToken(userName, password)
+            .then(
+                token => { 
+                    dispatch(success(token));
+                    history.push('dashBoardPage');
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+
+    function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
+    function success(token) { return { type: userConstants.LOGIN_SUCCESS, token } }
+    function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+}
 
 function login(userName, password) {
     return dispatch => {

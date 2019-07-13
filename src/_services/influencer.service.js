@@ -86,7 +86,7 @@ function getAll() {
         body: GET_ALL_INFS
     };
 
-    return fetch(`${configOrchardCore.apiUrl}/graphql`, requestOptions).then(handleGraphInfResponse);
+    return fetch(`${configOrchardCore.apiUrl}graphql`, requestOptions).then(handleGraphInfResponse);
 
 }
 
@@ -125,7 +125,7 @@ function register(InfluencerType) {
         body: JSON.stringify(InfluencerType)
     };
 
-    return fetch(`${configOrchardCore.apiUrl}/content`, requestOptions).then(handleContentResponse);
+    return fetch(`${configOrchardCore.apiUrl}content`, requestOptions).then(handleContentResponse);
 }
 
 function registerJobs(JobsType) {
@@ -138,6 +138,23 @@ function registerJobs(JobsType) {
     return fetch(`${configOrchardCore.apiUrl}/content`, requestOptions).then(handleContentJobsResponse);
 }
 
+function handleTokenContentResponse(response) {
+    return response.text().then(text => {
+        const data = text;
+        if (!response.ok) {
+            if (response.status === 401) {
+                // auto logout if 401 response returned from api
+                logout();
+                location.reload(true);
+            }
+
+            const error = (data && data.message) || response.statusText;
+            return Promise.reject(error);
+        }
+        debugger;
+        return data;
+    });    
+}
 
 function handleGraphJobCategoryResponse(response) {
     return response.json().then(text => {
@@ -212,5 +229,5 @@ function handleContentJobsResponse(response) {
         }
 
         return data;
-    });    
+    });
 }

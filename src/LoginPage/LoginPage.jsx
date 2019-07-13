@@ -17,8 +17,10 @@ class LoginPage extends React.Component {
 
         this.state = {
             userName: '',
+            email:'',
             password: '',
-            submitted: false
+            submitted: false,
+            token: ''
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -34,15 +36,15 @@ class LoginPage extends React.Component {
         e.preventDefault();
 
         this.setState({ submitted: true });
-        const { userName, password } = this.state;
+        const { userName, email, password } = this.state;
         const { dispatch } = this.props;
         if (userName && password) {
-            dispatch(userActions.login(userName, password));
+            dispatch(userActions.getToken(userName, password));
         }
     }
 
     render() {
-        const { loggingIn } = this.props;
+        const { loggingIn, token } = this.props;
         const { userName, password, submitted } = this.state;
         const settings = {
             dots: true,
@@ -138,21 +140,32 @@ class LoginPage extends React.Component {
                                     <h6 className="mt-3">No account? <a href="javascript:void(0);" className="text-primary">Sign up now</a></h6>
                                     <div className="divider row"></div>
                                     <div>
-                                        <form className="">
+                                        <form className="" onSubmit={this.handleSubmit}>
                                             <div className="form-row">
                                                 <div className="col-md-6">
-                                                    <div className="position-relative form-group"><label htmlFor="exampleEmail" className="">Email</label><input name="email" id="exampleEmail" placeholder="Email here..." type="email" className="form-control"/></div>
+                                                    <div className="position-relative form-group">                                                        
+                                                        <label htmlFor="userName" className="">Email</label>
+                                                        <input type="userName" name="userName" id="userName" placeholder="User name here..." type="text" className="form-control" value={userName} onChange={this.handleChange}/>
+                                                        {submitted && !userName &&
+                                                            <div className="help-block">User name is required</div>
+                                                        }
+                                                    </div>
                                                 </div>
                                                 <div className="col-md-6">
-                                                    <div className="position-relative form-group"><label htmlFor="examplePassword" className="">Password</label><input name="password" id="examplePassword" placeholder="Password here..." type="password"
-                                                                                                                                                        className="form-control"/></div>
+                                                    <div className="position-relative form-group">
+                                                        <label htmlFor="password" className="">Password</label>
+                                                        <input name="password" id="password" placeholder="Password here..." type="password" className="form-control" value={password} onChange={this.handleChange}/>
+                                                        {submitted && !password &&
+                                                            <div className="help-block">Password is required</div>
+                                                        }
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div className="position-relative form-check"><input name="check" id="exampleCheck" type="checkbox" className="form-check-input"/><label htmlFor="exampleCheck" className="form-check-label">Keep me logged in</label></div>
                                             <div className="divider row"></div>
                                             <div className="d-flex align-items-center">
                                                 <div className="ml-auto"><a href="javascript:void(0);" className="btn-lg btn btn-link">Recover Password</a>
-                                                    <button className="btn btn-primary btn-lg">Login to Dashboard</button>
+                                                    <button type="submit" className="btn btn-primary btn-lg">Login to Dashboard</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -170,9 +183,10 @@ class LoginPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { loggingIn } = state.authentication;
+    const { loggingIn, token } = state.authentication;
     return {
-        loggingIn
+        loggingIn,
+        token
     };
 }
 

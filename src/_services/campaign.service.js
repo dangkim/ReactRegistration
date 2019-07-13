@@ -15,7 +15,7 @@ function register(campaignType) {
         body: JSON.stringify(campaignType)
     };
 
-    return fetch(`${configOrchardCore.apiUrl}/content`, requestOptions).then(handleContentResponse);
+    return fetch(`${configOrchardCore.apiUrl}content`, requestOptions).then(handleContentResponse);
 }
 
 function getAll() {
@@ -50,7 +50,7 @@ function getAll() {
         body: GET_ALL_COMPAIGN
     };
 
-    return fetch(`${configOrchardCore.apiUrl}/graphql`, requestOptions).then(handleGraphResponse);
+    return fetch(`${configOrchardCore.apiUrl}graphql`, requestOptions).then(handleGraphResponse);
 }
 
 function getAllInteresting() {
@@ -78,7 +78,7 @@ function getAllInteresting() {
         body: GET_ALL_INTERESTING
     };
 
-    return fetch(`${configOrchardCore.apiUrl}/graphql`, requestOptions).then(handleGraphInterestingResponse);
+    return fetch(`${configOrchardCore.apiUrl}graphql`, requestOptions).then(handleGraphInterestingResponse);
 }
 
 function getAllLocation() {
@@ -106,7 +106,7 @@ function getAllLocation() {
         body: GET_ALL_LOCATION
     };
 
-    return fetch(`${configOrchardCore.apiUrl}/graphql`, requestOptions).then(handleGraphLocationResponse);
+    return fetch(`${configOrchardCore.apiUrl}graphql`, requestOptions).then(handleGraphLocationResponse);
 }
 
 function handleGraphLocationResponse(response) {
