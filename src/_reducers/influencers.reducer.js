@@ -11,7 +11,19 @@ export function influencers(state = {}, action) {
         influencer: action.influencer
       };
     case infConstants.INF_REGISTER_FAILURE:
-      return { 
+      return {
+        error: action.error
+      };
+    case infConstants.INF_UPDATE_REQUEST:
+      return {
+        loading: true
+      };
+    case infConstants.INF_UPDATE_SUCCESS:
+      return {
+        influencer: action.influencer
+      };
+    case infConstants.INF_UPDATE_FAILURE:
+      return {
         error: action.error
       };
     case infConstants.INFS_GETALL_REQUEST:
@@ -23,9 +35,9 @@ export function influencers(state = {}, action) {
         items: action.influencers
       };
     case infConstants.INFS_GETALL_FAILURE:
-      return { 
+      return {
         error: action.error
-      };    
+      };
     case infConstants.JOB_REGISTER_REQUEST:
       return {
         loading: true
@@ -35,8 +47,20 @@ export function influencers(state = {}, action) {
         jobs: action.jobs
       };
     case infConstants.JOB_REGISTER_FAILURE:
-      return { 
+      return {
         error: action.error
+      };
+    case infConstants.INFS_GETCOST_FAILURE:
+      return {
+        error: action.error
+      };
+    case infConstants.INFS_GETCOST_SUCCESS:
+      return {
+        items: action.influencer
+      };
+    case infConstants.INFS_GETCOST_REQUEST:
+      return {
+        loading: true
       };
     default:
       return state

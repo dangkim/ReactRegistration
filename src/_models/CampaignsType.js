@@ -1,6 +1,6 @@
 export function createCampaigns(brand, compaignType) {
 
-    const campaignsType = {
+  const campaignsType = {
     ContentItemId: '',
     ContentItemVersionId: '',
     ContentType: 'Campaigns',
@@ -64,74 +64,68 @@ export function createCampaign(campaign,
   var contentInterestingItems = [];
   var influencers = [];
 
-  if(selectedOptionLocation)
-  {
-    selectedOptionLocation.map((item, key) => 
-    {           
-        const location = {
-          ContentItemId: item.contentItemId,
-          ContentItemVersionId: item.contentItemVersionId,
-          ContentType: 'Locations',
-          DisplayText: item.location,
-          Latest: item.latest,
-          Published: item.published,
-          ModifiedUtc: item.modifiedUtc,
-          PublishedUtc: item.publishedUtc,
-          CreatedUtc: item.createdUtc,
-          Owner: item.owner,
-          Author: item.author,
-          Locations: {
-            Location: {
-              Text: item.location
-            }
-          },
-          TitlePart: {
-            Title: item.location
+  if (selectedOptionLocation) {
+    selectedOptionLocation.map((item, key) => {
+      const location = {
+        ContentItemId: item.contentItemId,
+        ContentItemVersionId: item.contentItemVersionId,
+        ContentType: 'Locations',
+        DisplayText: item.location,
+        Latest: item.latest,
+        Published: item.published,
+        ModifiedUtc: item.modifiedUtc,
+        PublishedUtc: item.publishedUtc,
+        CreatedUtc: item.createdUtc,
+        Owner: item.owner,
+        Author: item.author,
+        Locations: {
+          Location: {
+            Text: item.location
           }
-        };
-        campaignContentItems.push(location);
+        },
+        TitlePart: {
+          Title: item.location
+        }
+      };
+      campaignContentItems.push(location);
     });
   }
 
-  if(selectedOptionInteresting)
-  {    
-    selectedOptionInteresting.map((item, key) => 
-    {
-        const interesting = {
-          ContentItemId: item.contentItemId,
-          ContentItemVersionId: item.contentItemVersionId,
-          ContentType: 'InterestingList',
-          DisplayText: item.interesting,
-          Latest: item.latest,
-          Published: item.published,
-          ModifiedUtc: item.modifiedUtc,
-          PublishedUtc: item.publishedUtc,
-          CreatedUtc: item.createdUtc,
-          Owner: item.owner,
-          Author: item.author,
-          InterestingList: {
-            Interesting: {
-              Text: item.interesting
-            }
-          },
-          TitlePart: {
-            Title: item.interesting
+  if (selectedOptionInteresting) {
+    selectedOptionInteresting.map((item, key) => {
+      const interesting = {
+        ContentItemId: item.contentItemId,
+        ContentItemVersionId: item.contentItemVersionId,
+        ContentType: 'InterestingList',
+        DisplayText: item.interesting,
+        Latest: item.latest,
+        Published: item.published,
+        ModifiedUtc: item.modifiedUtc,
+        PublishedUtc: item.publishedUtc,
+        CreatedUtc: item.createdUtc,
+        Owner: item.owner,
+        Author: item.author,
+        InterestingList: {
+          Interesting: {
+            Text: item.interesting
           }
-        };
-        campaignContentItems.push(interesting);
+        },
+        TitlePart: {
+          Title: item.interesting
+        }
+      };
+      campaignContentItems.push(interesting);
     });
   }
 
-  if(selectedInfluencers)
-  {
-    selectedInfluencers.forEach(function(influencer, key) {
+  if (selectedInfluencers) {
+    selectedInfluencers.forEach(function (influencer, key) {
 
       const contentItems = [];
 
-      influencer.bag.contentItems.forEach(function(item, key) {
+      influencer.bag.contentItems.forEach(function (item, key) {
 
-        if(item.contentType==='AgeDemorgraphic')
-        {
+        if (item.contentType === 'AgeDemorgraphic') {
           const demorgraphic = {
             ContentItemId: item.contentItemId,
             ContentItemVersionId: '',
@@ -159,8 +153,7 @@ export function createCampaign(campaign,
           contentItems.push(demorgraphic);
         }
 
-        if(item.contentType==='Networks')
-        {
+        if (item.contentType === 'Networks') {
           const networks = {
             ContentItemId: item.contentItemId,
             ContentItemVersionId: '',
@@ -186,8 +179,7 @@ export function createCampaign(campaign,
           contentItems.push(networks);
         }
 
-        if(item.contentType==='Rates')
-        {
+        if (item.contentType === 'Rates') {
           const rates = {
             ContentItemId: item.contentItemId,
             ContentItemVersionId: '',
@@ -222,7 +214,7 @@ export function createCampaign(campaign,
       contentItems.push(jobs);
 
       //influencer.bag.contentItems.push(jobs);
-      debugger;
+      //debugger;
       const influencerLocal = {
         ContentItemId: influencer.contentItemId,
         ContentItemVersionId: influencer.contentItemVersionId,
@@ -257,7 +249,7 @@ export function createCampaign(campaign,
 
       campaignContentItems.push(influencerLocal);
     });
-    
+
   }
 
   const compaignType = {

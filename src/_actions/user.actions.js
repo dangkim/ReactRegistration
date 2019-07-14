@@ -20,7 +20,10 @@ function getToken(userName, password) {
             .then(
                 token => { 
                     dispatch(success(token));
-                    history.push('dashBoardPage');
+                    history.push({
+                        pathname: '/dashBoardPage',
+                        state: { userName: userName }
+                    })
                 },
                 error => {
                     dispatch(failure(error.toString()));

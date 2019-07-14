@@ -230,7 +230,7 @@ class LeftMenuPage extends Component {
     // }
 
     render() {
-
+        const { userName } = this.props;
         // const { influencers, brands, campaigns, locations, interestings, jobCategories} = this.props;
         // const { submitted,
         //     campaign,
@@ -292,7 +292,7 @@ class LeftMenuPage extends Component {
                         <ul className="vertical-nav-menu">
                             <li className="app-sidebar__heading">Menu</li>
                             <li className="mm-active">
-                                <a href="#">
+                                <a href="#">    
                                     <i className="metismenu-icon pe-7s-rocket"></i>
                                     Dashboards
                                         <i className="metismenu-state-icon pe-7s-angle-down caret-left"></i>
@@ -318,7 +318,7 @@ class LeftMenuPage extends Component {
                                                 <i className="metismenu-icon">
                                                 </i>Update Cost
                                             </a> */}
-                                        <Link to="/InfluencerUpdateCostPage" className="metismenu-icon">Update Cost</Link>
+                                        <Link className="metismenu-icon" to={{ pathname: '/InfluencerUpdateCostPage', state: { userName: userName } }}>Update Cost</Link>
                                     </li>
                                 </ul>
                             </li>

@@ -123,7 +123,6 @@ export function configureFakeBackend() {
                 
                 //Edit content
                 if (url.endsWith('/connect/token') && opts.method === 'POST') {
-                    debugger;
                     realFetch(url, opts).then(response => resolve(response));
                     return;
                 }

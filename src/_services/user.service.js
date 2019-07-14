@@ -20,7 +20,7 @@ const client_secret = 'kolviet';
 const grant_type = 'password';
 
 function getToken(username, password) {
-    debugger;
+    //debugger;
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -136,7 +136,7 @@ function handleTokenResponse(response) {
             const error = response.statusText;
             return Promise.reject(error);
         }
-        debugger;
+
         localStorage.setItem('token', token);
         return token;
     });

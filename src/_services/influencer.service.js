@@ -5,6 +5,9 @@ export const influencerService = {
     register,
     getAll,
     getAllJobCategories,
+    getCostByContentItemId,
+    getCostByUserName,
+    updateInfluencers,
     registerJobs
 };
 
@@ -118,14 +121,140 @@ function getAllJobCategories() {
     return fetch(`${configOrchardCore.apiUrl}/graphql`, requestOptions).then(handleGraphJobCategoryResponse);
 }
 
+function getCostByContentItemId(contentItemId) {
+    const GET_COST_BY_CONTENTID = `
+    {
+        influencer(where: {contentItemId: ` + contentItemId + `}) {
+          contentItemId
+          bag {
+            contentItems {
+              ... on Rates {
+                modifiedUtc
+                price
+                displayText
+                contentItemId
+              }
+            }
+          }
+        }
+      }
+    `;
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/graphql' },
+        body: GET_COST_BY_CONTENTID
+    };
+
+    return fetch(`${configOrchardCore.apiUrl}/graphql`, requestOptions).then(handleGraphRatesResponse);
+}
+
+function getCostByUserName(userName) {
+
+    const GET_COST_BY_USERNAME = `
+    {
+        influencer(where: {displayText: "` + userName + `"}) {
+            contentItemId,
+            contentItemVersionId,
+            contentType,
+            displayText,
+            latest,
+            published,
+            modifiedUtc,
+            publishedUtc,
+            createdUtc,
+            description,
+            fanpage,            
+            author,
+            photo {
+            urls
+            },
+            bag{
+              contentItems {
+                ... on AgeDemorgraphic {
+                      contentItemId,
+                      contentType,
+                      displayText,
+                      latest,
+                      published,
+                      modifiedUtc,
+                      publishedUtc,
+                      createdUtc,
+                      demoGraphicsName,
+                      percentage,
+                      }
+                ... on Networks {
+                    contentItemId,
+                    contentType,
+                    displayText,
+                    latest,
+                    published,
+                    modifiedUtc,
+                    publishedUtc,
+                    createdUtc,
+                    icon {
+                      paths,
+                      urls
+                    }
+                    }
+                ... on Rates {                
+                    contentItemId,
+                    contentType,
+                    displayText,
+                    latest,
+                    published,
+                    modifiedUtc,
+                    publishedUtc,
+                    createdUtc,
+                    price,
+                    icon {
+                      paths,
+                        urls
+                    }
+                    }
+                }
+            }
+        }
+      }
+    `;
+    const token = localStorage.getItem('token');
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/graphql',
+            'Authorization': token
+        },
+        body: GET_COST_BY_USERNAME
+    };
+
+    return fetch(`${configOrchardCore.apiUrl}graphql`, requestOptions).then(handleGraphRatesResponse);
+}
+
 function register(InfluencerType) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        },
         body: JSON.stringify(InfluencerType)
     };
 
     return fetch(`${configOrchardCore.apiUrl}content`, requestOptions).then(handleContentResponse);
+}
+
+function updateInfluencers(InfluencerType) {
+    const token = localStorage.getItem('token');
+    debugger;
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        },
+        body: JSON.stringify(InfluencerType)
+    };
+
+    return fetch(`${configOrchardCore.apiUrl}content/post03`, requestOptions).then(handleContentResponse);
 }
 
 function registerJobs(JobsType) {
@@ -153,14 +282,14 @@ function handleTokenContentResponse(response) {
         }
         debugger;
         return data;
-    });    
+    });
 }
 
 function handleGraphJobCategoryResponse(response) {
     return response.json().then(text => {
         const data = text.data.jobCategory;
         //debugger;
-        
+
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
@@ -176,11 +305,34 @@ function handleGraphJobCategoryResponse(response) {
     });
 }
 
+function handleGraphRatesResponse(response) {
+    return response.json().then(text => {
+
+        const data = text.data;//.influencer[0].bag.contentItems;
+
+        // var newArray = data.filter(value => Object.keys(value).length !== 0 && value.contentType == "Rates");
+        var newArray = data;
+
+        if (!response.ok) {
+            if (response.status === 401) {
+                // auto logout if 401 response returned from api
+                logout();
+                location.reload(true);
+            }
+
+            const error = (data && data.message) || response.statusText;
+            return Promise.reject(error);
+        }
+
+        return newArray;
+    });
+}
+
 function handleGraphInfResponse(response) {
     return response.json().then(text => {
         const data = text.data;
         //debugger;
-        
+
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
@@ -211,7 +363,7 @@ function handleContentResponse(response) {
         }
 
         return data;
-    });    
+    });
 }
 
 function handleContentJobsResponse(response) {

@@ -14,7 +14,6 @@ import { DashBoardPage } from '../DashBoardPage';
 import { RegisterInfluencerPage } from '../RegisterInfluencerPage';
 import { InfluencerUpdateCostPage } from '../InfluencerUpdateCostPage';
 import { TopHeaderPage } from '../TopHeaderPage';
-import { LeftMenuPage } from '../LeftMenuPage';
 import { messaging } from "../init-fcm";
 import { compose, lifecycle, withHandlers, withState } from "recompose";
 require("babel-core/register");
@@ -50,8 +49,8 @@ class App extends React.Component {
       .requestPermission()
       .then(async function () {
         const token = await messaging.getToken();
-        debugger;
-        setToken(token);
+        //debugger;
+        //setToken(token);
       })
       .catch(function (err) {
         console.log("Unable to get permission to notify.", err);
@@ -64,10 +63,8 @@ class App extends React.Component {
     const { alert } = this.props;
     return (
       <div className="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
-        <TopHeaderPage />
         <Router history={history}>
-          <div className="app-main">
-            <LeftMenuPage />
+          <div className="app-main">            
             <PrivateRoute exact path="/" component={HomePage} />
             <Route path="/login" component={LoginPage} />
             <Route path="/register" component={RegisterPage} />
@@ -96,33 +93,33 @@ function mapStateToProps(state) {
 }
 
 const connectedApp = connect(mapStateToProps)(App);
-export default compose(
-  withState("token", "setToken", ""),
-  withState("notifications", "setNotifications", []),
-  withHandlers({
-    pushNotification: ({
-      setNotifications,
-      notifications
-    }) => newNotification =>
-        setNotifications(notifications.concat(newNotification))
-  }),
-  lifecycle({
-    async componentDidMount() {
-      const { pushNotification, setToken } = this.props;
+// export default compose(
+//   withState("token", "setToken", ""),
+//   withState("notifications", "setNotifications", []),
+//   withHandlers({
+//     pushNotification: ({
+//       setNotifications,
+//       notifications
+//     }) => newNotification =>
+//         setNotifications(notifications.concat(newNotification))
+//   }),
+//   lifecycle({
+//     async componentDidMount() {
+//       const { pushNotification, setToken } = this.props;
 
-      messaging
-        .requestPermission()
-        .then(async function () {
-          const token = await messaging.getToken();
-          setToken(token);
-        })
-        .catch(function (err) {
-          console.log("Unable to get permission to notify.", err);
-        });
+//       messaging
+//         .requestPermission()
+//         .then(async function () {
+//           const token = await messaging.getToken();
+//           setToken(token);
+//         })
+//         .catch(function (err) {
+//           console.log("Unable to get permission to notify.", err);
+//         });
 
-      registerPushListener(pushNotification);
-    }
-  })
-)(App);
+//       registerPushListener(pushNotification);
+//     }
+//   })
+// )(App);
 
 export { connectedApp as App }; 
