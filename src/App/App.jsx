@@ -64,7 +64,7 @@ class App extends React.Component {
     return (
       <div className="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
         <Router history={history}>
-          <div className="app-main">            
+          <div className="app-container">            
             <PrivateRoute exact path="/" component={HomePage} />
             <Route path="/login" component={LoginPage} />
             <Route path="/register" component={RegisterPage} />
