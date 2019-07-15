@@ -23,20 +23,20 @@ class RegisterBrandPage extends React.Component {
         //     submitted: false
         // };
 
-        this.state = {            
+        this.state = {
             brand: {
                 //displayText:'',
-                fullName:'',
-                email:'',
-                brandName:'',
+                fullName: '',
+                email: '',
+                brandName: '',
                 businessAreas: '',
                 phone: '',
                 password: '',
-                location:''
-            },            
+                location: ''
+            },
             submitted: false
         };
-        
+
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -78,45 +78,45 @@ class RegisterBrandPage extends React.Component {
             && brand.location
             && brand.password) {
             const brandType = {
-                ContentItemId:'',
-                ContentItemVersionId:'',
-                ContentType:'Brand',
+                ContentItemId: '',
+                ContentItemVersionId: '',
+                ContentType: 'Brand',
                 DisplayText: 'Brand ' + brand.brandName,
-                Latest:false,
-                Published:false,
-                ModifiedUtc:null,
-                PublishedUtc:null,
-                CreatedUtc:null,
-                Owner:'admin',
-                Author:'admin',
-                Brand:{
-                    FullName:{
+                Latest: false,
+                Published: false,
+                ModifiedUtc: null,
+                PublishedUtc: null,
+                CreatedUtc: null,
+                Owner: 'admin',
+                Author: 'admin',
+                Brand: {
+                    FullName: {
                         Text: brand.fullName
                     },
-                    Email:{
+                    Email: {
                         Text: brand.email
                     },
-                    BrandName:{
+                    BrandName: {
                         Text: brand.brandName
                     },
-                    BusinessAreas:{
+                    BusinessAreas: {
                         Text: brand.businessAreas
                     },
-                    Phone:{
+                    Phone: {
                         Text: brand.phone
                     },
-                    Password:{
+                    Password: {
                         Text: brand.password
                     },
-                    Location:{
+                    Location: {
                         Text: brand.location
                     }
                 },
-                TitlePart:{
+                TitlePart: {
                     Title: 'Brand ' + brand.brandName,
                 }
             }
-            
+
             dispatch(brandActions.register(brandType));
         }
     }
@@ -124,54 +124,14 @@ class RegisterBrandPage extends React.Component {
     render() {
         const { brands } = this.props;
         const { brand, submitted } = this.state;
-        
-        return (            
+
+        return (
             // <section className="signup">
             //     <div className="containerForm">
             //         <div className="signup-content">
             //             <div className="signup-form">
             //                 <h2 className="form-title">Sign up</h2>
-            //                 <form onSubmit={this.handleSubmit} className="register-form" id="register-form">
-            //                     <div className={'form-group' + (submitted && !brand.fullName ? ' has-error' : '')}>
-            //                         <label htmlFor="name"><i className="zmdi zmdi-account material-icons-name"></i></label>
-            //                         <input type="text" name="fullName" id="fullName" placeholder="Your Full Name" value={brand.fullName} onChange={this.handleChange}/>
-            //                         {
-            //                             submitted && !brand.fullName &&
-            //                             <div className="help-block">Full Name is required</div>
-            //                         }
-            //                     </div>                                
-            //                     <div className="form-group">
-            //                         <label htmlFor="email"><i className="zmdi zmdi-email"></i></label>
-            //                         <input type="email" name="email" id="email" placeholder="Your Email" value={brand.email} onChange={this.handleChange}/>
-            //                         {
-            //                             submitted && !brand.email &&
-            //                             <div className="help-block">Email is required</div>
-            //                         }
-            //                     </div>
-            //                     <div className={'form-group' + (submitted && !brand.brandName ? ' has-error' : '')}>
-            //                         <label htmlFor="name"><i className="zmdi zmdi-account material-icons-branding_watermark"></i></label>
-            //                         <input type="text" name="brandName" id="brandname" placeholder="Your brand Name" value={brand.brandName} onChange={this.handleChange}/>
-            //                         {
-            //                             submitted && !brand.brandName &&
-            //                             <div className="help-block">brand Name is required</div>
-            //                         }
-            //                     </div>
-            //                     <div className={'form-group' + (submitted && !brand.businessAreas ? ' has-error' : '')}>
-            //                         <label htmlFor="name"><i className="zmdi zmdi-account material-icons-branding_watermark"></i></label>
-            //                         <input type="text" name="businessAreas" id="businessAreas" placeholder="Your Business Areas" value={brand.businessAreas} onChange={this.handleChange}/>
-            //                         {
-            //                             submitted && !brand.businessAreas &&
-            //                             <div className="help-block">Business areas is required</div>
-            //                         }
-            //                     </div>
-            //                     <div className={'form-group' + (submitted && !brand.phone ? ' has-error' : '')}>
-            //                         <label htmlFor="name"><i className="zmdi zmdi-account material-icons-branding_watermark"></i></label>
-            //                         <input type="text" name="phone" id="phone" placeholder="Your Phone" value={brand.phone} onChange={this.handleChange}/>
-            //                         {
-            //                             submitted && !brand.phone &&
-            //                             <div className="help-block">Phone is required</div>
-            //                         }
-            //                     </div>                                
+            //                 <form onSubmit={this.handleSubmit} className="register-form" id="register-form">                                                           
             //                     <div className="form-group">
             //                         <label htmlFor="pass"><i className="zmdi zmdi-lock"></i></label>
             //                         <input type="password" id="password" placeholder="Password" name="password" value={brand.password} onChange={this.handleChange}/>
@@ -213,66 +173,106 @@ class RegisterBrandPage extends React.Component {
             //         </div>
             //     </div>
             // </section>
-        <div className="app-container app-theme-white body-tabs-shadow">
-            <div className="app-container">
-                <div className="h-100">
-                <div className="h-100 no-gutters row">
-                    <div className="h-100 d-md-flex d-sm-block bg-white justify-content-center align-items-center col-md-12 col-lg-7">
-                        <div className="mx-auto app-login-box col-sm-12 col-md-10 col-lg-9">
-                            <div className="app-logo"></div>
-                            <h4>
-                                <div>Welcome,</div>
-                                <span>It only takes a <span className="text-success">few seconds</span> to create your account</span></h4>
-                            <div>
-                                <form className="">
-                                    <div className="form-row">
-                                        <div className="col-md-6">
-                                            <div className="position-relative form-group">
-                                                <label htmlFor="exampleEmail" className="">
-                                                    <span className="text-danger">*</span> Email</label>
-                                                    <input name="email" id="exampleEmail" placeholder="Email here..." type="email" className="form-control"/>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="position-relative form-group">
-                                                <label htmlFor="exampleName" className="">Name</label>
-                                                <input name="text" id="exampleName" placeholder="Name here..." type="text" className="form-control"/>
+            <div className="app-container app-theme-white body-tabs-shadow">
+                <div className="app-container">
+                    <div className="h-100">
+                        <div className="h-100 no-gutters row">
+                            <div className="h-100 d-md-flex d-sm-block bg-white justify-content-center align-items-center col-md-12 col-lg-7">
+                                <div className="mx-auto app-login-box col-sm-12 col-md-10 col-lg-9">
+                                    <div className="app-logo"></div>
+                                    <h4>
+                                        <div>Welcome,</div>
+                                        <span>It only takes a <span className="text-success">few seconds</span> to create your account</span></h4>
+                                    <div>
+                                        <form className="" onSubmit={this.handleSubmit} id="register-form">
+                                            <div className="form-row">
+                                                <div className="col-md-6">
+                                                    <div className="position-relative form-group">
+                                                        <label htmlFor="name" className="">
+                                                            <span className="text-danger">*</span> Full Name</label>
+                                                        <input type="text" name="fullName" id="fullName" placeholder="Your Full Name" value={brand.fullName} onChange={this.handleChange} className="form-control" />
+                                                        {
+                                                            submitted && !brand.fullName &&
+                                                            <div className="help-block text-danger">Full Name is required</div>
+                                                        }
+                                                    </div>
                                                 </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="position-relative form-group">
-                                                <label htmlFor="examplePassword" className="">
-                                                    <span className="text-danger">*</span> Password
-                                                </label>
-                                                <input name="password" id="examplePassword" placeholder="Password here..." type="password" className="form-control"/>
+                                                <div className="col-md-6">
+                                                    <div className="position-relative form-group">
+                                                        <label htmlFor="email" className="">
+                                                            <span className="text-danger">*</span> Email
+                                                        </label>
+                                                        <input type="email" name="email" id="email" placeholder="Your Email" value={brand.email} onChange={this.handleChange} className="form-control" />
+                                                        {
+                                                            submitted && !brand.email &&
+                                                            <div className="help-block text-danger">Email is required</div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="position-relative form-group">
+                                                        <label htmlFor="name" className="">
+                                                            <span className="text-danger">*</span> Brand Name
+                                                        </label>
+                                                        <input type="text" name="brandName" id="brandname" placeholder="Your brand Name" value={brand.brandName} onChange={this.handleChange} className="form-control" />
+                                                        {
+                                                            submitted && !brand.brandName &&
+                                                            <div className="help-block text-danger">Brand Name is required</div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="position-relative form-group">
+                                                        <label htmlFor="name" className="">
+                                                            <span className="text-danger">*</span> Business areas
+                                                        </label>
+                                                        <input type="text" name="businessAreas" id="businessAreas" placeholder="Your Business Areas" value={brand.businessAreas} onChange={this.handleChange} className="form-control" />
+                                                        {
+                                                            submitted && !brand.businessAreas &&
+                                                            <div className="help-block text-danger">Business areas is required</div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="position-relative form-group">
+                                                        <label htmlFor="name" className="">
+                                                            <span className="text-danger">*</span> Phone
+                                                        </label>
+                                                        <input type="text" name="phone" id="phone" placeholder="Your Phone" value={brand.phone} onChange={this.handleChange} className="form-control" />
+                                                        {
+                                                            submitted && !brand.phone &&
+                                                            <div className="help-block text-danger">Phone is required</div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="position-relative form-group">
+                                                        <label htmlFor="examplePasswordRep" className="">
+                                                            <span className="text-danger">*</span> Repeat Password</label>
+                                                        <input name="passwordrep" id="examplePasswordRep" placeholder="Repeat Password here..." type="password" className="form-control" />                                                                                                                                                                                                </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="position-relative form-group">
-                                                <label htmlFor="examplePasswordRep" className="">
-                                                <span className="text-danger">*</span> Repeat Password</label>
-                                                <input name="passwordrep" id="examplePasswordRep" placeholder="Repeat Password here..." type="password" className="form-control"/>                                                                                                                                                                                                </div>
-                                            </div>
-                                    </div>
-                                    <div className="mt-3 position-relative form-check"><input name="check" id="exampleCheck" type="checkbox" className="form-check-input"/><label htmlFor="exampleCheck" className="form-check-label">Accept our <a href="javascript:void(0);">Terms
+                                            <div className="mt-3 position-relative form-check"><input name="check" id="exampleCheck" type="checkbox" className="form-check-input" /><label htmlFor="exampleCheck" className="form-check-label">Accept our <a href="javascript:void(0);">Terms
                                         and Conditions</a>.</label></div>
-                                    <div className="mt-4 d-flex align-items-center"><h5 className="mb-0">Already have an account? <a href="javascript:void(0);" className="text-primary">Sign in</a></h5>
-                                        <div className="ml-auto">
-                                            <button className="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg">Create Account</button>
-                                        </div>
+                                            <div className="mt-4 d-flex align-items-center"><h5 className="mb-0">Already have an account? <a href="javascript:void(0);" className="text-primary">Sign in</a></h5>
+                                                <div className="ml-auto">
+                                                    <button className="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg">Create Account</button>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
-                                </form>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="d-lg-flex d-xs-none col-lg-5">
-                        <div className="slider-light">
-                            <div className="slick-slider slick-initialized">
-                                <div>
-                                    <div className="position-relative h-100 d-flex justify-content-center align-items-center bg-premium-dark" tabIndex="-1">
-                                        <div className="slide-img-bg" style={{backgroundImage: `url(${citynights})`}}></div>
-                                        <div className="slider-content"><h3>Scalable, Modular, Consistent</h3>
-                                            <p>Easily exclude the components you don't require. Lightweight, consistent Bootstrap based styles across all elements and components</p></div>
+                            <div className="d-lg-flex d-xs-none col-lg-5">
+                                <div className="slider-light">
+                                    <div className="slick-slider slick-initialized">
+                                        <div>
+                                            <div className="position-relative h-100 d-flex justify-content-center align-items-center bg-premium-dark" tabIndex="-1">
+                                                <div className="slide-img-bg" style={{ backgroundImage: `url(${citynights})` }}></div>
+                                                <div className="slider-content"><h3>Scalable, Modular, Consistent</h3>
+                                                    <p>Easily exclude the components you don't require. Lightweight, consistent Bootstrap based styles across all elements and components</p></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -280,8 +280,6 @@ class RegisterBrandPage extends React.Component {
                     </div>
                 </div>
             </div>
-            </div>
-        </div>
         );
     }
 }
