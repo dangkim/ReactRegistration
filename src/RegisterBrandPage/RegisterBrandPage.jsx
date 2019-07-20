@@ -6,7 +6,8 @@ import city from '../assets/images/originals/city.jpg'
 import citynights from '../assets/images/originals/citynights.jpg'
 import citydark from '../assets/images/originals/citydark.jpg'
 import Slider from "react-slick";
-import { brandActions } from '../_actions';
+import { brandActions, campaignActions } from '../_actions';
+import Select from 'react-select';
 
 class RegisterBrandPage extends React.Component {
     constructor(props) {
@@ -32,15 +33,22 @@ class RegisterBrandPage extends React.Component {
                 businessAreas: '',
                 phone: '',
                 password: '',
-                location: ''
+                repeatPassword: '',
+                location: '',
+                selectedOptionLocation: null,
             },
             submitted: false
         };
 
-
+        this.handleOptionLocationChange = this.handleOptionLocationChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    handleOptionLocationChange = selectedOptionLocation => {
+        this.setState({ selectedOptionLocation });
+        console.log(`Option selected:`, selectedOptionLocation);
+    };
 
     handleChange(event) {
         const { name, value } = event.target;
@@ -121,10 +129,86 @@ class RegisterBrandPage extends React.Component {
         }
     }
 
-    render() {
-        const { brands } = this.props;
-        const { brand, submitted } = this.state;
+    componentDidMount() {
+        const { dispatch } = this.props;
+        dispatch(campaignActions.getAllLocation());
 
+        // else
+        // {
+        //     history.push('/registerBrandPage');
+        // }
+
+    }
+
+    render() {
+        const { brands, locations } = this.props;
+        const { brand, selectedOptionLocation, submitted } = this.state;
+        const options = [
+            { value: 'An Giang', label: 'An Giang' },
+            { value: 'BàRịa-VũngTàu', label: 'BàRịa-VũngTàu' },
+            { value: 'BạcLiêu', label: 'BạcLiêu' },
+            { value: 'BắcKạn', label: 'BắcKạn' },
+            { value: 'BắcGiang', label: 'BắcGiang' },
+            { value: 'BắcNinh', label: 'BắcNinh' },
+            { value: 'BếnTre', label: 'BếnTre' },
+            { value: 'BìnhDương', label: 'BìnhDương' },
+            { value: 'BìnhĐịnh', label: 'BìnhĐịnh' },
+            { value: 'BìnhPhước', label: 'BìnhPhước' },
+            { value: 'BìnhThuận', label: 'BìnhThuận' },
+            { value: 'CàMau', label: 'CàMau' },
+            { value: 'CaoBằng', label: 'CaoBằng' },
+            { value: 'CầnThơ(TP)', label: 'CầnThơ(TP)' },
+            { value: 'ĐàNẵng(TP)', label: 'ĐàNẵng(TP)' },
+            { value: 'ĐắkLắk', label: 'ĐắkLắk' },
+            { value: 'ĐắkNông', label: 'ĐắkNông' },
+            { value: 'ĐiệnBiên', label: 'ĐiệnBiên' },
+            { value: 'ĐồngNai', label: 'ĐồngNai' },
+            { value: 'ĐồngTháp', label: 'ĐồngTháp' },
+            { value: 'GiaLai', label: 'GiaLai' },
+            { value: 'HàGiang', label: 'HàGiang' },
+            { value: 'HàNam', label: 'HàNam' },
+            { value: 'HàNội(TP)', label: 'HàNội(TP)' },
+            { value: 'HàTây', label: 'HàTây' },
+            { value: 'HàTĩnh', label: 'HàTĩnh' },
+            { value: 'HảiDương', label: 'HảiDương' },
+            { value: 'HảiPhòng(TP)', label: 'HảiPhòng(TP)' },
+            { value: 'HòaBình', label: 'HòaBình' },
+            { value: 'HồChíMinh(TP)', label: 'HồChíMinh(TP)' },
+            { value: 'HậuGiang', label: 'HậuGiang' },
+            { value: 'HưngYên', label: 'HưngYên' },
+            { value: 'KhánhHòa', label: 'KhánhHòa' },
+            { value: 'KiênGiang', label: 'KiênGiang' },
+            { value: 'KonTum', label: 'KonTum' },
+            { value: 'LaiChâu', label: 'LaiChâu' },
+            { value: 'LàoCai', label: 'LàoCai' },
+            { value: 'LạngSơn', label: 'LạngSơn' },
+            { value: 'LâmĐồng', label: 'LâmĐồng' },
+            { value: 'LongAn', label: 'LongAn' },
+            { value: 'NamĐịnh', label: 'NamĐịnh' },
+            { value: 'NghệAn', label: 'NghệAn' },
+            { value: 'NinhBình', label: 'NinhBình' },
+            { value: 'NinhThuận', label: 'NinhThuận' },
+            { value: 'PhúThọ', label: 'PhúThọ' },
+            { value: 'PhúYên', label: 'PhúYên' },
+            { value: 'QuảngBình', label: 'QuảngBình' },
+            { value: 'QuảngNam', label: 'QuảngNam' },
+            { value: 'QuảngNgãi', label: 'QuảngNgãi' },
+            { value: 'QuảngNinh', label: 'QuảngNinh' },
+            { value: 'QuảngTrị', label: 'QuảngTrị' },
+            { value: 'SócTrăng', label: 'SócTrăng' },
+            { value: 'SơnLa', label: 'SơnLa' },
+            { value: 'TâyNinh', label: 'TâyNinh' },
+            { value: 'TháiBình', label: 'TháiBình' },
+            { value: 'TháiNguyên', label: 'TháiNguyên' },
+            { value: 'ThanhHóa', label: 'ThanhHóa' },
+            { value: 'ThừaThiên-Huế', label: 'ThừaThiên-Huế' },
+            { value: 'TiềnGiang', label: 'TiềnGiang' },
+            { value: 'TràVinh', label: 'TràVinh' },
+            { value: 'TuyênQuang', label: 'TuyênQuang' },
+            { value: 'VĩnhLong', label: 'VĩnhLong' },
+            { value: 'VĩnhPhúc', label: 'VĩnhPhúc' },
+            { value: 'YênBái', label: 'YênBái' },
+        ];
         return (
             // <section className="signup">
             //     <div className="containerForm">
@@ -132,22 +216,8 @@ class RegisterBrandPage extends React.Component {
             //             <div className="signup-form">
             //                 <h2 className="form-title">Sign up</h2>
             //                 <form onSubmit={this.handleSubmit} className="register-form" id="register-form">                                                           
-            //                     <div className="form-group">
-            //                         <label htmlFor="pass"><i className="zmdi zmdi-lock"></i></label>
-            //                         <input type="password" id="password" placeholder="Password" name="password" value={brand.password} onChange={this.handleChange}/>
-            //                         {
-            //                             submitted && !brand.password &&
-            //                             <div className="help-block">Password is required</div>
-            //                         }
-            //                     </div>
-            //                     <div className={'form-group' + (submitted && !brand.location ? ' has-error' : '')}>
-            //                         <label htmlFor="name"><i className="zmdi zmdi-account material-icons-branding_watermark"></i></label>
-            //                         <input type="text" name="location" id="location" placeholder="Your Location" value={brand.location} onChange={this.handleChange}/>
-            //                         {
-            //                             submitted && !brand.location &&
-            //                             <div className="help-block">Location is required</div>
-            //                         }
-            //                     </div>
+
+
             //                     <div className="form-group form-button">
             //                         <input type="submit" name="signup" id="signup" className="form-submit" value="Register"/>
             //                         {
@@ -211,6 +281,34 @@ class RegisterBrandPage extends React.Component {
                                                 </div>
                                                 <div className="col-md-6">
                                                     <div className="position-relative form-group">
+                                                        <label htmlFor="location" className="">
+                                                            <span className="text-danger">*</span> Location</label>
+                                                        <Select
+                                                            value={selectedOptionLocation}
+                                                            onChange={this.handleOptionLocationChange}
+                                                            isMulti
+                                                            placeholder="Locations..."
+                                                            options={options} />
+                                                        {
+                                                            submitted && !selectedOptionLocation &&
+                                                            <div className="help-block text-danger">Location is required</div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="position-relative form-group">
+                                                        <label htmlFor="name" className="">
+                                                            <span className="text-danger">*</span> Phone
+                                                        </label>
+                                                        <input type="text" name="phone" id="phone" placeholder="Your Phone" value={brand.phone} onChange={this.handleChange} className="form-control" />
+                                                        {
+                                                            submitted && !brand.phone &&
+                                                            <div className="help-block text-danger">Phone is required</div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="position-relative form-group">
                                                         <label htmlFor="name" className="">
                                                             <span className="text-danger">*</span> Brand Name
                                                         </label>
@@ -235,21 +333,25 @@ class RegisterBrandPage extends React.Component {
                                                 </div>
                                                 <div className="col-md-6">
                                                     <div className="position-relative form-group">
-                                                        <label htmlFor="name" className="">
-                                                            <span className="text-danger">*</span> Phone
-                                                        </label>
-                                                        <input type="text" name="phone" id="phone" placeholder="Your Phone" value={brand.phone} onChange={this.handleChange} className="form-control" />
+                                                        <label htmlFor="pass" className="">
+                                                            <span className="text-danger">*</span> Password</label>
+                                                        <input type="password" id="password" placeholder="Password" name="password" value={brand.password} onChange={this.handleChange} className="form-control" />
                                                         {
-                                                            submitted && !brand.phone &&
-                                                            <div className="help-block text-danger">Phone is required</div>
+                                                            submitted && !brand.password &&
+                                                            <div className="help-block text-danger">Password is required</div>
                                                         }
                                                     </div>
                                                 </div>
                                                 <div className="col-md-6">
                                                     <div className="position-relative form-group">
-                                                        <label htmlFor="examplePasswordRep" className="">
+                                                        <label htmlFor="pass" className="">
                                                             <span className="text-danger">*</span> Repeat Password</label>
-                                                        <input name="passwordrep" id="examplePasswordRep" placeholder="Repeat Password here..." type="password" className="form-control" />                                                                                                                                                                                                </div>
+                                                        <input type="repeatPassword" id="repeatPassword" placeholder="Repeat Password" name="repeatPassword" value={brand.repeatPassword} onChange={this.handleChange} className="form-control" />
+                                                        {
+                                                            submitted && !brand.repeatPassword &&
+                                                            <div className="help-block text-danger">Repeat Password is required</div>
+                                                        }
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div className="mt-3 position-relative form-check"><input name="check" id="exampleCheck" type="checkbox" className="form-check-input" /><label htmlFor="exampleCheck" className="form-check-label">Accept our <a href="javascript:void(0);">Terms
@@ -285,9 +387,10 @@ class RegisterBrandPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { brands } = state;
+    const { locations, brands } = state;
     return {
-        brands
+        brands,
+        locations
     };
 }
 

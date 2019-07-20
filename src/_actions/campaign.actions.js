@@ -88,7 +88,7 @@ function getAll() {
 function getAllLocation() {
     return dispatch => {
         dispatch(request());
-
+        debugger;
         campaignService.getAllLocation()
             .then(
                 locations => dispatch(success(locations)),

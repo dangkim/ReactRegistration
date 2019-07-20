@@ -100,9 +100,13 @@ function getAllLocation() {
       }
     }
     `;
+    const token = localStorage.getItem('token');
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/graphql' },
+        headers: {
+            'Content-Type': 'application/graphql',
+            'Authorization': token
+        },
         body: GET_ALL_LOCATION
     };
 
