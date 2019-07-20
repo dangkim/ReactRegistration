@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import img from '../assets/images/hand.jpg'
 //import { campaignActions } from '../_actions';
 import { campaignActions, infActions, brandActions } from '../_actions';
-//import Select from 'react-select';
+import Select from 'react-select';
 import {createJobs} from './../_models/JobType';
 //import {configContent} from 'configContent';
 
