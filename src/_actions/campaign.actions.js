@@ -60,7 +60,7 @@ function register(campaign,
         );
     };
 
-    function request() { return { type: campaignConstants.CAM_REGISTER_SUCCESS } }
+    function request() { return { type: campaignConstants.CAM_REGISTER_REQUEST } }
     function success(campaigns) { return { type: campaignConstants.CAM_REGISTER_SUCCESS, campaigns } }
     function failure(error) { return { type: campaignConstants.CAM_REGISTER_SUCCESS, error } }
 

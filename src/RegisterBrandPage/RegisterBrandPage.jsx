@@ -6,7 +6,7 @@ import city from '../assets/images/originals/city.jpg'
 import citynights from '../assets/images/originals/citynights.jpg'
 import citydark from '../assets/images/originals/citydark.jpg'
 import Slider from "react-slick";
-import { brandActions, campaignActions } from '../_actions';
+import { brandActions, campaignActions, userActions } from '../_actions';
 import Select from 'react-select';
 
 class RegisterBrandPage extends React.Component {
@@ -74,17 +74,40 @@ class RegisterBrandPage extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-
         this.setState({ submitted: true });
-        const { brand } = this.state;
-        const { dispatch } = this.props;
+        const { brand, selectedOptionLocation } = this.state;
+        const { dispatch, users } = this.props;
+
+        // let locationString = selectedOptionLocation.map((val)=>{  
+        //     return val.value + ';'; 
+        // })
+
+        let locationString = '';
+        var i;
+        for (i = 0; i < selectedOptionLocation.length; i++) {
+            locationString += selectedOptionLocation[i].value + ',';
+        }
+
+        const locationStrim = locationString.replace(/,\s*$/, "");
+
         if (brand.fullName
             && brand.email
             && brand.brandName
             && brand.businessAreas
             && brand.phone
-            && brand.location
-            && brand.password) {
+            && locationString
+            && brand.password
+            && brand.repeatPassword) {
+
+            const userType = {
+                UserName: brand.email,
+                Email: brand.email,
+                Password: brand.password,
+                ConfirmPassword: brand.repeatPassword,
+                IsFluencer: false,
+                IsBrand: true
+            }
+
             const brandType = {
                 ContentItemId: '',
                 ContentItemVersionId: '',
@@ -117,7 +140,7 @@ class RegisterBrandPage extends React.Component {
                         Text: brand.password
                     },
                     Location: {
-                        Text: brand.location
+                        Text: locationString
                     }
                 },
                 TitlePart: {
@@ -125,13 +148,13 @@ class RegisterBrandPage extends React.Component {
                 }
             }
 
-            dispatch(brandActions.register(brandType));
+            dispatch(brandActions.register(brandType, userType));
         }
     }
 
     componentDidMount() {
         const { dispatch } = this.props;
-        dispatch(campaignActions.getAllLocation());
+        //dispatch(campaignActions.getAllLocation());
 
         // else
         // {
@@ -247,7 +270,7 @@ class RegisterBrandPage extends React.Component {
                 <div className="app-container">
                     <div className="h-100">
                         <div className="h-100 no-gutters row">
-                            <div className="h-100 d-md-flex d-sm-block bg-white justify-content-center align-items-center col-md-12 col-lg-7">
+                            <div className="h-100 d-md-flex d-sm-block bg-white justify-content-center align-items-center col-md-12 col-lg-8">
                                 <div className="mx-auto app-login-box col-sm-12 col-md-10 col-lg-9">
                                     <div className="app-logo"></div>
                                     <h4>
@@ -284,6 +307,7 @@ class RegisterBrandPage extends React.Component {
                                                         <label htmlFor="location" className="">
                                                             <span className="text-danger">*</span> Location</label>
                                                         <Select
+                                                            maxMenuHeight={200}
                                                             value={selectedOptionLocation}
                                                             onChange={this.handleOptionLocationChange}
                                                             isMulti
@@ -346,7 +370,7 @@ class RegisterBrandPage extends React.Component {
                                                     <div className="position-relative form-group">
                                                         <label htmlFor="pass" className="">
                                                             <span className="text-danger">*</span> Repeat Password</label>
-                                                        <input type="repeatPassword" id="repeatPassword" placeholder="Repeat Password" name="repeatPassword" value={brand.repeatPassword} onChange={this.handleChange} className="form-control" />
+                                                        <input type="password" id="repeatPassword" placeholder="Repeat Password" name="repeatPassword" value={brand.repeatPassword} onChange={this.handleChange} className="form-control" />
                                                         {
                                                             submitted && !brand.repeatPassword &&
                                                             <div className="help-block text-danger">Repeat Password is required</div>
@@ -358,14 +382,19 @@ class RegisterBrandPage extends React.Component {
                                         and Conditions</a>.</label></div>
                                             <div className="mt-4 d-flex align-items-center"><h5 className="mb-0">Already have an account? <a href="javascript:void(0);" className="text-primary">Sign in</a></h5>
                                                 <div className="ml-auto">
-                                                    <button className="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg">Create Account</button>
+                                                    {/* <button className="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg">Create Account</button> */}
+                                                    <input type="submit" name="signup" id="signup" className="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg" value="Create Account" />
+                                                    {
+                                                        brands.registering &&
+                                                        <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                                    }
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
-                            <div className="d-lg-flex d-xs-none col-lg-5">
+                            <div className="d-lg-flex d-xs-none col-lg-4">
                                 <div className="slider-light">
                                     <div className="slick-slider slick-initialized">
                                         <div>
@@ -387,10 +416,11 @@ class RegisterBrandPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { locations, brands } = state;
+    const { locations, brands, users } = state;
     return {
         brands,
-        locations
+        locations,
+        users
     };
 }
 

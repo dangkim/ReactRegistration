@@ -34,12 +34,16 @@ function getAll() {
 }
 
 function register(brandType) {
+    const token = localStorage.getItem('token');
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        },
         body: JSON.stringify(brandType)
     };
-    return fetch(`${configOrchardCore.apiUrl}content`, requestOptions).then(handleContentResponse);
+    return fetch(`${configOrchardCore.apiUrl}content/Post?draft=true`, requestOptions).then(handleContentResponse);
 }
 
 function handleGraphResponse(response) {
@@ -63,6 +67,7 @@ function handleGraphResponse(response) {
 
 function handleContentResponse(response) {
     return response.text().then(text => {
+        debugger;
         const data = text && JSON.parse(text);
         if (!response.ok) {
             if (response.status === 401) {

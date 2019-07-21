@@ -82,7 +82,7 @@ function register(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`${configContent.apiUrl}/users/register`, requestOptions).then(handleResponse);
+    return fetch(`${configOrchardCore.apiUrl}content/Post02`, requestOptions).then(handleResponseRegisterUser);
 }
 
 function update(user) {
@@ -105,9 +105,9 @@ function _delete(id) {
     return fetch(`${configContent.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
 }
 
-function handleResponse(response) {
+function handleResponseRegisterUser(response) {
     return response.text().then(text => {
-        const data = text && JSON.parse(text);
+        const data = text;
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
@@ -118,7 +118,7 @@ function handleResponse(response) {
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
         }
-
+        debugger;
         return data;
     });
 }

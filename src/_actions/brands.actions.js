@@ -1,5 +1,5 @@
 import { brandConstants } from '../_constants';
-import { brandService } from '../_services';
+import { brandService, userService } from '../_services';
 import { alertActions } from '.';
 import { history } from '../_helpers';
 
@@ -9,20 +9,37 @@ export const brandActions = {
     getBrandFromBrandPage
 };
 
-function register(brandType) {
+function register(brandType, userType) {
     return dispatch => {
         dispatch(request(brandType));
 
-        brandService.register(brandType)
-            .then(
-                brand => { 
-                    dispatch(success());
-                    history.push({
-                        pathname: '/registerCampaignPage',
-                        state: { brand: brand }
-                    })
-                    dispatch(alertActions.success('Registration successful'));
-                },
+        userService.register(userType)
+            .then(user => {
+                userService.getToken(userType.UserName, userType.Password)
+                    .then(token => {
+                        brandService.register(brandType)
+                            .then(brand => {
+                                debugger;
+                                history.push({
+                                    pathname: '/registerCampaignPage',
+                                    state: { brand: brand }
+                                })
+                                dispatch(alertActions.success('Registration successful'));
+                            },
+                                error => {
+                                    dispatch(failure(error.toString()));
+                                    dispatch(alertActions.error(error.toString()));
+                                }
+                            );
+                    },
+                        error => {
+                            dispatch(failure(error.toString()));
+                            dispatch(alertActions.error(error.toString()));
+                        }
+                    )
+
+                //dispatch(alertActions.success('Registration User Successful'));
+            },
                 error => {
                     dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));
@@ -54,11 +71,10 @@ function getAll() {
 function getBrandFromBrandPage(brand) {
     return dispatch => {
         dispatch(request());
-        if(brand)
-        {
+        if (brand) {
             dispatch(success(brand));
         }
-        else{
+        else {
             const error = "cannot get from brand";
             dispatch(failure(error.toString()));
             dispatch(alertActions.error(error.toString()));
@@ -67,5 +83,5 @@ function getBrandFromBrandPage(brand) {
 
     function request() { return { type: brandConstants.FROM_BRAND_REQUEST } }
     function success(brand) { return { type: brandConstants.FROM_BRAND_SUCCESS, brand } }
-    function failure(error) { return { type: brandConstants.FROM_BRAND_FAILURE,  error} }
+    function failure(error) { return { type: brandConstants.FROM_BRAND_FAILURE, error } }
 }

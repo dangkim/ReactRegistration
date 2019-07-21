@@ -53,168 +53,13 @@ export function createCampaigns(brand, compaignType) {
 }
 
 export function createCampaign(campaign,
-  jobs,
-  selectedOptionLocation,
-  selectedOptionInteresting,
   brand,
   selectedInfluencers) {
 
   var campaignContentItems = [];
-  var contentLocationItems = [];
-  var contentInterestingItems = [];
-  var influencers = [];
-
-  if (selectedOptionLocation) {
-    selectedOptionLocation.map((item, key) => {
-      const location = {
-        ContentItemId: item.contentItemId,
-        ContentItemVersionId: item.contentItemVersionId,
-        ContentType: 'Locations',
-        DisplayText: item.location,
-        Latest: item.latest,
-        Published: item.published,
-        ModifiedUtc: item.modifiedUtc,
-        PublishedUtc: item.publishedUtc,
-        CreatedUtc: item.createdUtc,
-        Owner: item.owner,
-        Author: item.author,
-        Locations: {
-          Location: {
-            Text: item.location
-          }
-        },
-        TitlePart: {
-          Title: item.location
-        }
-      };
-      campaignContentItems.push(location);
-    });
-  }
-
-  if (selectedOptionInteresting) {
-    selectedOptionInteresting.map((item, key) => {
-      const interesting = {
-        ContentItemId: item.contentItemId,
-        ContentItemVersionId: item.contentItemVersionId,
-        ContentType: 'InterestingList',
-        DisplayText: item.interesting,
-        Latest: item.latest,
-        Published: item.published,
-        ModifiedUtc: item.modifiedUtc,
-        PublishedUtc: item.publishedUtc,
-        CreatedUtc: item.createdUtc,
-        Owner: item.owner,
-        Author: item.author,
-        InterestingList: {
-          Interesting: {
-            Text: item.interesting
-          }
-        },
-        TitlePart: {
-          Title: item.interesting
-        }
-      };
-      campaignContentItems.push(interesting);
-    });
-  }
 
   if (selectedInfluencers) {
     selectedInfluencers.forEach(function (influencer, key) {
-
-      const contentItems = [];
-
-      influencer.bag.contentItems.forEach(function (item, key) {
-
-        if (item.contentType === 'AgeDemorgraphic') {
-          const demorgraphic = {
-            ContentItemId: item.contentItemId,
-            ContentItemVersionId: '',
-            ContentType: 'AgeDemorgraphic',
-            DisplayText: item.displayText,
-            Latest: item.latest,
-            Published: item.published,
-            ModifiedUtc: item.modifiedUtc,
-            PublishedUtc: item.publishedUtc,
-            CreatedUtc: item.createdUtc,
-            Owner: 'admin',
-            Author: 'admin',
-            AgeDemorgraphic: {
-              Percentage: {
-                Text: item.percentage
-              },
-              DemoGraphicsName: {
-                Text: item.demoGraphicsName
-              }
-            },
-            TitlePart: {
-              Title: item.displayText
-            }
-          }
-          contentItems.push(demorgraphic);
-        }
-
-        if (item.contentType === 'Networks') {
-          const networks = {
-            ContentItemId: item.contentItemId,
-            ContentItemVersionId: '',
-            ContentType: 'Networks',
-            DisplayText: item.displayText,
-            Latest: item.latest,
-            Published: item.published,
-            ModifiedUtc: item.modifiedUtc,
-            PublishedUtc: item.publishedUtc,
-            CreatedUtc: item.createdUtc,
-            Owner: 'admin',
-            Author: 'admin',
-            Networks: {
-              Icon: {
-                Paths: item.icon.paths,
-                Urls: item.icon.urls
-              }
-            },
-            TitlePart: {
-              Title: item.displayText
-            }
-          }
-          contentItems.push(networks);
-        }
-
-        if (item.contentType === 'Rates') {
-          const rates = {
-            ContentItemId: item.contentItemId,
-            ContentItemVersionId: '',
-            ContentType: 'Rates',
-            DisplayText: item.displayText,
-            Latest: item.latest,
-            Published: item.published,
-            ModifiedUtc: item.modifiedUtc,
-            PublishedUtc: item.publishedUtc,
-            CreatedUtc: item.createdUtc,
-            Owner: 'admin',
-            Author: 'admin',
-            Rates: {
-              Icon: {
-                Paths: item.icon.paths,
-                Urls: item.icon.urls
-              },
-              Price: {
-                Value: item.price
-              }
-            },
-            TitlePart: {
-              Title: item.displayText
-            }
-          }
-
-          contentItems.push(rates);
-        }
-
-      })
-
-      contentItems.push(jobs);
-
-      //influencer.bag.contentItems.push(jobs);
-      //debugger;
       const influencerLocal = {
         ContentItemId: influencer.contentItemId,
         ContentItemVersionId: influencer.contentItemVersionId,
@@ -237,13 +82,67 @@ export function createCampaign(campaign,
           },
           Fanpage: {
             Text: influencer.fanpage
+          },
+          Email: {
+            Text: null
+          },
+          FullName: {
+            Text: influencer.fullName
+          },
+          ShareLink: {
+            Text: influencer.shareLink
+          },
+          PostImage: {
+            Text: influencer.postImage
+          },
+          LiveStream: {
+            Text: influencer.liveStream
+          },
+          CheckIn: {
+            Text: influencer.sheckIn
+          },
+          Video: {
+            Text: influencer.video
+          },
+          Phone: {
+            Text: influencer.phone
+          },
+          NumberOfLike: {
+            Text: influencer.numberOfLike
+          },
+          NumberOfLove: {
+            Text: influencer.numberOfLove
+          },
+          NumberOfComment: {
+            Text: influencer.numberOfComment
           }
-        },
-        BagPart: {
-          ContentItems: contentItems
         },
         TitlePart: {
           Title: influencer.displayText
+        },
+        AgeDemorgraphic: {
+          AgePercentage: {
+            Text: influencer.agePercentage
+          },
+          AgeGraphicsName: {
+            Text: influencer.ageGraphicsName
+          }
+        },
+        GenderDemorgraphic: {
+          GenderPercentage: {
+            Text: influencer.genderDemorgraphic
+          },
+          GenderGraphicName: {
+            Text: influencer.genderGraphicName
+          }
+        },
+        GeoDemorgraphic: {
+          GeoPercentage: {
+            Text: influencer.geoPercentage
+          },
+          GeoGraphicName: {
+            Text: influencer.geoGraphicName
+          }
         }
       }
 
@@ -297,6 +196,21 @@ export function createCampaign(campaign,
       },
       Gender: {
         Value: campaign.gender
+      },
+      HashTag: {
+        Text: 'New Style Of Campaign'
+      },
+      Keyword: {
+        Text: 'New Style Of Campaign'
+      },
+      Link: {
+        Text: 'New Style Of Campaign'
+      },
+      Description: {
+        Text: 'New Style Of Campaign'
+      },
+      Interesting: {
+        Text: 'Music'
       }
     },
     TitlePart: {
@@ -304,6 +218,31 @@ export function createCampaign(campaign,
     },
     BagPart: {
       ContentItems: campaignContentItems
+    },
+    CheckIn: {
+      Cost: {
+        Text: '1000000'
+      }
+    },
+    LiveStream: {
+      Cost: {
+        Text: '20000000'
+      }
+    },
+    PostImage: {
+      Cost: {
+        Text: null
+      }
+    },
+    ShareLink: {
+      Cost: {
+        Text: null
+      }
+    },
+    Video: {
+      Cost: {
+        Text: null
+      }
     }
   }
 

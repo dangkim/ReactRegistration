@@ -94,7 +94,18 @@ class LoginPage extends React.Component {
                                         <h4 className="mb-0">
                                             <span className="d-block">Welcome back,</span>
                                             <span>Please sign in to your account.</span></h4>
-                                        <h6 className="mt-3">No account? <a href="javascript:void(0);" className="text-primary">Sign up now</a></h6>
+                                        <div className="row">
+                                            <div col-md-6>
+                                                <h6 className="mt-3">No account?
+                                                <Link to="/registerBrandPage">Sign up as Brand now</Link>
+                                                </h6>
+                                            </div>
+                                            <div col-md-6>
+                                                <h6>
+                                                    <a href="javascript:void(0);" className="text-primary">Sign up as Influencer now</a>
+                                                </h6>
+                                            </div>
+                                        </div>
                                         <div className="divider row"></div>
                                         <div>
                                             <form className="" onSubmit={this.handleSubmit}>
