@@ -46,9 +46,9 @@ class RegisterCampaignPage extends Component {
             selectedOptionJobCategory: null,
             selectedInfluencers: [],
             submitted: false,
-            isFormStep: false,
+            isFormStep: true,
             isInfluencerStep: false,
-            isJobStep: true,
+            isJobStep: false,
             isChecked: false,
             skip: 0,
             checkedInfluencers: new Map(),
@@ -102,6 +102,7 @@ class RegisterCampaignPage extends Component {
     }
 
     handleSubmitJobs(event) {
+
         event.preventDefault();
 
         this.setState({ submitted: true });
@@ -109,7 +110,6 @@ class RegisterCampaignPage extends Component {
             job,
             selectedOptionLocation,
             selectedOptionInteresting,
-            selectedOptionJobCategory,
             selectedInfluencers,
             checkedInfluencers } = this.state;
         const { dispatch, brands } = this.props;
@@ -127,31 +127,71 @@ class RegisterCampaignPage extends Component {
             selectedOptionLocation &&
             selectedOptionInteresting &&
             job.jobDescription &&
-            job.jobHashTag &&
-            job.jobKeyword &&
             job.jobName &&
-            checkedInfluencers.size > 0) {
+            selectedInfluencers.length > 0) {
 
-            const jobsLocal = createJobs(job, selectedOptionJobCategory);
+            debugger;
+
+            this.setState({ isFormStep: true, isInfluencerStep: false, isJobStep: false });
 
             dispatch(campaignActions.register(campaign,
-                jobsLocal,
+                job,
                 selectedOptionLocation,
                 selectedOptionInteresting,
                 brand,
-                selectedInfluencers));
-            this.setState({ isFormStep: true, isInfluencerStep: false, isJobStep: false });
+                selectedInfluencers,
+                checkedInfluencers));            
         }
     }
 
     handleInfluencerStep(event) {
+        const { campaign, selectedOptionLocation, selectedOptionInteresting } = this.state;
         event.preventDefault();
-        this.setState({ isFormStep: false, isInfluencerStep: true, isJobStep: false });
+        this.setState({ submitted: true });
+        debugger;
+        if (campaign.campaignName &&
+            campaign.campaignTarget &&
+            campaign.fromDate &&
+            campaign.toDate &&
+            campaign.fromAge &&
+            campaign.toAge &&
+            campaign.productInfo &&
+            campaign.gender &&
+            campaign.budget &&
+            selectedOptionLocation &&
+            selectedOptionInteresting) {
+
+            this.setState({ isFormStep: false, isInfluencerStep: true, isJobStep: false });
+        }
     }
 
     handleJobStep(event) {
         event.preventDefault();
-        this.setState({ isFormStep: false, isInfluencerStep: false, isJobStep: true });
+        this.setState({ submitted: true });
+        debugger;
+        const { campaign,
+            job,
+            selectedOptionLocation,
+            selectedOptionInteresting,
+            selectedInfluencers,
+            checkedInfluencers } = this.state;
+        const { dispatch, brands } = this.props;
+
+        if (campaign.campaignName &&
+            campaign.campaignTarget &&
+            campaign.fromDate &&
+            campaign.toDate &&
+            campaign.fromAge &&
+            campaign.toAge &&
+            campaign.productInfo &&
+            campaign.gender &&
+            campaign.budget &&
+            selectedOptionLocation &&
+            selectedOptionInteresting &&
+            checkedInfluencers.size > 0) {
+
+            this.setState({ isFormStep: false, isInfluencerStep: false, isJobStep: true });
+        }
     }
 
     handleBackStep(event) {
@@ -210,10 +250,11 @@ class RegisterCampaignPage extends Component {
     componentDidMount() {
         const first = 9;
         const { dispatch } = this.props;
-        dispatch(infActions.getAll(first, 0));
+
         if (this.props.location.state) {
-            debugger;
+            //debugger;
             const { brand } = this.props.location.state;
+            dispatch(infActions.getAll(first, 0));
             dispatch(brandActions.getBrandFromBrandPage(brand));
             //dispatch(campaignActions.getAll());
             //dispatch(infActions.getAll());
@@ -222,7 +263,7 @@ class RegisterCampaignPage extends Component {
             //dispatch(infActions.getAllJobCategories());
         }
         else {
-            //history.push('/registerBrandPage');
+            history.push('/registerBrandPage');
         }
 
     }
@@ -232,13 +273,6 @@ class RegisterCampaignPage extends Component {
     // }
 
     render() {
-        const { brand } = this.props.location.state;
-        const { influencers, campaigns } = this.props;
-        let imgSrc = defaultAvatar;
-        if (brand && brand.published) {
-            imgSrc = item.photo.urls.length == 0 ? defaultAvatar : configContent.apiUrl + item.photo.urls[0] + '?&width=240&height=240&rmode=';
-        }
-
         const { submitted,
             campaign,
             job,
@@ -250,11 +284,23 @@ class RegisterCampaignPage extends Component {
             isJobStep,
             checkedInfluencers } = this.state;
 
+        const { influencers, campaigns } = this.props;
+
+        let imgSrc = defaultAvatar;
+
         const locations = createLocations();
         const interestings = createInterestings();
         const jobs = createJobs();
-        debugger;
-        return (
+
+        if (this.props.location.state) {
+            const { brand } = this.props.location.state;
+
+            if (brand && brand.published) {
+                imgSrc = item.photo.urls.length == 0 ? defaultAvatar : configContent.apiUrl + item.photo.urls[0] + '?&width=240&height=240&rmode=';
+            }
+        }
+
+        return this.props.location.state ? (
             <div className="app-container app-theme-white body-tabs-shadow">
                 <div className="app-container">
                     <div className="h-100">
@@ -360,9 +406,7 @@ class RegisterCampaignPage extends Component {
                                                                 onChange={this.handleOptionLocationChange}
                                                                 isMulti
                                                                 placeholder="Locations..."
-                                                                getOptionLabel={(obj) => obj.location}
-                                                                getOptionValue={(obj) => obj.contentItemId}
-                                                                options={locations.locations}
+                                                                options={locations}
                                                             />
                                                         </div>
                                                     </div>
@@ -375,9 +419,7 @@ class RegisterCampaignPage extends Component {
                                                                 onChange={this.handleOptionInterestingChange}
                                                                 isMulti
                                                                 placeholder="Interestings..."
-                                                                getOptionLabel={(obj) => obj.interesting}
-                                                                getOptionValue={(obj) => obj.contentItemId}
-                                                                options={interestings.interestings}
+                                                                options={interestings}
                                                             />
                                                         </div>
                                                     </div>
@@ -436,7 +478,7 @@ class RegisterCampaignPage extends Component {
                                     <div className="form-row">
                                         {
                                             influencers.items && influencers.items.influencer.map((item, key) => {
-                                                debugger;
+                                                //debugger;
                                                 var configContent = require('configContent')
                                                 return (
                                                     <div key={key} className="col-sm-4">
@@ -549,6 +591,13 @@ class RegisterCampaignPage extends Component {
                                                             <input type="text" className="form-control" name="jobKeyword" id="jobKeyword" placeholder="Job Keyword" value={job.jobKeyword} onChange={this.handleJobChange} />
                                                         </div>
                                                     </div>
+                                                    <div className="col-md-3">
+                                                        <div className="position-relative form-group">
+                                                            <label htmlFor="jobLink" className="">
+                                                                <span></span> Job Link</label>
+                                                            <input type="text" className="form-control" name="jobLink" id="jobLink" placeholder="Job Link" value={job.jobLink} onChange={this.handleJobChange} />
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div className="mt-4 d-flex align-items-center">
                                                     <div className="ml-auto">
@@ -582,8 +631,7 @@ class RegisterCampaignPage extends Component {
                         }
                     </div>
                 </div>
-            </div>
-        );
+            </div>) : '';
     }
 }
 

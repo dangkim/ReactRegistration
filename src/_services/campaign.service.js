@@ -9,13 +9,17 @@ export const campaignService = {
 };
 
 function register(campaignType) {
+    const token = localStorage.getItem('token');
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        },
         body: JSON.stringify(campaignType)
     };
 
-    return fetch(`${configOrchardCore.apiUrl}content`, requestOptions).then(handleContentResponse);
+    return fetch(`${configOrchardCore.apiUrl}content/Post?draft=true`, requestOptions).then(handleContentResponse);
 }
 
 function getAll() {

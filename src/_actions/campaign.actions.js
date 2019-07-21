@@ -2,7 +2,7 @@ import { campaignConstants } from '../_constants';
 import { campaignService, influencerService } from '../_services';
 import { alertActions } from '.';
 import { history } from '../_helpers';
-import {createCampaign, createCampaigns} from '../_models/CampaignsType';
+import { createCampaign, createCampaigns } from '../_models/CampaignsType';
 
 export const campaignActions = {
     register,
@@ -12,52 +12,46 @@ export const campaignActions = {
 };
 
 function register(campaign,
-                jobsLocal,
-                selectedOptionLocation,
-                selectedOptionInteresting,
-                brand,
-                checkedInfluencers) {
+    job,
+    selectedOptionLocation,
+    selectedOptionInteresting,
+    brand,
+    selectedInfluencers,
+    checkedInfluencers) {
     return dispatch => {
-
+        debugger;
         dispatch(request());
 
-        influencerService.registerJobs(jobsLocal)
-            .then(jobsType => {
-                    const campaignLocal = createCampaign(campaign,
-                                                    jobsType,
-                                                    selectedOptionLocation,
-                                                    selectedOptionInteresting,
-                                                    brand,
-                                                    checkedInfluencers);
-                    campaignService.register(campaignLocal)
-                    .then(campaignType => {
-                            const campaignsLocal = createCampaigns(brand, campaignType);
-                            campaignService.register(campaignsLocal)
-                            .then(campaignsType => {
-                                    dispatch(success());
-                                    history.push('/registerBrandPage');
-                                    dispatch(alertActions.success('Registration Campaigns Successful'));
-                                }),
-                                error => {
-                                    dispatch(failure(error.toString()));
-                                    dispatch(alertActions.error(error.toString()));
-                            }
+        const campaignLocal = createCampaign(campaign,
+            job,
+            selectedOptionLocation,
+            selectedOptionInteresting,
+            brand,
+            selectedInfluencers);
 
-                            dispatch(alertActions.success('Registration Campaign successful'));
-                        },
-                        error => {
-                            dispatch(failure(error.toString()));
-                            dispatch(alertActions.error(error.toString()));
-                        }
-                    );
+        campaignService.register(campaignLocal)
+            .then(campaignType => {
+                const campaignsLocal = createCampaigns(brand, campaignType);
+                campaignService.register(campaignsLocal)
+                    .then(campaignsType => {
+                        dispatch(success());
+                        history.push('/registerBrandPage');
+                        dispatch(alertActions.success('Registration Campaigns Successful'));
+                    }),
+                    error => {
+                        dispatch(failure(error.toString()));
+                        dispatch(alertActions.error(error.toString()));
+                    }
 
-                    dispatch(alertActions.success('Registration Job Successful'));
-                },
+                dispatch(alertActions.success('Registration Campaign successful'));
+            },
                 error => {
                     dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));
                 }
-        );
+            );
+
+        dispatch(alertActions.success('Registration Job Successful'));
     };
 
     function request() { return { type: campaignConstants.CAM_REGISTER_REQUEST } }

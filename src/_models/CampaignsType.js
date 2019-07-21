@@ -53,8 +53,25 @@ export function createCampaigns(brand, compaignType) {
 }
 
 export function createCampaign(campaign,
+  job,
+  selectedOptionLocation,
+  selectedOptionInteresting,
   brand,
   selectedInfluencers) {
+
+  debugger;
+
+  let locationString = '';
+  var i;
+  for (i = 0; i < selectedOptionLocation.length; i++) {
+    locationString += selectedOptionLocation[i].value + ',';
+  }
+
+  let interestingString = '';
+  var i;
+  for (i = 0; i < selectedOptionInteresting.length; i++) {
+    interestingString += selectedOptionInteresting[i].value + ',';
+  }
 
   var campaignContentItems = [];
 
@@ -84,7 +101,7 @@ export function createCampaign(campaign,
             Text: influencer.fanpage
           },
           Email: {
-            Text: null
+            Text: ''
           },
           FullName: {
             Text: influencer.fullName
@@ -186,7 +203,7 @@ export function createCampaign(campaign,
         Text: campaign.campaignName
       },
       MarketPlace: {
-        Text: 'Toàn Quốc'
+        Text: locationString
       },
       FromAge: {
         Value: campaign.fromAge
@@ -198,19 +215,19 @@ export function createCampaign(campaign,
         Value: campaign.gender
       },
       HashTag: {
-        Text: 'New Style Of Campaign'
+        Text: job.hashTag
       },
       Keyword: {
-        Text: 'New Style Of Campaign'
+        Text: job.keyword
       },
       Link: {
-        Text: 'New Style Of Campaign'
+        Text: job.jobLink
       },
       Description: {
-        Text: 'New Style Of Campaign'
+        Text: job.description
       },
       Interesting: {
-        Text: 'Music'
+        Text: interestingString
       }
     },
     TitlePart: {
@@ -221,27 +238,27 @@ export function createCampaign(campaign,
     },
     CheckIn: {
       Cost: {
-        Text: '1000000'
+        Text: ''
       }
     },
     LiveStream: {
       Cost: {
-        Text: '20000000'
+        Text: ''
       }
     },
     PostImage: {
       Cost: {
-        Text: null
+        Text: ''
       }
     },
     ShareLink: {
       Cost: {
-        Text: null
+        Text: ''
       }
     },
     Video: {
       Cost: {
-        Text: null
+        Text: ''
       }
     }
   }
