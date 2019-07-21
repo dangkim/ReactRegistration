@@ -19,7 +19,6 @@ function register(brandType, userType) {
                     .then(token => {
                         brandService.register(brandType)
                             .then(brand => {
-                                debugger;
                                 history.push({
                                     pathname: '/registerCampaignPage',
                                     state: { brand: brand }

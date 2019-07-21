@@ -59,11 +59,11 @@ function registerJobs(jobsType) {
     function failure(error) { return { type: infConstants.JOB_REGISTER_FAILURE, error } }
 }
 
-function getAll() {
+function getAll(first, skip) {
     return dispatch => {
         dispatch(request());
 
-        influencerService.getAll()
+        influencerService.getAll(first, skip)
             .then(
                 influencers => dispatch(success(influencers)),
                 error => dispatch(failure(error.toString()))

@@ -11,81 +11,56 @@ export const influencerService = {
     registerJobs
 };
 
-function getAll() {
+function getAll(first, skip) {
     const GET_ALL_INFS = `
     {
-        influencer {
-        contentItemId,
-        contentItemVersionId,
-        contentType,
-        displayText,
-        latest,
-        published,
-        modifiedUtc,
-        publishedUtc,
-        createdUtc,
-        description,
-        fanpage,
-        owner,
-        author
-        photo {
-        urls
-        },
-        bag{
-          contentItems {
-            ... on AgeDemorgraphic {
-                  contentItemId,
-                  contentType,
-                  displayText,
-                  latest,
-                  published,
-                  modifiedUtc,
-                  publishedUtc,
-                  createdUtc,
-                  author,
-                  demoGraphicsName,
-                  percentage,
-                  }
-            ... on Networks {
-                contentItemId,
-                contentType,
-                displayText,
-                latest,
-                published,
-                modifiedUtc,
-                publishedUtc,
-                createdUtc,
-                author,
-                icon {
-                  paths,
-                  urls
-                }
-                }
-            ... on Rates {                
-                contentItemId,
-                contentType,
-                displayText,
-                latest,
-                published,
-                modifiedUtc,
-                publishedUtc,
-                createdUtc,
-                author,
-                price,
-                icon {
-                  paths,
-                    urls
-                }
-                }
+        influencer(first: `+ first + `, skip: ` + skip + `){
+            author
+            checkIn
+            contentItemId
+            contentItemVersionId
+            contentType
+            createdUtc
+            description
+            displayText
+            email
+            fullName
+            genderDemorgraphic {
+              genderGraphicName
+              genderPercentage
             }
+            geoDemorgraphic {
+              geoGraphicName
+              geoPercentage
+            }
+            latest
+            modifiedUtc
+            numberOfComment
+            numberOfLike
+            numberOfLove
+            owner
+            phone
+            ageDemorgraphic {
+              ageGraphicsName
+              agePercentage
+            }
+            photo {
+              paths
+              urls
+            }
+            published
+            publishedUtc
           }
-      }
     }
     `;
 
+    const token = localStorage.getItem('token');
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/graphql' },
+        headers: {
+            'Content-Type': 'application/graphql',
+            'Authorization': token
+        },
         body: GET_ALL_INFS
     };
 
@@ -331,7 +306,6 @@ function handleGraphRatesResponse(response) {
 function handleGraphInfResponse(response) {
     return response.json().then(text => {
         const data = text.data;
-        //debugger;
 
         if (!response.ok) {
             if (response.status === 401) {

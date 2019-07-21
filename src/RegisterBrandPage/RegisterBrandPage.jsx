@@ -169,103 +169,70 @@ class RegisterBrandPage extends React.Component {
         const options = [
             { value: 'An Giang', label: 'An Giang' },
             { value: 'BàRịa-VũngTàu', label: 'BàRịa-VũngTàu' },
-            { value: 'BạcLiêu', label: 'BạcLiêu' },
-            { value: 'BắcKạn', label: 'BắcKạn' },
-            { value: 'BắcGiang', label: 'BắcGiang' },
-            { value: 'BắcNinh', label: 'BắcNinh' },
-            { value: 'BếnTre', label: 'BếnTre' },
-            { value: 'BìnhDương', label: 'BìnhDương' },
-            { value: 'BìnhĐịnh', label: 'BìnhĐịnh' },
-            { value: 'BìnhPhước', label: 'BìnhPhước' },
-            { value: 'BìnhThuận', label: 'BìnhThuận' },
-            { value: 'CàMau', label: 'CàMau' },
-            { value: 'CaoBằng', label: 'CaoBằng' },
-            { value: 'CầnThơ(TP)', label: 'CầnThơ(TP)' },
-            { value: 'ĐàNẵng(TP)', label: 'ĐàNẵng(TP)' },
-            { value: 'ĐắkLắk', label: 'ĐắkLắk' },
-            { value: 'ĐắkNông', label: 'ĐắkNông' },
-            { value: 'ĐiệnBiên', label: 'ĐiệnBiên' },
-            { value: 'ĐồngNai', label: 'ĐồngNai' },
-            { value: 'ĐồngTháp', label: 'ĐồngTháp' },
-            { value: 'GiaLai', label: 'GiaLai' },
-            { value: 'HàGiang', label: 'HàGiang' },
-            { value: 'HàNam', label: 'HàNam' },
-            { value: 'HàNội(TP)', label: 'HàNội(TP)' },
-            { value: 'HàTây', label: 'HàTây' },
-            { value: 'HàTĩnh', label: 'HàTĩnh' },
-            { value: 'HảiDương', label: 'HảiDương' },
-            { value: 'HảiPhòng(TP)', label: 'HảiPhòng(TP)' },
-            { value: 'HòaBình', label: 'HòaBình' },
+            { value: 'Bạc Liêu', label: 'Bạc Liêu' },
+            { value: 'Bắc Kạn', label: 'Bắc Kạn' },
+            { value: 'Bắc Giang', label: 'Bắc Giang' },
+            { value: 'Bắc Ninh', label: 'Bắc Ninh' },
+            { value: 'Bến Tre', label: 'Bến Tre' },
+            { value: 'Bình Dương', label: 'Bình Dương' },
+            { value: 'BìnhĐịnh', label: 'Bình Định' },
+            { value: 'BìnhPhước', label: 'Bình Phước' },
+            { value: 'BìnhThuận', label: 'Bình Thuận' },
+            { value: 'Cà Mau', label: 'Cà Mau' },
+            { value: 'Cao Bằng', label: 'Cao Bằng' },
+            { value: 'Cần Thơ(TP)', label: 'Cần Thơ(TP)' },
+            { value: 'Đà Nẵng(TP)', label: 'Đà Nẵng(TP)' },
+            { value: 'Đắk Lắk', label: 'Đắk Lắk' },
+            { value: 'Đắk Nông', label: 'Đắk Nông' },
+            { value: 'Điện Biên', label: 'Điện Biên' },
+            { value: 'Đồng Nai', label: 'Đồng Nai' },
+            { value: 'Đồng Tháp', label: 'Đồng Tháp' },
+            { value: 'Gia Lai', label: 'Gia Lai' },
+            { value: 'Hà Giang', label: 'Hà Giang' },
+            { value: 'Hà Nam', label: 'Hà Nam' },
+            { value: 'Hà Nội(TP)', label: 'Hà Nội(TP)' },
+            { value: 'Hà Tây', label: 'Hà Tây' },
+            { value: 'Hà Tĩnh', label: 'Hà Tĩnh' },
+            { value: 'Hải Dương', label: 'Hải Dương' },
+            { value: 'Hải Phòng(TP)', label: 'Hải Phòng(TP)' },
+            { value: 'Hòa Bình', label: 'Hòa Bình' },
             { value: 'HồChíMinh(TP)', label: 'HồChíMinh(TP)' },
-            { value: 'HậuGiang', label: 'HậuGiang' },
-            { value: 'HưngYên', label: 'HưngYên' },
-            { value: 'KhánhHòa', label: 'KhánhHòa' },
-            { value: 'KiênGiang', label: 'KiênGiang' },
-            { value: 'KonTum', label: 'KonTum' },
-            { value: 'LaiChâu', label: 'LaiChâu' },
-            { value: 'LàoCai', label: 'LàoCai' },
-            { value: 'LạngSơn', label: 'LạngSơn' },
-            { value: 'LâmĐồng', label: 'LâmĐồng' },
-            { value: 'LongAn', label: 'LongAn' },
-            { value: 'NamĐịnh', label: 'NamĐịnh' },
-            { value: 'NghệAn', label: 'NghệAn' },
-            { value: 'NinhBình', label: 'NinhBình' },
-            { value: 'NinhThuận', label: 'NinhThuận' },
-            { value: 'PhúThọ', label: 'PhúThọ' },
-            { value: 'PhúYên', label: 'PhúYên' },
-            { value: 'QuảngBình', label: 'QuảngBình' },
-            { value: 'QuảngNam', label: 'QuảngNam' },
-            { value: 'QuảngNgãi', label: 'QuảngNgãi' },
-            { value: 'QuảngNinh', label: 'QuảngNinh' },
-            { value: 'QuảngTrị', label: 'QuảngTrị' },
-            { value: 'SócTrăng', label: 'SócTrăng' },
-            { value: 'SơnLa', label: 'SơnLa' },
-            { value: 'TâyNinh', label: 'TâyNinh' },
-            { value: 'TháiBình', label: 'TháiBình' },
-            { value: 'TháiNguyên', label: 'TháiNguyên' },
-            { value: 'ThanhHóa', label: 'ThanhHóa' },
+            { value: 'Hậu Giang', label: 'Hậu Giang' },
+            { value: 'Hưng Yên', label: 'Hưng Yên' },
+            { value: 'Khánh Hòa', label: 'Khánh Hòa' },
+            { value: 'Kiên Giang', label: 'Kiên Giang' },
+            { value: 'Kon Tum', label: 'Kon Tum' },
+            { value: 'Lai Châu', label: 'Lai Châu' },
+            { value: 'Lào Cai', label: 'LàoCai' },
+            { value: 'Lạng Sơn', label: 'Lạng Sơn' },
+            { value: 'Lâm Đồng', label: 'Lâm Đồng' },
+            { value: 'Long An', label: 'Long An' },
+            { value: 'Nam Định', label: 'Nam Định' },
+            { value: 'Nghệ An', label: 'Nghệ An' },
+            { value: 'Ninh Bình', label: 'Ninh Bình' },
+            { value: 'NinhT huận', label: 'Ninh Thuận' },
+            { value: 'Phú Thọ', label: 'Phú Thọ' },
+            { value: 'Phú Yên', label: 'Phú Yên' },
+            { value: 'Quảng Bình', label: 'Quảng Bình' },
+            { value: 'Quảng Nam', label: 'Quảng Nam' },
+            { value: 'Quảng Ngãi', label: 'Quảng Ngãi' },
+            { value: 'Quảng Ninh', label: 'Quảng Ninh' },
+            { value: 'Quảng Trị', label: 'Quảng Trị' },
+            { value: 'Sóc Trăng', label: 'Sóc Trăng' },
+            { value: 'Sơn La', label: 'Sơn La' },
+            { value: 'Tây Ninh', label: 'Tây Ninh' },
+            { value: 'Thái Bình', label: 'Thái Bình' },
+            { value: 'Thái Nguyên', label: 'Thái Nguyên' },
+            { value: 'Thanh Hóa', label: 'Thanh Hóa' },
             { value: 'ThừaThiên-Huế', label: 'ThừaThiên-Huế' },
-            { value: 'TiềnGiang', label: 'TiềnGiang' },
-            { value: 'TràVinh', label: 'TràVinh' },
-            { value: 'TuyênQuang', label: 'TuyênQuang' },
-            { value: 'VĩnhLong', label: 'VĩnhLong' },
-            { value: 'VĩnhPhúc', label: 'VĩnhPhúc' },
-            { value: 'YênBái', label: 'YênBái' },
+            { value: 'Tiền Giang', label: 'Tiền Giang' },
+            { value: 'Trà Vinh', label: 'Trà Vinh' },
+            { value: 'Tuyên Quang', label: 'Tuyên Quang' },
+            { value: 'Vĩnh Long', label: 'Vĩnh Long' },
+            { value: 'Vĩnh Phúc', label: 'Vĩnh Phúc' },
+            { value: 'Yên Bái', label: 'Yên Bái' },
         ];
-        return (
-            // <section className="signup">
-            //     <div className="containerForm">
-            //         <div className="signup-content">
-            //             <div className="signup-form">
-            //                 <h2 className="form-title">Sign up</h2>
-            //                 <form onSubmit={this.handleSubmit} className="register-form" id="register-form">                                                           
-
-
-            //                     <div className="form-group form-button">
-            //                         <input type="submit" name="signup" id="signup" className="form-submit" value="Register"/>
-            //                         {
-            //                             brands.registering && 
-            //                             <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-            //                         }
-            //                         <Link to="/login" className="btn btn-link">Cancel</Link>
-            //                     </div>
-            //                 </form>
-            //             </div>
-            //             <div className="signup-image">
-            //                 <figure><img src={img} alt="sing up image"/></figure>
-            //                 {/* <a href="#" className="signup-image-link">I am already member</a> */}
-            //                 <Link to="/RegisterInfluencerPage" className="signup-image-link">I am an Influencer</Link>
-            //                 {/* <Link to={{
-            //                     pathname: '/registerCampaignPage',
-            //                     state: {
-            //                         brands: brands
-            //                     }
-            //                     }}>Tyler McGinnis
-            //                 </Link> */}
-            //             </div>
-            //         </div>
-            //     </div>
-            // </section>
+        return (            
             <div className="app-container app-theme-white body-tabs-shadow">
                 <div className="app-container">
                     <div className="h-100">
