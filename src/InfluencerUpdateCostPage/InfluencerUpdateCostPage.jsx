@@ -129,44 +129,12 @@ class InfluencerUpdateCostPage extends Component {
                                             <div className="form-group">
                                                 <label htmlFor="shareLink">Share Link</label>
                                                 <div>
-                                                    <input type="number" className="form-control" id="shareLink" name="shareLink" value={influencer.shareLink} onChange={this.handleChange} placeholder="Price..." />
+                                                    <input type="number" className="form-control" id="shareLink" name="shareLink" value={this.props.influencers.items?this.props.influencers.items.shareLink:''} onChange={this.handleChange} placeholder="Price..." />
                                                     {/* <NumberFormat value={item.price} id={key} name={key} thousandSeparator={true} onChange={this.handleChange} className="form-control" suffix={'đ'}/> */}
                                                     {submitted && !influencer.shareLink &&
                                                         <div className="help-block" style={{ color: 'red' }}>Price is required</div>
                                                     }
-                                                </div>
-                                                <label htmlFor="video">Video</label>
-                                                <div>
-                                                    <input type="number" className="form-control" id="video" name="video" value={video} onChange={this.handleChange} placeholder="Price..." />
-                                                    {/* <NumberFormat value={item.price} id={key} name={key} thousandSeparator={true} onChange={this.handleChange} className="form-control" suffix={'đ'}/> */}
-                                                    {submitted && !influencer.video &&
-                                                        <div className="help-block" style={{ color: 'red' }}>Price is required</div>
-                                                    }
-                                                </div>
-                                                <label htmlFor="postImage">Post Image</label>
-                                                <div>
-                                                    <input type="number" className="form-control" id="postImage" name="postImage" value={postImage} onChange={this.handleChange} placeholder="Price..." />
-                                                    {/* <NumberFormat value={item.price} id={key} name={key} thousandSeparator={true} onChange={this.handleChange} className="form-control" suffix={'đ'}/> */}
-                                                    {submitted && !influencer.postImage &&
-                                                        <div className="help-block" style={{ color: 'red' }}>Price is required</div>
-                                                    }
-                                                </div>
-                                                <label htmlFor="checkIn">Check In</label>
-                                                <div>
-                                                    <input type="number" className="form-control" id="checkIn" name="checkIn" value={checkIn} onChange={this.handleChange} placeholder="Price..." />
-                                                    {/* <NumberFormat value={item.price} id={key} name={key} thousandSeparator={true} onChange={this.handleChange} className="form-control" suffix={'đ'}/> */}
-                                                    {submitted && !influencer.checkIn &&
-                                                        <div className="help-block" style={{ color: 'red' }}>Price is required</div>
-                                                    }
-                                                </div>
-                                                <label htmlFor="liveStream">Live Stream</label>
-                                                <div>
-                                                    <input type="number" className="form-control" id="liveStream" name="liveStream" value={liveStream} onChange={this.handleChange} placeholder="Price..." />
-                                                    {/* <NumberFormat value={item.price} id={key} name={key} thousandSeparator={true} onChange={this.handleChange} className="form-control" suffix={'đ'}/> */}
-                                                    {submitted && !influencer.liveStream &&
-                                                        <div className="help-block" style={{ color: 'red' }}>Price is required</div>
-                                                    }
-                                                </div>
+                                                </div>                                                
                                             </div>
                                         </div>
                                         <div className="divider row"></div>

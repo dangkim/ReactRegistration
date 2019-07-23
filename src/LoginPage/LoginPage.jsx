@@ -101,7 +101,7 @@ class LoginPage extends React.Component {
                                                 </h6>
                                             </div>
                                             <div className="col-md-6">
-                                                <h6>
+                                                <h6 className="mt-3">
                                                     <a href="javascript:void(0);" className="text-primary">Sign up as Influencer now</a>
                                                 </h6>
                                             </div>
