@@ -18,8 +18,13 @@ class InfluencerUpdateCostPage extends Component {
         super(props);
 
         this.state = {
-            rates: [],
+            shareLink: '',
+            postImage: '',
+            video: '',
+            liveStream: '',
+            checkIn: '',
             submitted: false,
+            influencer: props.influencers.items
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -28,13 +33,28 @@ class InfluencerUpdateCostPage extends Component {
     }
 
     handleChange(e) {
+        debugger;
         const { influencers } = this.props;
         const { name, value } = e.target;
 
-        let rates = influencers.items.influencer[0].bag.contentItems.filter(value => Object.keys(value).length !== 0 && value.contentType == "Rates");
-        rates[name].price = value;
-
-        this.setState({ rates: rates });
+        let influencer = influencers.items;
+        if (name == 'shareLink') {
+            influencer.shareLink = value
+        }
+        if (name == 'postImage') {
+            influencer.postImage = value
+        }
+        if (name == 'video') {
+            influencer.video = value
+        }
+        if (name == 'liveStream') {
+            influencer.liveStream = value
+        }
+        if (name == 'checkIn') {
+            influencer.checkIn = value
+        }
+        //const { influencer } = this.state;
+        this.setState({ influencer: influencer });
     }
 
     handleSubmit(e) {
@@ -56,9 +76,9 @@ class InfluencerUpdateCostPage extends Component {
 
         if (isValid) {
             debugger;
-            //let obj = JSON.parse(influencers.items);
+            //let obj = JSON.parse(influencer.items);
             const { userName } = this.props.location.state;
-            dispatch(infActions.updateInfluencers(influencers.items.influencer[0], userName));
+            dispatch(infActions.updateInfluencers(influencer.items.influencer[0], userName));
         }
     }
 
@@ -74,11 +94,12 @@ class InfluencerUpdateCostPage extends Component {
     render() {
         const { influencers } = this.props;
         const userName = this.props.location.state;
-        const { submitted } = this.state;
-
-        const rates = influencers.items ?
-            influencers.items.influencer[0].bag.contentItems.filter(value => Object.keys(value).length !== 0 && value.contentType == "Rates")
-            : [];
+        const { submitted, shareLink, video, checkIn, liveStream, postImage } = this.state;
+        const influencer = influencers.items ? influencers.items : [];
+        debugger;
+        // const rates = influencer.items ?
+        //     influencer.items.influencer[0].bag.contentItems.filter(value => Object.keys(value).length !== 0 && value.contentType == "Rates")
+        //     : [];
 
         return (
             <div>
@@ -105,23 +126,48 @@ class InfluencerUpdateCostPage extends Component {
                                 <div className="card-body">
                                     <form id="costForm" className="col-md-10 mx-auto" onSubmit={this.handleSubmit}>
                                         <div className="form-row">
-                                            {
-                                                rates && rates.map((item, key) => {
-                                                    return (
-                                                        item.contentType == 'Rates' ?
-                                                            <div key={key} className="form-group">
-                                                                <label htmlFor={item.displayText}>{item.displayText}</label>
-                                                                <div>
-                                                                    <input type="number" className="form-control" id={key} name={key} value={item.price} onChange={this.handleChange} placeholder="Price..." />
-                                                                    {/* <NumberFormat value={item.price} id={key} name={key} thousandSeparator={true} onChange={this.handleChange} className="form-control" suffix={'đ'}/> */}
-                                                                    {submitted && !item.price &&
-                                                                        <div className="help-block" style={{ color: 'red' }}>Price is required</div>
-                                                                    }
-                                                                </div>
-                                                            </div> : ''
-                                                    )
-                                                })
-                                            }
+                                            <div className="form-group">
+                                                <label htmlFor="shareLink">Share Link</label>
+                                                <div>
+                                                    <input type="number" className="form-control" id="shareLink" name="shareLink" value={influencer.shareLink} onChange={this.handleChange} placeholder="Price..." />
+                                                    {/* <NumberFormat value={item.price} id={key} name={key} thousandSeparator={true} onChange={this.handleChange} className="form-control" suffix={'đ'}/> */}
+                                                    {submitted && !influencer.shareLink &&
+                                                        <div className="help-block" style={{ color: 'red' }}>Price is required</div>
+                                                    }
+                                                </div>
+                                                <label htmlFor="video">Video</label>
+                                                <div>
+                                                    <input type="number" className="form-control" id="video" name="video" value={video} onChange={this.handleChange} placeholder="Price..." />
+                                                    {/* <NumberFormat value={item.price} id={key} name={key} thousandSeparator={true} onChange={this.handleChange} className="form-control" suffix={'đ'}/> */}
+                                                    {submitted && !influencer.video &&
+                                                        <div className="help-block" style={{ color: 'red' }}>Price is required</div>
+                                                    }
+                                                </div>
+                                                <label htmlFor="postImage">Post Image</label>
+                                                <div>
+                                                    <input type="number" className="form-control" id="postImage" name="postImage" value={postImage} onChange={this.handleChange} placeholder="Price..." />
+                                                    {/* <NumberFormat value={item.price} id={key} name={key} thousandSeparator={true} onChange={this.handleChange} className="form-control" suffix={'đ'}/> */}
+                                                    {submitted && !influencer.postImage &&
+                                                        <div className="help-block" style={{ color: 'red' }}>Price is required</div>
+                                                    }
+                                                </div>
+                                                <label htmlFor="checkIn">Check In</label>
+                                                <div>
+                                                    <input type="number" className="form-control" id="checkIn" name="checkIn" value={checkIn} onChange={this.handleChange} placeholder="Price..." />
+                                                    {/* <NumberFormat value={item.price} id={key} name={key} thousandSeparator={true} onChange={this.handleChange} className="form-control" suffix={'đ'}/> */}
+                                                    {submitted && !influencer.checkIn &&
+                                                        <div className="help-block" style={{ color: 'red' }}>Price is required</div>
+                                                    }
+                                                </div>
+                                                <label htmlFor="liveStream">Live Stream</label>
+                                                <div>
+                                                    <input type="number" className="form-control" id="liveStream" name="liveStream" value={liveStream} onChange={this.handleChange} placeholder="Price..." />
+                                                    {/* <NumberFormat value={item.price} id={key} name={key} thousandSeparator={true} onChange={this.handleChange} className="form-control" suffix={'đ'}/> */}
+                                                    {submitted && !influencer.liveStream &&
+                                                        <div className="help-block" style={{ color: 'red' }}>Price is required</div>
+                                                    }
+                                                </div>
+                                            </div>
                                         </div>
                                         <div className="divider row"></div>
                                         <div className="d-flex align-items-center">

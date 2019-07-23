@@ -14,7 +14,6 @@ import { DashBoardPage } from '../DashBoardPage';
 import { RegisterInfluencerPage } from '../RegisterInfluencerPage';
 import { InfluencerUpdateCostPage } from '../InfluencerUpdateCostPage';
 import { TopHeaderPage } from '../TopHeaderPage';
-import { messaging } from "../init-fcm";
 import { compose, lifecycle, withHandlers, withState } from "recompose";
 require("babel-core/register");
 require("babel-polyfill");
@@ -45,18 +44,18 @@ class App extends React.Component {
   async componentDidMount() {
     const { pushNotification, setToken } = this.props;
 
-    messaging
-      .requestPermission()
-      .then(async function () {
-        const token = await messaging.getToken();
-        //debugger;
-        //setToken(token);
-      })
-      .catch(function (err) {
-        console.log("Unable to get permission to notify.", err);
-      });
+    // messaging
+    //   .requestPermission()
+    //   .then(async function () {
+    //     const token = await messaging.getToken();
+    //     //debugger;
+    //     //setToken(token);
+    //   })
+    //   .catch(function (err) {
+    //     console.log("Unable to get permission to notify.", err);
+    //   });
 
-    registerPushListener(pushNotification);
+    // registerPushListener(pushNotification);
   }
 
   render() {

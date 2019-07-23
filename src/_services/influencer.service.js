@@ -127,70 +127,47 @@ function getCostByUserName(userName) {
 
     const GET_COST_BY_USERNAME = `
     {
-        influencer(where: {displayText: "` + userName + `"}) {
-            contentItemId,
-            contentItemVersionId,
-            contentType,
-            displayText,
-            latest,
-            published,
-            modifiedUtc,
-            publishedUtc,
-            createdUtc,
-            description,
-            fanpage,            
-            author,
-            photo {
-            urls
-            },
-            bag{
-              contentItems {
-                ... on AgeDemorgraphic {
-                      contentItemId,
-                      contentType,
-                      displayText,
-                      latest,
-                      published,
-                      modifiedUtc,
-                      publishedUtc,
-                      createdUtc,
-                      demoGraphicsName,
-                      percentage,
-                      }
-                ... on Networks {
-                    contentItemId,
-                    contentType,
-                    displayText,
-                    latest,
-                    published,
-                    modifiedUtc,
-                    publishedUtc,
-                    createdUtc,
-                    icon {
-                      paths,
-                      urls
-                    }
-                    }
-                ... on Rates {                
-                    contentItemId,
-                    contentType,
-                    displayText,
-                    latest,
-                    published,
-                    modifiedUtc,
-                    publishedUtc,
-                    createdUtc,
-                    price,
-                    icon {
-                      paths,
-                        urls
-                    }
-                    }
-                }
+        influencer(where: {displayText: "` + userName + `"}, status: PUBLISHED) {
+            contentItemId
+            contentType
+            liveStream
+            shareLink
+            video
+            postImage
+            fullName
+            displayText
+            author
+            checkIn
+            contentItemVersionId
+            createdUtc
+            description
+            email
+            fanpage
+            genderDemorgraphic {
+              genderGraphicName
+              genderPercentage
             }
-        }
+            geoDemorgraphic {
+              geoGraphicName
+              geoPercentage
+            }
+            latest
+            modifiedUtc
+            numberOfComment
+            numberOfLike
+            numberOfLove
+            owner
+            phone
+            photo {
+              paths
+              urls
+            }
+            published
+            publishedUtc
       }
+    }
     `;
+
     const token = localStorage.getItem('token');
     const requestOptions = {
         method: 'POST',
@@ -283,10 +260,11 @@ function handleGraphJobCategoryResponse(response) {
 function handleGraphRatesResponse(response) {
     return response.json().then(text => {
 
+        debugger;
         const data = text.data;//.influencer[0].bag.contentItems;
 
         // var newArray = data.filter(value => Object.keys(value).length !== 0 && value.contentType == "Rates");
-        var newArray = data;
+        var influencer = data.influencer[0];
 
         if (!response.ok) {
             if (response.status === 401) {
@@ -299,7 +277,7 @@ function handleGraphRatesResponse(response) {
             return Promise.reject(error);
         }
 
-        return newArray;
+        return influencer;
     });
 }
 
