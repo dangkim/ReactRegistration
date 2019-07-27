@@ -6,6 +6,7 @@ import { history } from '../_helpers';
 import { alertActions } from '../_actions';
 import { PrivateRoute } from '../_components';
 import { HomePage } from '../HomePage';
+import { LandingPage } from '../LandingPage';
 import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
 import { RegisterBrandPage } from '../RegisterBrandPage';
@@ -18,6 +19,8 @@ import { compose, lifecycle, withHandlers, withState } from "recompose";
 require("babel-core/register");
 require("babel-polyfill");
 import css from './app.css';
+import landing_page_css from './landing-page.css';
+//import pe_icon_7_stroke_css from './pe-icon-7-stroke.css';
 
 const renderNotification = (notification, i) => <li key={i}>{notification}</li>;
 
@@ -61,11 +64,11 @@ class App extends React.Component {
   render() {
     const { alert } = this.props;
     return (
-      <div className="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
+      <div>
         <Router history={history}>
-          <div className="app-container">            
-            <PrivateRoute exact path="/" component={HomePage} />
-            <Route path="/login" component={LoginPage} />
+          <div>            
+            <PrivateRoute exact path="/" component={LoginPage} />
+            <Route path="/landingPage" component={LandingPage} />
             <Route path="/register" component={RegisterPage} />
             <Route path="/registerBrandPage" component={RegisterBrandPage} />
             <Route path="/registerCampaignPage" component={RegisterCampaignPage} />
