@@ -75,7 +75,7 @@ class LandingPage extends Component {
                     <div className="container">
                         <div className="navbar-header">
                             <div className="logo-container">
-                                <div className="logo" style={{border:'none', width:'150px'}}>
+                                <div className="logo" style={{ border: 'none', width: '150px' }}>
                                     <img src={new_logo} alt="Kols Viet" />
                                 </div>
                                 {/* <div className="brand">
@@ -103,7 +103,7 @@ class LandingPage extends Component {
                                         <br />
                                         {/* <h5>Be amazed by the best looking bootstrap landing page on the web! Your new app deserves an amazing page to show all of its features. Clear visual, light colours and beautifully aligned elements - they all try to make the users aware of your great app features!</h5> */}
                                         <div className="">
-                                            <a href="http://www.creative-tim.com/product/awesome-landing-page" id="Demo3" className="btn btn-fill btn-info" data-button="info">Get Free Access</a>
+                                            <Link to="/login" className="btn btn-fill btn-info">Get Free Access</Link>
                                         </div>
                                     </div>
                                 </div>
@@ -173,7 +173,8 @@ class LandingPage extends Component {
                                     <p>
                                         With all the apps that users love! Make it easy for users to share, like, post and tweet their favourite things from the app. Be sure to let users know they continue to remain connected while using your app!
                             </p>
-                                    <a href="http://www.creative-tim.com/product/awesome-landing-page" id="Demo3" className="btn btn-fill btn-info" data-button="info">Get Free Access</a>
+                                    <Link to="/login" className="btn btn-fill btn-info">Get Free Access</Link>
+                                    {/* <a href="http://www.creative-tim.com/product/awesome-landing-page" id="Demo3" className="btn btn-fill btn-info" data-button="info">Get Free Access</a> */}
                                 </div>
                             </div>
                         </div>
@@ -263,52 +264,11 @@ class LandingPage extends Component {
                             <div className="info">
                                 <h1>Try this for free!</h1>
                                 <p>Beautiful places for you.</p>
-                                <a href="http://www.creative-tim.com/product/awesome-landing-page" className="btn btn-neutral btn-lg btn-fill">EXPLORE</a>
+                                <Link to="/login" className="btn btn-neutral btn-lg btn-fill">Get Free Access</Link>
+                                {/* <a href="http://www.creative-tim.com/product/awesome-landing-page" className="btn btn-neutral btn-lg btn-fill">EXPLORE</a> */}
                             </div>
                         </div>
                     </div>
-                    <footer className="footer">
-                        <div className="container">
-                            <nav className="pull-left">
-                                <ul>
-                                    <li>
-                                        <a href="#">
-                                            Home
-                                </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            Company
-                                </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            Portfolio
-                                </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            Blog
-                                </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                            <div className="social-area pull-right">
-                                <a className="btn btn-social btn-facebook btn-simple">
-                                    <i className="fa fa-facebook-square"></i>
-                                </a>
-                                <a className="btn btn-social btn-twitter btn-simple">
-                                    <i className="fa fa-twitter"></i>
-                                </a>
-                                <a className="btn btn-social btn-pinterest btn-simple">
-                                    <i className="fa fa-pinterest"></i>
-                                </a>
-                            </div>
-                            <div className="copyright">
-                                &copy; 2016 <a href="http://www.creative-tim.com">Creative Tim</a>, made with love
-                    </div>
-                        </div>
-                    </footer>
                 </div>
             </div>
         );

@@ -20,7 +20,7 @@ require("babel-core/register");
 require("babel-polyfill");
 import css from './app.css';
 import landing_page_css from './landing-page.css';
-//import pe_icon_7_stroke_css from './pe-icon-7-stroke.css';
+import pe_icon_7_stroke_css from './pe-icon-7-stroke.css';
 
 const renderNotification = (notification, i) => <li key={i}>{notification}</li>;
 
@@ -64,25 +64,24 @@ class App extends React.Component {
   render() {
     const { alert } = this.props;
     return (
-      <div>
-        <Router history={history}>
-          <div>            
-            <PrivateRoute exact path="/" component={LoginPage} />
-            <Route path="/landingPage" component={LandingPage} />
-            <Route path="/register" component={RegisterPage} />
-            <Route path="/registerBrandPage" component={RegisterBrandPage} />
-            <Route path="/registerCampaignPage" component={RegisterCampaignPage} />
-            <Route path="/dashboardPage" component={DashBoardPage} />
-            <Route path="/influencerUpdateCostPage" component={InfluencerUpdateCostPage} />
-            <Route path="/registerInfluencerPage" component={RegisterInfluencerPage} />
-          </div>
-        </Router>
+      <Router history={history}>
         <div>
-          {alert.message &&
-            <div className={`alert ${alert.type}`}>{alert.message}</div>
-          }
+          <PrivateRoute exact path="/" component={LoginPage} />
+          <Route path="/landingPage" component={LandingPage} />
+          <Route path="/login" component={LoginPage} />
+          <Route path="/register" component={RegisterPage} />
+          <Route path="/registerBrandPage" component={RegisterBrandPage} />
+          <Route path="/registerCampaignPage" component={RegisterCampaignPage} />
+          <Route path="/dashboardPage" component={DashBoardPage} />
+          <Route path="/influencerUpdateCostPage" component={InfluencerUpdateCostPage} />
+          <Route path="/registerInfluencerPage" component={RegisterInfluencerPage} />
+          <div>
+            {alert.message &&
+              <div className={`alert ${alert.type}`}>{alert.message}</div>
+            }
+          </div>
         </div>
-      </div>
+      </Router>
     );
   }
 }
