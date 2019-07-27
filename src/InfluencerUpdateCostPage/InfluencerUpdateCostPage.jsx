@@ -33,25 +33,25 @@ class InfluencerUpdateCostPage extends Component {
     }
 
     handleChange(e) {
-        debugger;
+
         const { influencers } = this.props;
         const { name, value } = e.target;
 
         let influencer = influencers.items;
         if (name == 'shareLink') {
-            influencer.shareLink = value
+            influencer.shareLink = Number(value);
         }
         if (name == 'postImage') {
-            influencer.postImage = value
+            influencer.postImage = Number(value);
         }
         if (name == 'video') {
-            influencer.video = value
+            influencer.video = Number(value);
         }
         if (name == 'liveStream') {
-            influencer.liveStream = value
+            influencer.liveStream = Number(value);
         }
         if (name == 'checkIn') {
-            influencer.checkIn = value
+            influencer.checkIn = Number(value);
         }
         //const { influencer } = this.state;
         this.setState({ influencer: influencer });
@@ -92,7 +92,6 @@ class InfluencerUpdateCostPage extends Component {
         const userName = this.props.location.state;
         const { submitted, shareLink, video, checkIn, liveStream, postImage } = this.state;
         const influencer = influencers.items ? influencers.items : [];
-        debugger;
         // const rates = influencer.items ?
         //     influencer.items.influencer[0].bag.contentItems.filter(value => Object.keys(value).length !== 0 && value.contentType == "Rates")
         //     : [];

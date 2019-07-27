@@ -111,14 +111,14 @@ function updateInfluencers(infType, userName) {
     debugger;
     return dispatch => {
         dispatch(request(infType));
-        debugger
+
         const influencerType = createInfluencer(infType, userName);
 
         influencerService.updateInfluencers(influencerType)
             .then(
                 infType => { 
                     dispatch(success());
-                    history.push('/Login');
+                    //history.push('/dashBoard');
                     dispatch(alertActions.success('Registration Influencer successful'));
                 },
                 error => {

@@ -2,27 +2,27 @@ export function createInfluencer(influencer, userName) {
   if (influencer) {
 
     const influencerType = {
-      ContentItemId: '',
-      ContentItemVersionId: '',
+      ContentItemId: influencer.contentItemId,
+      ContentItemVersionId: influencer.contentItemVersionId,
       ContentType: 'Influencer',
       DisplayText: influencer.displayText,
-      Latest: true,
-      Published: true,
-      ModifiedUtc: '',
-      PublishedUtc: '',
-      CreatedUtc: '',
-      Owner: influencer.userName,
-      Author: influencer.userName,
+      Latest: influencer.latest,
+      Published: influencer.published,
+      ModifiedUtc: influencer.modifiedUtc,
+      PublishedUtc: influencer.publishedUtc,
+      CreatedUtc: influencer.createdUtc,
+      Owner: userName,
+      Author: userName,
       Influencer: {
         Description: {
           Text: influencer.description
         },
         Photo: {
           Paths: [
-            influencer.photo.paths
+            influencer.photo.paths[0]
           ],
           Urls: [
-            influencer.urls.urls
+            influencer.photo.urls[0]
           ]
         },
         Fanpage: {
@@ -53,40 +53,40 @@ export function createInfluencer(influencer, userName) {
           Text: influencer.phone
         },
         NumberOfLike: {
-          Text: ''
+          Text: influencer.numberOfLike
         },
         NumberOfLove: {
-          Text: ''
+          Text: influencer.numberOfLove
         },
         NumberOfComment: {
-          Text: ''
+          Text: influencer.numberOfComment
         }
       },
       TitlePart: {
-        Title: influencer.userName
+        Title: userName
       },
       AgeDemorgraphic: {
         AgePercentage: {
-          Text: ''
+          Text: influencer.ageDemorgraphic
         },
         AgeGraphicsName: {
-          Text: 'Từ 19 tới 30'
+          Text: influencer.ageGraphicsName
         }
       },
       GenderDemorgraphic: {
         GenderPercentage: {
-          Text: '90%'
+          Text: influencer.genderPercentage
         },
         GenderGraphicName: {
-          Text: ''
+          Text: influencer.genderGraphicName
         }
       },
       GeoDemorgraphic: {
         GeoPercentage: {
-          Text: '90%'
+          Text: influencer.geoPercentage
         },
         GeoGraphicName: {
-          Text: 'HCM'
+          Text: influencer.geoGraphicName
         }
       }
     }

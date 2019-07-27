@@ -196,7 +196,7 @@ function register(InfluencerType) {
 
 function updateInfluencers(InfluencerType) {
     const token = localStorage.getItem('token');
-    debugger;
+
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -260,7 +260,6 @@ function handleGraphJobCategoryResponse(response) {
 function handleGraphRatesResponse(response) {
     return response.json().then(text => {
 
-        debugger;
         const data = text.data;//.influencer[0].bag.contentItems;
 
         // var newArray = data.filter(value => Object.keys(value).length !== 0 && value.contentType == "Rates");
@@ -303,6 +302,7 @@ function handleGraphInfResponse(response) {
 function handleContentResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
+        debugger;
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
