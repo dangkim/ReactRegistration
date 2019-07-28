@@ -15,16 +15,29 @@ export const userActions = {
 function getToken(userName, password) {
     return dispatch => {
         dispatch(request({ userName }));
-
         userService.getToken(userName, password)
-            .then(
-                token => { 
-                    dispatch(success(token));
-                    history.push({
-                        pathname: '/dashBoardPage',
-                        state: { userName: userName }
-                    })
-                },
+            .then(token => {
+                userService.getContentType(token)
+                    .then(type => {
+                        if (type == "Brand") {
+                            history.push({
+                                pathname: '/registerCampaignPage',
+                                state: { userName: userName }
+                            })
+                        }
+                        else if (type == "Influencer") {
+                            history.push({
+                                pathname: '/dashBoardPage',
+                                state: { userName: userName }
+                            })
+                        }
+                    },
+                        error => {
+                            dispatch(failure(error.toString()));
+                            dispatch(alertActions.error(error.toString()));
+                        }
+                    );
+            },
                 error => {
                     dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));
@@ -43,7 +56,7 @@ function login(userName, password) {
 
         userService.login(userName, password)
             .then(
-                user => { 
+                user => {
                     dispatch(success(user));
                     history.push('/');
                 },
@@ -70,7 +83,7 @@ function register(user) {
 
         userService.register(user)
             .then(
-                user => { 
+                user => {
                     dispatch(success());
                     history.push('/login');
                     //dispatch(alertActions.success('Registration successful'));

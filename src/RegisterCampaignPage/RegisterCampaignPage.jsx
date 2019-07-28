@@ -11,6 +11,16 @@ import citynights from '../assets/images/originals/citynights.jpg'
 import citydark from '../assets/images/originals/citydark.jpg'
 import defaultAvatar from '../assets/images/avatars/default.jpg'
 import Slider from "react-slick";
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import {
+    Row, Col, CustomInput   
+} from 'reactstrap';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import {
+    faAngleUp
+} from '@fortawesome/free-solid-svg-icons';
 //import {configContent} from 'configContent';
 
 import { history } from '../_helpers';
@@ -140,7 +150,7 @@ class RegisterCampaignPage extends Component {
                 selectedOptionInteresting,
                 brand,
                 selectedInfluencers,
-                checkedInfluencers));            
+                checkedInfluencers));
         }
     }
 
@@ -263,6 +273,7 @@ class RegisterCampaignPage extends Component {
             //dispatch(infActions.getAllJobCategories());
         }
         else {
+            //dispatch(infActions.getAll(first, 0));
             history.push('/registerBrandPage');
         }
 
@@ -300,7 +311,7 @@ class RegisterCampaignPage extends Component {
             }
         }
 
-        return this.props.location.state ? (
+        return true ? (
             <div className="app-container app-theme-white body-tabs-shadow">
                 <div className="app-container">
                     <div className="h-100">
@@ -476,50 +487,101 @@ class RegisterCampaignPage extends Component {
                             <div className="h-100 no-gutters row">
                                 <div className="d-lg-flex d-xs-none col-lg-12">
                                     <div className="form-row">
-                                        {
-                                            influencers.items && influencers.items.influencer.map((item, key) => {
-                                                //debugger;
-                                                var configContent = require('configContent')
-                                                return (
-                                                    <div key={key} className="col-sm-4">
-                                                        <div className="team-member">
-                                                            <img className="mx-auto rounded-circle" src={imgSrc} alt="" />
-                                                            <h6>{item.displayText}</h6>
-                                                            <p>{item.description}</p>
-                                                            <div key={key} className="row">
-                                                                <p className='col-sm-5'>{item.ageDemorgraphic ? item.ageDemorgraphic.ageGraphicsName : ''}</p>
-                                                                <p className='col-sm-2'>{item.ageDemorgraphic ? item.ageDemorgraphic.agePercentage : ''}</p>
-                                                                <p className='col-sm-3'>{item.genderDemorgraphic ? item.genderDemorgraphic.genderGraphicsName : ''}</p>
-                                                                <p className='col-sm-2'>{item.genderDemorgraphic ? item.genderDemorgraphic.genderPercentage : ''}</p>
-                                                                <p className='col-sm-8'>{item.geoDemorgraphic ? item.geoDemorgraphic.geoGraphicName : ''}</p>
-                                                                <p className='col-sm-4'>{item.geoDemorgraphic ? item.geoDemorgraphic.geoPercentage : ''}</p>
-                                                                <p className='col-sm-8'>Share Link</p>
-                                                                <p className='col-sm-4'>{item.shareLink ? item.shareLink : ''}</p>
-                                                                <p className='col-sm-8'>Post Image</p>
-                                                                <p className='col-sm-4'>{item.postImage ? item.postImage : ''}</p>
-                                                                <p className='col-sm-8'>Live Stream</p>
-                                                                <p className='col-sm-4'>{item.liveStream ? item.liveStream : ''}</p>
-                                                                <p className='col-sm-4'>Check In</p>
-                                                                <p className='col-sm-3'>{item.checkIn ? item.checkIn : ''}</p>
-                                                                <p className='col-sm-2'>Video</p>
-                                                                <p className='col-sm-3'>{item.video ? item.video : ''}</p>
-                                                            </div>
-                                                            <div className="form-group">
-                                                                <input onChange={this.handleCheckBoxChange}
-                                                                    id={item.contentItemId}
-                                                                    checked={this.state.checkedInfluencers.get(item.contentItemId) ? this.state.checkedInfluencers.get(item.contentItemId) : false}
-                                                                    type="checkbox"
-                                                                    name={item.contentItemId}
-                                                                    className="agree-term"
-                                                                />
-                                                                <label htmlFor={item.contentItemId} className="label-agree-term"><span><span></span></span>Select</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                )
+                                        <ReactCSSTransitionGroup
+                                            component="div"
+                                            transitionName="TabsAnimation"
+                                            transitionAppear={true}
+                                            transitionAppearTimeout={0}
+                                            transitionEnter={false}
+                                            transitionLeave={false}>
+                                            {
+                                                <Row>
+                                                    {
+                                                        influencers.items && influencers.items.influencer.map((item, key) => {
+                                                            return (
+                                                                <Col key={key} md="4">
+                                                                    <div className="card mb-3 widget-chart bg-tempting-azure card-border">
+                                                                        <div className="rounded-circle">
+                                                                            {/* <div className="icon-wrapper-bg bg-white opacity-1" /> */}
+                                                                            {/* <i className="lnr-cog text-white" /> */}
+                                                                            <img className="mx-auto rounded-circle" style={{ width: '88px', height: '88px' }} src={imgSrc} alt="" />
+                                                                        </div>
+                                                                        <div className="divide" style={{ marginBottom: '5px' }} />
+                                                                        {/* <div className="widget-numbers">
+                                                                            45.8k
+                                                                        </div> */}
+                                                                        <div className="widget-heading">
+                                                                            {item.fullName} - {item.description}
+                                                                        </div>
+                                                                        <Row>
+                                                                            <Col>
+                                                                                <div className="widget-subheading" style={{ textAlign: 'left' }}>
+                                                                                    Hướng về lứa: {item.ageDemorgraphic.ageGraphicsName}
+                                                                                </div>
+                                                                            </Col>
+                                                                            <Col>
+                                                                                <div className="widget-subheading" style={{ textAlign: 'left' }}>
+                                                                                    Share Link: {item.shareLink}
+                                                                                </div>
+                                                                            </Col>
+                                                                        </Row>
+                                                                        <Row>
+                                                                            <Col>
+                                                                                <div className="widget-subheading" style={{ textAlign: 'left' }}>
+                                                                                    Hướng về giới: {item.genderDemorgraphic.genderGraphicsName}
+                                                                                </div>
+                                                                            </Col>
+                                                                            <Col>
+                                                                                <div className="widget-subheading" style={{ textAlign: 'left' }}>
+                                                                                    Post Image: {item.postImage}
+                                                                                </div>
+                                                                            </Col>
+                                                                        </Row>
+                                                                        <Row>
+                                                                            <Col>
+                                                                                <div className="widget-subheading" style={{ textAlign: 'left' }}>
+                                                                                    Hướng về nơi: {item.geoDemorgraphic.geoGraphicName}
+                                                                                </div>
+                                                                            </Col>
+                                                                            <Col>
+                                                                                <div className="widget-subheading" style={{ textAlign: 'left' }}>
+                                                                                    Video: {item.video}
+                                                                                </div>
+                                                                            </Col>
+                                                                        </Row>
+                                                                        <Row>
+                                                                            <Col>
+                                                                            </Col>
+                                                                            <Col>
+                                                                                <div className="widget-subheading" style={{ textAlign: 'left' }}>
+                                                                                    Video: {item.checkIn}
+                                                                                </div>
+                                                                            </Col>
+                                                                        </Row>
+                                                                        <Row>
+                                                                            <Col>
+                                                                            </Col>
+                                                                            <Col>
+                                                                                <div className="widget-subheading" style={{ textAlign: 'left' }}>
+                                                                                    LiveStream: {item.liveStream}
+                                                                                </div>
+                                                                            </Col>
+                                                                        </Row>
+                                                                        <div className="widget-description text-success">
+                                                                            {/* <FontAwesomeIcon icon={faAngleUp} />
+                                                                            <span className="pl-1">175.5%</span> */}
+                                                                            <CustomInput type="checkbox" id={item.contentItemId} name={item.contentItemId} onChange={this.handleCheckBoxChange} checked={this.state.checkedInfluencers.get(item.contentItemId) ? this.state.checkedInfluencers.get(item.contentItemId) : false}
+                                                                            label="Select"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </Col>
 
-                                            })
-                                        }
+                                                            )
+                                                        })
+                                                    }
+                                                </Row>
+                                            }
+                                        </ReactCSSTransitionGroup>
                                         <div className="mt-4 d-flex align-items-center">
                                             <div className="ml-auto">
                                                 {/* <input type="submit" name="nextStep" id="nextStep" className="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg" value="Next Step" /> */}

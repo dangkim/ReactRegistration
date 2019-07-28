@@ -44,7 +44,6 @@ class LoginPage extends React.Component {
     }
 
     render() {
-
         const { loggingIn, token } = this.props;
         const { userName, password, submitted } = this.state;
         const settings = {
@@ -103,7 +102,7 @@ class LoginPage extends React.Component {
                                             </div>
                                             <div className="col-md-6">
                                                 <h6 className="mt-3">
-                                                    <a href="javascript:void(0);" className="text-primary">Sign up as Influencer now</a>
+                                                <Link to="/registerInfluencerPage">Sign up as Influencer now</Link>
                                                 </h6>
                                             </div>
                                         </div>

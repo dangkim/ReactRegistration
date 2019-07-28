@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import bg3 from '../assets/images/template/bg3.jpg'
 import iphone3 from '../assets/images/template/iphone3.png'
 import mac from '../assets/images/template/mac.png'
-import new_logo from '../assets/images/new_logo.png'
+import big_logo from '../assets/images/big_logo.png'
 import citydark from '../assets/images/originals/citydark.jpg'
 import adobe from '../assets/images/logos/adobe.png'
 import ebay from '../assets/images/logos/ebay.png'
@@ -76,7 +76,7 @@ class LandingPage extends Component {
                         <div className="navbar-header">
                             <div className="logo-container">
                                 <div className="logo" style={{ border: 'none', width: '150px' }}>
-                                    <img src={new_logo} alt="Kols Viet" />
+                                    <img src={big_logo} alt="Kols Viet" />
                                 </div>
                                 {/* <div className="brand">
                                         Kols Viet

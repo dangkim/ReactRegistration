@@ -8,6 +8,7 @@ export const userService = {
     login,
     getToken,
     logout,
+    getContentType,
     register,
     getAll,
     getById,
@@ -34,6 +35,19 @@ function getToken(username, password) {
     };
 
     return fetch(`${configContent.apiUrl}connect/token`, requestOptions).then(handleTokenResponse);
+}
+
+function getContentType(token) {
+    debugger;
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        },
+    };
+
+    return fetch(`${configOrchardCore.apiUrl}content/Post04`, requestOptions).then(handleContentTypeResponse);
 }
 
 function login(userName, password) {
@@ -139,5 +153,24 @@ function handleTokenResponse(response) {
 
         localStorage.setItem('token', token);
         return token;
+    });
+}
+
+
+function handleContentTypeResponse(response) {
+    return response.text().then(text => {
+        const data = text;
+        if (!response.ok) {
+            if (response.status === 401) {
+                // auto logout if 401 response returned from api
+                logout();
+                location.reload(true);
+            }
+
+            const error = (data && data.message) || response.statusText;
+            return Promise.reject(error);
+        }
+        debugger;
+        return data;
     });
 }

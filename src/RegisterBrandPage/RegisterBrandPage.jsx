@@ -13,17 +13,6 @@ class RegisterBrandPage extends React.Component {
     constructor(props) {
         super(props);
 
-        // this.state = {
-        //     brand: {
-        //         firstName: '',
-        //         lastName: '',
-        //         brandName: '',
-        //         email: '',
-        //         password: ''
-        //     },
-        //     submitted: false
-        // };
-
         this.state = {
             brand: {
                 //displayText:'',
@@ -61,26 +50,11 @@ class RegisterBrandPage extends React.Component {
         });
     }
 
-    // handleSubmit(event) {
-    //     event.preventDefault();
-
-    //     this.setState({ submitted: true });
-    //     const { brand } = this.state;
-    //     const { dispatch } = this.props;
-    //     if (brand.firstName && brand.lastName && brand.brandName && brand.email && brand.password) {
-    //         dispatch(brandActions.register(brand));
-    //     }
-    // }
-
     handleSubmit(event) {
         event.preventDefault();
         this.setState({ submitted: true });
         const { brand, selectedOptionLocation } = this.state;
         const { dispatch, users } = this.props;
-
-        // let locationString = selectedOptionLocation.map((val)=>{  
-        //     return val.value + ';'; 
-        // })
 
         let locationString = '';
         var i;
@@ -154,13 +128,6 @@ class RegisterBrandPage extends React.Component {
 
     componentDidMount() {
         const { dispatch } = this.props;
-        //dispatch(campaignActions.getAllLocation());
-
-        // else
-        // {
-        //     history.push('/registerBrandPage');
-        // }
-
     }
 
     render() {
