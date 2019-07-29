@@ -5,6 +5,7 @@ import city from '../assets/images/originals/city.jpg'
 import citynights from '../assets/images/originals/citynights.jpg'
 import citydark from '../assets/images/originals/citydark.jpg'
 import Slider from "react-slick";
+import new_logo from '../assets/images/new_logo.png'
 
 import { userActions } from '../_actions';
 
@@ -90,7 +91,10 @@ class LoginPage extends React.Component {
                                 </div>
                                 <div className="h-100 d-flex bg-white justify-content-center align-items-center col-md-12 col-lg-8">
                                     <div className="mx-auto app-login-box col-sm-12 col-md-10 col-lg-9">
-                                        <div className="app-logo"></div>
+                                        {/* <div className="app-logo"></div> */}
+                                        <div style={{ marginBottom: '3rem', width: '97px', height: '23px' }}>
+                                            <img src={new_logo} alt="Kols Viet" />
+                                        </div>
                                         <h4 className="mb-0">
                                             <span className="d-block">Welcome back,</span>
                                             <span>Please sign in to your account.</span></h4>
@@ -102,7 +106,7 @@ class LoginPage extends React.Component {
                                             </div>
                                             <div className="col-md-6">
                                                 <h6 className="mt-3">
-                                                <Link to="/registerInfluencerPage">Sign up as Influencer now</Link>
+                                                    <Link to="/registerInfluencerPage">Sign up as Influencer now</Link>
                                                 </h6>
                                             </div>
                                         </div>
@@ -133,7 +137,12 @@ class LoginPage extends React.Component {
                                                 <div className="divider row"></div>
                                                 <div className="d-flex align-items-center">
                                                     <div className="ml-auto"><a href="javascript:void(0);" className="btn-lg btn btn-link">Recover Password</a>
-                                                        <button type="submit" className="btn btn-primary btn-lg">Login to Dashboard</button>
+                                                        {/* <button type="submit" className="btn btn-primary btn-lg">Login to Dashboard</button> */}
+                                                        <input type="submit" name="signup" id="signup" className="btn btn-primary btn-lg" value="Create Account" />
+                                                        {
+                                                            loggingIn &&
+                                                            <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                                        }
                                                     </div>
                                                 </div>
                                             </form>

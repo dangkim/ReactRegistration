@@ -136,7 +136,7 @@ class RegisterInfluencerPage extends React.Component {
                             <div className="h-100 d-md-flex d-sm-block bg-white justify-content-center align-items-center col-md-12 col-lg-8">
                                 <div className="mx-auto app-login-box col-sm-12 col-md-10 col-lg-9">
                                     {/* <div className="app-logo"></div> */}
-                                    <div style={{ marginBottom: '3rem', width: '97px', height:'23px' }}>
+                                    <div style={{ marginBottom: '3rem', width: '97px', height: '23px' }}>
                                         <img src={new_logo} alt="Kols Viet" />
                                     </div>
                                     <h4>
@@ -167,7 +167,7 @@ class RegisterInfluencerPage extends React.Component {
                                                             <div className="help-block text-danger">Email is required</div>
                                                         }
                                                     </div>
-                                                </div>                                                
+                                                </div>
                                                 <div className="col-md-6">
                                                     <div className="position-relative form-group">
                                                         <label htmlFor="name" className="">
@@ -179,7 +179,19 @@ class RegisterInfluencerPage extends React.Component {
                                                             <div className="help-block text-danger">Phone is required</div>
                                                         }
                                                     </div>
-                                                </div>                                                
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="position-relative form-group">
+                                                        <label htmlFor="name" className="">
+                                                            <span className="text-danger">*</span> Fanpage
+                                                        </label>
+                                                        <input type="text" name="fanpage" id="fanpage" placeholder="Your Fanpage" value={influencer.fanpage} onChange={this.handleChange} className="form-control" />
+                                                        {
+                                                            submitted && !influencer.fanpage &&
+                                                            <div className="help-block text-danger">Fanpage is required</div>
+                                                        }
+                                                    </div>
+                                                </div>
                                                 <div className="col-md-6">
                                                     <div className="position-relative form-group">
                                                         <label htmlFor="pass" className="">

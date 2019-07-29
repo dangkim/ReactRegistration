@@ -8,6 +8,7 @@ import citydark from '../assets/images/originals/citydark.jpg'
 import Slider from "react-slick";
 import { brandActions, campaignActions, userActions } from '../_actions';
 import Select from 'react-select';
+import new_logo from '../assets/images/new_logo.png'
 
 class RegisterBrandPage extends React.Component {
     constructor(props) {
@@ -206,7 +207,10 @@ class RegisterBrandPage extends React.Component {
                         <div className="h-100 no-gutters row">
                             <div className="h-100 d-md-flex d-sm-block bg-white justify-content-center align-items-center col-md-12 col-lg-8">
                                 <div className="mx-auto app-login-box col-sm-12 col-md-10 col-lg-9">
-                                    <div className="app-logo"></div>
+                                    {/* <div className="app-logo"></div> */}
+                                    <div style={{ marginBottom: '3rem', width: '97px', height: '23px' }}>
+                                            <img src={new_logo} alt="Kols Viet" />
+                                        </div>
                                     <h4>
                                         <div>Welcome,</div>
                                         <span>It only takes a <span className="text-success">few seconds</span> to create your account</span></h4>
