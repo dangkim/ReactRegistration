@@ -1,5 +1,5 @@
 import { infConstants } from '../_constants';
-import { influencerService } from '../_services';
+import { influencerService, userService } from '../_services';
 import { alertActions } from '.';
 import { history } from '../_helpers';
 import {createInfluencer} from '../_models/InfluencerType';
@@ -13,17 +13,49 @@ export const infActions = {
     updateInfluencers,
 };
 
-function register(infType) {
+function register(infType, userType) {
     return dispatch => {
         dispatch(request(infType));
 
-        influencerService.register(infType)
-            .then(
-                infType => { 
-                    dispatch(success());
-                    history.push('/Login');
-                    dispatch(alertActions.success('Registration Influencer successful'));
-                },
+        // influencerService.register(infType)
+        //     .then(
+        //         infType => { 
+        //             dispatch(success());
+        //             history.push('/Login');
+        //             dispatch(alertActions.success('Registration Influencer successful'));
+        //         },
+        //         error => {
+        //             dispatch(failure(error.toString()));
+        //             dispatch(alertActions.error(error.toString()));
+        //         }
+        //     );
+
+        userService.register(userType)
+            .then(user => {
+                userService.getToken(userType.UserName, userType.Password)
+                    .then(token => {
+                        influencerService.register(infType, token)
+                            .then(influencer => {
+                                history.push({
+                                    pathname: '/dashBoardPage',
+                                    state: { userName: userType.UserName }
+                                })
+                                dispatch(alertActions.success('Registration successful'));
+                            },
+                                error => {
+                                    dispatch(failure(error.toString()));
+                                    dispatch(alertActions.error(error.toString()));
+                                }
+                            );
+                    },
+                        error => {
+                            dispatch(failure(error.toString()));
+                            dispatch(alertActions.error(error.toString()));
+                        }
+                    )
+
+                //dispatch(alertActions.success('Registration User Successful'));
+            },
                 error => {
                     dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));

@@ -11,7 +11,10 @@ class RegisterInfluencerPage extends React.Component {
         this.state = {
             influencer: {
                 fullName: '',
+                email: '',
                 phone: '',
+                password: '',
+                repeatPassword: '',
                 fanpage: '',
             },
             submitted: false
@@ -40,37 +43,113 @@ class RegisterInfluencerPage extends React.Component {
         const { influencer } = this.state;
 
         //const { influencers } = this.props;
-        if (influencer.fullName && influencer.phone && influencer.fanpage) {
+        if (influencer.fullName
+            && influencer.phone
+            && influencer.fanpage
+            && influencer.email
+            && influencer.password
+            && influencer.repeatPassword) {
+
+            const userType = {
+                UserName: influencer.email,
+                Email: influencer.email,
+                Password: influencer.password,
+                ConfirmPassword: influencer.repeatPassword,
+                IsFluencer: true,
+                IsBrand: false
+            }
 
             const InfluencerType = {
                 ContentItemId: '',
                 ContentItemVersionId: '',
                 ContentType: 'Influencer',
-                DisplayText: influencer.fullName,
-                Latest: false,
-                Published: false,
-                ModifiedUtc: null,
-                PublishedUtc: null,
-                CreatedUtc: null,
+                DisplayText: influencer.email + ";" + influencer.fullName,
+                Latest: true,
+                Published: true,
+                ModifiedUtc: '',
+                PublishedUtc: '',
+                CreatedUtc: '',
                 Owner: 'admin',
                 Author: 'admin',
                 Influencer: {
+                    Description: {
+                        Text: ''
+                    },
+                    Photo: {
+                        Paths: [
+                            ''
+                        ],
+                        Urls: [
+                            ''
+                        ]
+                    },
+                    Fanpage: {
+                        Text: influencer.fanpage
+                    },
+                    Email: {
+                        Text: influencer.email
+                    },
                     FullName: {
                         Text: influencer.fullName
+                    },
+                    ShareLink: {
+                        Text: 0
+                    },
+                    PostImage: {
+                        Text: 0
+                    },
+                    LiveStream: {
+                        Text: 0
+                    },
+                    CheckIn: {
+                        Text: 0
+                    },
+                    Video: {
+                        Text: 0
                     },
                     Phone: {
                         Text: influencer.phone
                     },
-                    Fanpage: {
-                        Text: influencer.fanpage
+                    NumberOfLike: {
+                        Text: ''
+                    },
+                    NumberOfLove: {
+                        Text: ''
+                    },
+                    NumberOfComment: {
+                        Text: ''
                     }
                 },
                 TitlePart: {
-                    Title: influencer.fullName,
+                    Title: influencer.email
+                },
+                AgeDemorgraphic: {
+                    AgePercentage: {
+                        Text: '90%'
+                    },
+                    AgeGraphicsName: {
+                        Text: 'Từ 19 tới 30'
+                    }
+                },
+                GenderDemorgraphic: {
+                    GenderPercentage: {
+                        Text: '90%'
+                    },
+                    GenderGraphicName: {
+                        Text: 'Mọi giới'
+                    }
+                },
+                GeoDemorgraphic: {
+                    GeoPercentage: {
+                        Text: '90%'
+                    },
+                    GeoGraphicName: {
+                        Text: 'TPHCM'
+                    }
                 }
             }
 
-            dispatch(infActions.register(InfluencerType));
+            dispatch(infActions.register(InfluencerType, userType));
         }
     }
 

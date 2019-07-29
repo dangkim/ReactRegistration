@@ -201,29 +201,6 @@ class DashBoardPage extends Component {
 
     render() {
         const { userName } = this.state;
-        // const { influencers, brands, campaigns, locations, interestings, jobCategories} = this.props;
-        // const { submitted,
-        //     campaign,
-        //     job,
-        //     selectedOptionLocation,
-        //     selectedOptionInteresting,
-        //     selectedOptionJobCategory,
-        //     isFormStep,
-        //     isInfluencerStep,
-        //     isJobStep,
-        //     checkedInfluencers  } = this.state;
-
-        // var localJobCategories = [
-        // ];
-
-        // if(jobCategories.jobCategories)
-        // {
-        //     jobCategories.jobCategories.map((item, key) => 
-        //     {                
-        //         const jobCategory = {value: item, label: item.description};
-        //         localJobCategories.push(jobCategory);
-        //     })
-        // }
 
         return (
             <div>

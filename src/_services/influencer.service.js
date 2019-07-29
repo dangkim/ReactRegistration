@@ -181,7 +181,7 @@ function getCostByUserName(userName) {
     return fetch(`${configOrchardCore.apiUrl}graphql`, requestOptions).then(handleGraphRatesResponse);
 }
 
-function register(InfluencerType) {
+function register(InfluencerType, token) {
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -191,7 +191,7 @@ function register(InfluencerType) {
         body: JSON.stringify(InfluencerType)
     };
 
-    return fetch(`${configOrchardCore.apiUrl}content`, requestOptions).then(handleContentResponse);
+    return fetch(`${configOrchardCore.apiUrl}content/Post`, requestOptions).then(handleContentResponse);
 }
 
 function updateInfluencers(InfluencerType) {
