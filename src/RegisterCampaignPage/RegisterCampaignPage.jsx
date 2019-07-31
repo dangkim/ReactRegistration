@@ -11,9 +11,11 @@ import citynights from '../assets/images/originals/citynights.jpg'
 import citydark from '../assets/images/originals/citydark.jpg'
 import defaultAvatar from '../assets/images/avatars/default.jpg'
 import Slider from "react-slick";
+import { LinkedCalendar } from 'rb-datepicker';
+import 'bootstrap-daterangepicker/daterangepicker.css';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {
-    Row, Col, CustomInput   
+    Row, Col, CustomInput
 } from 'reactstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -33,16 +35,16 @@ class RegisterCampaignPage extends Component {
         this.state = {
             campaign: {
                 campaignTarget: '',
-                marketPlace: '',
-                fromAge: '',
-                toAge: '',
-                gender: '',
+                marketPlace: 'Toàn quốc',
+                fromAge: 19,
+                toAge: 30,
+                gender: 'Mọi giới',
                 campaignName: '',
                 fromDate: '',
                 toDate: '',
                 productInfo: '',
                 budget: '',
-                currency: ''
+                currency: 'VND'
             },
             job: {
                 jobName: '',
@@ -279,9 +281,12 @@ class RegisterCampaignPage extends Component {
 
     }
 
-    // handleDeletecampaign(id) {
-    //     return (e) => this.props.dispatch(campaignActions.delete(id));
-    // }
+    onDatesChange = ({ startDate, endDate }) => {
+        const { submitted, campaign } = this.state;
+        campaign.fromDate = startDate;
+        campaign.toDate = endDate;
+        console.log(({ startDate, endDate }));
+    }
 
     render() {
         const { submitted,
@@ -349,7 +354,7 @@ class RegisterCampaignPage extends Component {
                                                             }
                                                         </div>
                                                     </div>
-                                                    <div className="col-md-3">
+                                                    {/* <div className="col-md-3">
                                                         <div className="position-relative form-group">
                                                             <label htmlFor="name" className="">
                                                                 <span className="text-danger">*</span> From Date
@@ -371,13 +376,23 @@ class RegisterCampaignPage extends Component {
                                                                 <div className="help-block text-danger">Campaign Date is required</div>
                                                             }
                                                         </div>
+                                                    </div> */}
+                                                    <div className="col-md-3">
+                                                        <div className="position-relative form-group">
+                                                            <label htmlFor="name" className=""> <span className="text-danger">*</span> Date Time</label>
+                                                            <LinkedCalendar onDatesChange={this.onDatesChange} showDropdowns={false} />
+                                                            {
+                                                                (submitted && (!campaign.toDate || !campaign.fromDate)) &&
+                                                                <div className="help-block text-danger">Campaign Date is required</div>
+                                                            }
+                                                        </div>
                                                     </div>
                                                     <div className="col-md-3">
                                                         <div className="position-relative form-group">
                                                             <label htmlFor="name" className="">
                                                                 <span className="text-danger">*</span> From Age
                                                         </label>
-                                                            <input type="text" className="form-control" name="fromAge" id="fromAge" placeholder="From Age" value={campaign.fromAge} onChange={this.handleCampaignChange} />
+                                                            <input type="number" className="form-control" name="fromAge" id="fromAge" placeholder="From Age" value={campaign.fromAge} onChange={this.handleCampaignChange} />
                                                             {
                                                                 submitted && !campaign.fromAge &&
                                                                 <div className="help-block text-danger">Age is required</div>
@@ -389,7 +404,7 @@ class RegisterCampaignPage extends Component {
                                                             <label htmlFor="name" className="">
                                                                 <span className="text-danger">*</span> To Age
                                                         </label>
-                                                            <input type="text" className="form-control" name="toAge" id="toAge" placeholder="To Age" value={campaign.toAge} onChange={this.handleCampaignChange} />
+                                                            <input type="number" className="form-control" name="toAge" id="toAge" placeholder="To Age" value={campaign.toAge} onChange={this.handleCampaignChange} />
                                                             {
                                                                 submitted && !campaign.toAge &&
                                                                 <div className="help-block text-danger">Age is required</div>
@@ -414,6 +429,7 @@ class RegisterCampaignPage extends Component {
                                                                 <span className="text-danger">*</span> Location</label>
                                                             <Select
                                                                 value={selectedOptionLocation}
+                                                                defaultValue={locations[0]}
                                                                 onChange={this.handleOptionLocationChange}
                                                                 isMulti
                                                                 placeholder="Locations..."
@@ -427,6 +443,7 @@ class RegisterCampaignPage extends Component {
                                                                 <span className="text-danger">*</span> Interestings</label>
                                                             <Select
                                                                 value={selectedOptionInteresting}
+                                                                defaultValue={interestings[2]}
                                                                 onChange={this.handleOptionInterestingChange}
                                                                 isMulti
                                                                 placeholder="Interestings..."
@@ -571,7 +588,7 @@ class RegisterCampaignPage extends Component {
                                                                             {/* <FontAwesomeIcon icon={faAngleUp} />
                                                                             <span className="pl-1">175.5%</span> */}
                                                                             <CustomInput type="checkbox" id={item.contentItemId} name={item.contentItemId} onChange={this.handleCheckBoxChange} checked={this.state.checkedInfluencers.get(item.contentItemId) ? this.state.checkedInfluencers.get(item.contentItemId) : false}
-                                                                            label="Select"/>
+                                                                                label="Select" />
                                                                         </div>
                                                                     </div>
                                                                 </Col>
