@@ -127,7 +127,7 @@ function getCostByUserName(userName) {
 
     const GET_COST_BY_USERNAME = `
     {
-        influencer(where: {displayText: "` + userName + `"}, status: PUBLISHED) {
+        influencer(where: {displayText_contains: "` + userName + `"}, status: PUBLISHED) {
             contentItemId
             contentType
             liveStream

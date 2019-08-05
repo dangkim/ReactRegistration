@@ -55,7 +55,7 @@ class App extends React.Component {
     //     //setToken(token);
     //   })
     //   .catch(function (err) {
-    //     console.log("Unable to get permission to notify.", err);
+    //     //console.log("Unable to get permission to notify.", err);
     //   });
 
     // registerPushListener(pushNotification);
@@ -115,7 +115,7 @@ const connectedApp = connect(mapStateToProps)(App);
 //           setToken(token);
 //         })
 //         .catch(function (err) {
-//           console.log("Unable to get permission to notify.", err);
+//           //console.log("Unable to get permission to notify.", err);
 //         });
 
 //       registerPushListener(pushNotification);

@@ -144,17 +144,17 @@ class DashBoardPage extends Component {
 
     handleOptionLocationChange = selectedOptionLocation => {
         this.setState({ selectedOptionLocation });
-        console.log(`Option selected:`, selectedOptionLocation);
+        //console.log(`Option selected:`, selectedOptionLocation);
     };
 
     handleOptionInterestingChange = selectedOptionInteresting => {
         this.setState({ selectedOptionInteresting });
-        console.log(`Option selected:`, selectedOptionInteresting);
+        //console.log(`Option selected:`, selectedOptionInteresting);
     };
 
     handleOptionJobCategoryChange = selectedOptionJobCategory => {
         this.setState({ selectedOptionJobCategory });
-        console.log(`Option selected:`, selectedOptionJobCategory);
+        //console.log(`Option selected:`, selectedOptionJobCategory);
     };
 
     handleCheckBoxChange(event) {

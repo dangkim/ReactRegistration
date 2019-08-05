@@ -10,10 +10,14 @@ import city from '../assets/images/originals/city.jpg'
 import citynights from '../assets/images/originals/citynights.jpg'
 import citydark from '../assets/images/originals/citydark.jpg'
 import defaultAvatar from '../assets/images/avatars/default.jpg'
-import Slider from "react-slick";
-import { LinkedCalendar } from 'rb-datepicker';
-import 'bootstrap-daterangepicker/daterangepicker.css';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import DateRangePicker from 'react-daterange-picker'
+import originalMoment from "moment";
+import { extendMoment } from "moment-range";
+import 'react-daterange-picker/dist/css/react-calendar.css'
+
+const moment = extendMoment(originalMoment);
+
 import {
     Row, Col, CustomInput
 } from 'reactstrap';
@@ -31,6 +35,10 @@ class RegisterCampaignPage extends Component {
 
     constructor(props) {
         super(props);
+
+        const today = moment();
+        //const startDate = today;
+        //const dateValue = today;
 
         this.state = {
             campaign: {
@@ -53,8 +61,8 @@ class RegisterCampaignPage extends Component {
                 jobDescription: '',
                 jobLink: ''
             },
-            selectedOptionLocation: null,
-            selectedOptionInteresting: null,
+            selectedOptionLocation: [{value: "TPHCM", label: "TPHCM"}],
+            selectedOptionInteresting: [{value: "Fashion", label: "Fashion"}],
             selectedOptionJobCategory: null,
             selectedInfluencers: [],
             submitted: false,
@@ -64,6 +72,10 @@ class RegisterCampaignPage extends Component {
             isChecked: false,
             skip: 0,
             checkedInfluencers: new Map(),
+            startDate: today,
+            endDate: today,
+            isOpen: false,
+            dateValue: moment.range(today.clone(), today.clone().add(7, "days"))
         };
 
         this.handleCampaignChange = this.handleCampaignChange.bind(this);
@@ -142,8 +154,6 @@ class RegisterCampaignPage extends Component {
             job.jobName &&
             selectedInfluencers.length > 0) {
 
-            debugger;
-
             this.setState({ isFormStep: true, isInfluencerStep: false, isJobStep: false });
 
             dispatch(campaignActions.register(campaign,
@@ -156,11 +166,10 @@ class RegisterCampaignPage extends Component {
         }
     }
 
-    handleInfluencerStep(event) {
+    handleInfluencerStep(event) {        
         const { campaign, selectedOptionLocation, selectedOptionInteresting } = this.state;
         event.preventDefault();
         this.setState({ submitted: true });
-        debugger;
         if (campaign.campaignName &&
             campaign.campaignTarget &&
             campaign.fromDate &&
@@ -180,7 +189,6 @@ class RegisterCampaignPage extends Component {
     handleJobStep(event) {
         event.preventDefault();
         this.setState({ submitted: true });
-        debugger;
         const { campaign,
             job,
             selectedOptionLocation,
@@ -223,17 +231,17 @@ class RegisterCampaignPage extends Component {
 
     handleOptionLocationChange = selectedOptionLocation => {
         this.setState({ selectedOptionLocation });
-        console.log(`Option selected:`, selectedOptionLocation);
+        //console.log(`Option selected:`, selectedOptionLocation);
     };
 
     handleOptionInterestingChange = selectedOptionInteresting => {
         this.setState({ selectedOptionInteresting });
-        console.log(`Option selected:`, selectedOptionInteresting);
+        //console.log(`Option selected:`, selectedOptionInteresting);
     };
 
     handleOptionJobCategoryChange = selectedOptionJobCategory => {
         this.setState({ selectedOptionJobCategory });
-        console.log(`Option selected:`, selectedOptionJobCategory);
+        //console.log(`Option selected:`, selectedOptionJobCategory);
     };
 
     handleCheckBoxChange(event) {
@@ -268,11 +276,6 @@ class RegisterCampaignPage extends Component {
             const { brand } = this.props.location.state;
             dispatch(infActions.getAll(first, 0));
             dispatch(brandActions.getBrandFromBrandPage(brand));
-            //dispatch(campaignActions.getAll());
-            //dispatch(infActions.getAll());
-            //dispatch(campaignActions.getAllLocation());
-            //dispatch(campaignActions.getAllInteresting());
-            //dispatch(infActions.getAllJobCategories());
         }
         else {
             //dispatch(infActions.getAll(first, 0));
@@ -281,12 +284,27 @@ class RegisterCampaignPage extends Component {
 
     }
 
-    onDatesChange = ({ startDate, endDate }) => {
-        const { submitted, campaign } = this.state;
-        campaign.fromDate = startDate;
-        campaign.toDate = endDate;
-        console.log(({ startDate, endDate }));
+    onDatesChange = (dateValue) => {
+        //debugger;
+        const { campaign } = this.state;
+
+        //console.log(({ startDate, endDate }));
+
+        if (dateValue) {
+            this.setState({ isOpen: false, dateValue: dateValue });
+            campaign.fromDate = dateValue.start.format("DD-MM-YYYY");
+            campaign.toDate = dateValue.end.format("DD-MM-YYYY");
+        }
     }
+
+    // onSelect = (dateValue, states) => {
+    //     this.setState({ isOpen: false, dateValue: dateValue });
+    // };
+
+    onToggle = () => {
+        const { isOpen } = this.state;
+        this.setState({ isOpen: !isOpen });
+    };
 
     render() {
         const { submitted,
@@ -298,7 +316,13 @@ class RegisterCampaignPage extends Component {
             isFormStep,
             isInfluencerStep,
             isJobStep,
-            checkedInfluencers } = this.state;
+            checkedInfluencers,
+            fromDate,
+            toDate,
+            startDate,
+            endDate,
+            isOpen,
+            dateValue } = this.state;
 
         const { influencers, campaigns } = this.props;
 
@@ -315,7 +339,6 @@ class RegisterCampaignPage extends Component {
                 imgSrc = item.photo.urls.length == 0 ? defaultAvatar : configContent.apiUrl + item.photo.urls[0] + '?&width=240&height=240&rmode=';
             }
         }
-
         return true ? (
             <div className="app-container app-theme-white body-tabs-shadow">
                 <div className="app-container">
@@ -354,33 +377,32 @@ class RegisterCampaignPage extends Component {
                                                             }
                                                         </div>
                                                     </div>
-                                                    {/* <div className="col-md-3">
+                                                    <div className="col-md-6">
                                                         <div className="position-relative form-group">
                                                             <label htmlFor="name" className="">
-                                                                <span className="text-danger">*</span> From Date
-                                                        </label>
-                                                            <input type="text" className="form-control" name="fromDate" id="fromDate" placeholder="From Date" value={campaign.fromDate} onChange={this.handleCampaignChange} />
+                                                                <span className="text-danger">*</span> Product Info
+                                                            </label>
+                                                            <input type="text" className="form-control" name="productInfo" id="productInfo" placeholder="Product Info" value={campaign.productInfo} onChange={this.handleCampaignChange} />
                                                             {
-                                                                submitted && !campaign.fromDate &&
-                                                                <div className="help-block text-danger">Campaign Date is required</div>
+                                                                submitted && !campaign.productInfo &&
+                                                                <div className="help-block text-danger">Product Info is required</div>
                                                             }
                                                         </div>
                                                     </div>
-                                                    <div className="col-md-3">
-                                                        <div className="position-relative form-group">
-                                                            <label htmlFor="name" className="">
-                                                                <span className="text-danger">*</span> To Date</label>
-                                                            <input type="text" className="form-control" name="toDate" id="toDate" placeholder="To Date" value={campaign.toDate} onChange={this.handleCampaignChange} />
-                                                            {
-                                                                submitted && !campaign.toDate &&
-                                                                <div className="help-block text-danger">Campaign Date is required</div>
-                                                            }
-                                                        </div>
-                                                    </div> */}
-                                                    <div className="col-md-3">
+                                                    <div className="col-md-6">
                                                         <div className="position-relative form-group">
                                                             <label htmlFor="name" className=""> <span className="text-danger">*</span> Date Time</label>
-                                                            <LinkedCalendar onDatesChange={this.onDatesChange} showDropdowns={false} />
+                                                            <div>
+                                                                <input className="form-control" name="dateRange"
+                                                                    type="text"
+                                                                    value={'From ' + dateValue.start.format("DD-MM-YYYY") + ' To ' + dateValue.end.format("DD-MM-YYYY")}
+                                                                    onChange={this.onDatesChange}
+                                                                    onClick={this.onToggle} />
+                                                            </div>
+
+                                                            {isOpen && (
+                                                                <DateRangePicker value={dateValue} onSelect={this.onDatesChange} singleDateRange={true} />
+                                                            )}
                                                             {
                                                                 (submitted && (!campaign.toDate || !campaign.fromDate)) &&
                                                                 <div className="help-block text-danger">Campaign Date is required</div>
@@ -413,23 +435,10 @@ class RegisterCampaignPage extends Component {
                                                     </div>
                                                     <div className="col-md-6">
                                                         <div className="position-relative form-group">
-                                                            <label htmlFor="name" className="">
-                                                                <span className="text-danger">*</span> Product Info
-                                                        </label>
-                                                            <input type="text" className="form-control" name="productInfo" id="productInfo" placeholder="Product Info" value={campaign.productInfo} onChange={this.handleCampaignChange} />
-                                                            {
-                                                                submitted && !campaign.productInfo &&
-                                                                <div className="help-block text-danger">Product Info is required</div>
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-md-6">
-                                                        <div className="position-relative form-group">
                                                             <label htmlFor="pass" className="">
                                                                 <span className="text-danger">*</span> Location</label>
                                                             <Select
                                                                 value={selectedOptionLocation}
-                                                                defaultValue={locations[0]}
                                                                 onChange={this.handleOptionLocationChange}
                                                                 isMulti
                                                                 placeholder="Locations..."
@@ -443,7 +452,6 @@ class RegisterCampaignPage extends Component {
                                                                 <span className="text-danger">*</span> Interestings</label>
                                                             <Select
                                                                 value={selectedOptionInteresting}
-                                                                defaultValue={interestings[2]}
                                                                 onChange={this.handleOptionInterestingChange}
                                                                 isMulti
                                                                 placeholder="Interestings..."

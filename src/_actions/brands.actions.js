@@ -23,7 +23,7 @@ function register(brandType, userType) {
                                     pathname: '/registerCampaignPage',
                                     state: { brand: brand }
                                 })
-                                dispatch(alertActions.success('Registration successful'));
+                                //dispatch(alertActions.success('Registration successful'));
                             },
                                 error => {
                                     dispatch(failure(error.toString()));

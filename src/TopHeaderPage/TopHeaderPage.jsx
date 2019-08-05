@@ -19,6 +19,7 @@ import avatar9 from '../assets/images/avatars/9.jpg';
 import avatar10 from '../assets/images/avatars/10.jpg';
 import avatar11 from '../assets/images/avatars/11.jpg';
 import avatar12 from '../assets/images/avatars/12.jpg';
+import new_logo from '../assets/images/new_logo.png'
 //import { campaignActions } from '../_actions';
 import { campaignActions, infActions, brandActions } from '../_actions';
 //import Select from 'react-select';
@@ -170,17 +171,17 @@ class TopHeaderPage extends Component {
 
     handleOptionLocationChange = selectedOptionLocation => {
         this.setState({ selectedOptionLocation });
-        console.log(`Option selected:`, selectedOptionLocation);
+        //console.log(`Option selected:`, selectedOptionLocation);
     };
 
     handleOptionInterestingChange = selectedOptionInteresting => {
         this.setState({ selectedOptionInteresting });
-        console.log(`Option selected:`, selectedOptionInteresting);
+        //console.log(`Option selected:`, selectedOptionInteresting);
     };
 
     handleOptionJobCategoryChange = selectedOptionJobCategory => {
         this.setState({ selectedOptionJobCategory });
-        console.log(`Option selected:`, selectedOptionJobCategory);
+        //console.log(`Option selected:`, selectedOptionJobCategory);
     };
 
     handleCheckBoxChange(event) {
@@ -204,61 +205,17 @@ class TopHeaderPage extends Component {
         });
 
         this.setState({ selectedInfluencers: selectedInfluencersLocal })
-    };
+    };    
 
-    // componentDidMount() {
-    //     const { dispatch } = this.props;
-    //     if(this.props.location.state)
-    //     {
-    //         const { brand } = this.props.location.state;
-    //         dispatch(brandActions.getBrandFromBrandPage(brand));
-    //         //dispatch(campaignActions.getAll());
-    //         dispatch(infActions.getAll());
-    //         dispatch(campaignActions.getAllLocation());
-    //         dispatch(campaignActions.getAllInteresting());
-    //         dispatch(infActions.getAllJobCategories());
-    //     }
-    //     else
-    //     {
-    //         history.push('/registerBrandPage');
-    //     }
-
-    // }
-
-    // handleDeletecampaign(id) {
-    //     return (e) => this.props.dispatch(campaignActions.delete(id));
-    // }
-
-    render() {
-
-        // const { influencers, brands, campaigns, locations, interestings, jobCategories} = this.props;
-        // const { submitted,
-        //     campaign,
-        //     job,
-        //     selectedOptionLocation,
-        //     selectedOptionInteresting,
-        //     selectedOptionJobCategory,
-        //     isFormStep,
-        //     isInfluencerStep,
-        //     isJobStep,
-        //     checkedInfluencers  } = this.state;
-
-        // var localJobCategories = [
-        // ];
-
-        // if(jobCategories.jobCategories)
-        // {
-        //     jobCategories.jobCategories.map((item, key) => 
-        //     {                
-        //         const jobCategory = {value: item, label: item.description};
-        //         localJobCategories.push(jobCategory);
-        //     })
-        // }
+    render() {        
 
         return (            
             <div className="app-header header-shadow">
                 <div className="app-header__logo">
-                    <div className="logo-src"></div>
+                    {/* <div className="logo-src"></div> */}
+                    <div style={{ width: '97px', height: '23px' }}>
+                        <img src={new_logo} alt="Kols Viet" />
+                    </div>
                     <div className="header__pane ml-auto">
                         <div>
                             <button type="button" className="hamburger close-sidebar-btn hamburger--elastic" data-classname="closed-sidebar">

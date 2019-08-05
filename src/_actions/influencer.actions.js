@@ -40,7 +40,7 @@ function register(infType, userType) {
                                     pathname: '/dashBoardPage',
                                     state: { userName: userType.UserName }
                                 })
-                                dispatch(alertActions.success('Registration successful'));
+                                //dispatch(alertActions.success('Registration successful'));
                             },
                                 error => {
                                     dispatch(failure(error.toString()));

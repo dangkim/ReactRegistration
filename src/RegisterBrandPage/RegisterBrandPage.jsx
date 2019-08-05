@@ -37,7 +37,7 @@ class RegisterBrandPage extends React.Component {
 
     handleOptionLocationChange = selectedOptionLocation => {
         this.setState({ selectedOptionLocation });
-        console.log(`Option selected:`, selectedOptionLocation);
+        //console.log(`Option selected:`, selectedOptionLocation);
     };
 
     handleChange(event) {
