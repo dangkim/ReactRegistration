@@ -281,20 +281,19 @@ function handleGraphRatesResponse(response) {
 }
 
 function handleGraphInfResponse(response) {
-    return response.json().then(text => {
-        const data = text.data;
-
-        if (!response.ok) {
-            if (response.status === 401) {
-                // auto logout if 401 response returned from api
-                logout();
-                location.reload(true);
-            }
-
-            const error = (data && data.message) || response.statusText;
+    if (!response.ok) {
+        if (response.status === 401) {
+            // auto logout if 401 response returned from api
+            logout();
+            //location.reload(true);
+            const error = response.statusText;            
             return Promise.reject(error);
         }
+    }
 
+    return response.json().then(text => {
+        debugger;
+        const data = text.data;
         return data;
     });
 }
@@ -334,4 +333,10 @@ function handleContentJobsResponse(response) {
 
         return data;
     });
+}
+
+function logout() {    
+    // remove user from local storage to log user out
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
 }

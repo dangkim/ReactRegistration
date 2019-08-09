@@ -6,7 +6,6 @@ import citynights from '../assets/images/originals/citynights.jpg'
 import citydark from '../assets/images/originals/citydark.jpg'
 import Slider from "react-slick";
 import new_logo from '../assets/images/new_logo.png'
-
 import { userActions } from '../_actions';
 
 class LoginPage extends React.Component {

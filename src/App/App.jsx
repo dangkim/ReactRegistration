@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import { ToastContainer } from "react-toastify";
 import { history } from '../_helpers';
 import { alertActions } from '../_actions';
 import { PrivateRoute } from '../_components';
@@ -18,6 +18,7 @@ import { TopHeaderPage } from '../TopHeaderPage';
 import { compose, lifecycle, withHandlers, withState } from "recompose";
 require("babel-core/register");
 require("babel-polyfill");
+import "react-toastify/dist/ReactToastify.css";
 import css from './app.css';
 import landing_page_css from './landing-page.css';
 import pe_icon_7_stroke_css from './pe-icon-7-stroke.css';
@@ -66,6 +67,7 @@ class App extends React.Component {
     return (
       <Router history={history}>
         <div>
+          <ToastContainer autoClose={2000} />
           <PrivateRoute exact path="/" component={LoginPage} />
           <Route path="/landingPage" component={LandingPage} />
           <Route path="/login" component={LoginPage} />
@@ -76,9 +78,9 @@ class App extends React.Component {
           <Route path="/influencerUpdateCostPage" component={InfluencerUpdateCostPage} />
           <Route path="/registerInfluencerPage" component={RegisterInfluencerPage} />
           <div>
-            {alert.message &&
+            {/* {alert.message &&
               <div className={`alert ${alert.type}`}>{alert.message}</div>
-            }
+            } */}
           </div>
         </div>
       </Router>

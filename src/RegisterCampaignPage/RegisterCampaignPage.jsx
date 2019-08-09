@@ -61,14 +61,14 @@ class RegisterCampaignPage extends Component {
                 jobDescription: '',
                 jobLink: ''
             },
-            selectedOptionLocation: [{value: "TPHCM", label: "TPHCM"}],
-            selectedOptionInteresting: [{value: "Fashion", label: "Fashion"}],
-            selectedOptionJobCategory: null,
+            selectedOptionLocation: [{ value: "TPHCM", label: "TPHCM" }],
+            selectedOptionInteresting: [{ value: "Fashion", label: "Fashion" }],
+            selectedOptionJobCategory: [{ value: 'Share Link', label: 'Share Link' }, { value: 'Post Image', label: 'Post Image' }],
             selectedInfluencers: [],
             submitted: false,
-            isFormStep: true,
+            isFormStep: false,
             isInfluencerStep: false,
-            isJobStep: false,
+            isJobStep: true,
             isChecked: false,
             skip: 0,
             checkedInfluencers: new Map(),
@@ -138,11 +138,11 @@ class RegisterCampaignPage extends Component {
             checkedInfluencers } = this.state;
         const { dispatch, brands } = this.props;
         const brand = brands.brand;
-
+        debugger;
         if (campaign.campaignName &&
             campaign.campaignTarget &&
-            campaign.fromDate &&
-            campaign.toDate &&
+            dateValue.start &&
+            dateValue.end &&
             campaign.fromAge &&
             campaign.toAge &&
             campaign.productInfo &&
@@ -157,6 +157,8 @@ class RegisterCampaignPage extends Component {
             this.setState({ isFormStep: true, isInfluencerStep: false, isJobStep: false });
 
             dispatch(campaignActions.register(campaign,
+                dateValue.start.format("DD MMM YYYY"),
+                dateValue.end.format("DD MMM YYYY"),
                 job,
                 selectedOptionLocation,
                 selectedOptionInteresting,
@@ -166,14 +168,15 @@ class RegisterCampaignPage extends Component {
         }
     }
 
-    handleInfluencerStep(event) {        
-        const { campaign, selectedOptionLocation, selectedOptionInteresting } = this.state;
+    handleInfluencerStep(event) {
+        const { campaign, dateValue, selectedOptionLocation, selectedOptionInteresting } = this.state;
         event.preventDefault();
+        debugger
         this.setState({ submitted: true });
         if (campaign.campaignName &&
             campaign.campaignTarget &&
-            campaign.fromDate &&
-            campaign.toDate &&
+            dateValue.start &&
+            dateValue.end &&
             campaign.fromAge &&
             campaign.toAge &&
             campaign.productInfo &&
@@ -191,6 +194,7 @@ class RegisterCampaignPage extends Component {
         this.setState({ submitted: true });
         const { campaign,
             job,
+            dateValue,
             selectedOptionLocation,
             selectedOptionInteresting,
             selectedInfluencers,
@@ -199,8 +203,8 @@ class RegisterCampaignPage extends Component {
 
         if (campaign.campaignName &&
             campaign.campaignTarget &&
-            campaign.fromDate &&
-            campaign.toDate &&
+            dateValue.start &&
+            dateValue.end &&
             campaign.fromAge &&
             campaign.toAge &&
             campaign.productInfo &&
@@ -292,8 +296,8 @@ class RegisterCampaignPage extends Component {
 
         if (dateValue) {
             this.setState({ isOpen: false, dateValue: dateValue });
-            campaign.fromDate = dateValue.start.format("DD-MM-YYYY");
-            campaign.toDate = dateValue.end.format("DD-MM-YYYY");
+            //campaign.fromDate = dateValue.start.format("DD-MM-YYYY");
+            //campaign.toDate = dateValue.end.format("DD-MM-YYYY");
         }
     }
 
@@ -316,14 +320,8 @@ class RegisterCampaignPage extends Component {
             isFormStep,
             isInfluencerStep,
             isJobStep,
-            checkedInfluencers,
-            fromDate,
-            toDate,
-            startDate,
-            endDate,
             isOpen,
             dateValue } = this.state;
-
         const { influencers, campaigns } = this.props;
 
         let imgSrc = defaultAvatar;
@@ -404,7 +402,7 @@ class RegisterCampaignPage extends Component {
                                                                 <DateRangePicker value={dateValue} onSelect={this.onDatesChange} singleDateRange={true} />
                                                             )}
                                                             {
-                                                                (submitted && (!campaign.toDate || !campaign.fromDate)) &&
+                                                                (submitted && !dateValue) &&
                                                                 <div className="help-block text-danger">Campaign Date is required</div>
                                                             }
                                                         </div>
@@ -633,7 +631,7 @@ class RegisterCampaignPage extends Component {
                                                         <div className="position-relative form-group">
                                                             <label htmlFor="jobName" className="">
                                                                 <span className="text-danger">*</span> Job Name</label>
-                                                            <input type="text" name="jobName" id="jobName" placeholder="Job Name" value={job.jobName} onChange={this.handleJobChange} className="form-control" />
+                                                            <input type="text" name="jobName" id="jobName" placeholder="Name of your job" value={job.jobName} onChange={this.handleJobChange} className="form-control" />
                                                             {
                                                                 submitted && !job.jobName &&
                                                                 <div className="help-block text-danger">Job Name is required</div>
@@ -644,14 +642,35 @@ class RegisterCampaignPage extends Component {
                                                         <div className="position-relative form-group">
                                                             <label htmlFor="name" className="">
                                                                 <span className="text-danger">*</span> Job Description</label>
-                                                            <input type="text" className="form-control" name="jobDescription" id="jobDescription" placeholder="Job Description" value={campaign.jobDescription} onChange={this.handleJobChange} />
+                                                            <input type="text" className="form-control" name="jobDescription" id="jobDescription" placeholder="Description of your job" value={campaign.jobDescription} onChange={this.handleJobChange} />
                                                             {
                                                                 submitted && !job.jobDescription &&
                                                                 <div className="help-block text-danger">Job Description is required</div>
                                                             }
                                                         </div>
                                                     </div>
-                                                    <div className="col-md-5">
+                                                    <div className="col-md-6">
+                                                        <div className="position-relative form-group">
+                                                            <label htmlFor="jobHashTag" className="">
+                                                                <span></span> Job HashTag</label>
+                                                            <input type="text" className="form-control" name="jobHashTag" id="jobHashTag" placeholder="Ex: #hashtag1;#hashtag2" value={job.jobHashTag} onChange={this.handleJobChange} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="position-relative form-group">
+                                                            <label htmlFor="jobKeyword" className="">
+                                                                <span></span> Job Keyword</label>
+                                                            <input type="text" className="form-control" name="jobKeyword" id="jobKeyword" placeholder="Ex: nice" value={job.jobKeyword} onChange={this.handleJobChange} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-12">
+                                                        <div className="position-relative form-group">
+                                                            <label htmlFor="jobLink" className="">
+                                                                <span></span> Job Link</label>
+                                                            <input type="text" className="form-control" name="jobLink" id="jobLink" placeholder="Link of your page" value={job.jobLink} onChange={this.handleJobChange} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-7">
                                                         <div className="position-relative form-group">
                                                             <label htmlFor="jobCategory" className="">
                                                                 <span className="text-danger">*</span> Job</label>
@@ -659,42 +678,19 @@ class RegisterCampaignPage extends Component {
                                                                 value={selectedOptionJobCategory}
                                                                 onChange={this.handleOptionJobCategoryChange}
                                                                 isMulti
-                                                                placeholder="Job..."
                                                                 options={jobs}
                                                             />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-md-4">
-                                                        <div className="position-relative form-group">
-                                                            <label htmlFor="jobHashTag" className="">
-                                                                <span></span> Job HashTag</label>
-                                                            <input type="text" className="form-control" name="jobHashTag" id="jobHashTag" placeholder="Job HashTag" value={job.jobHashTag} onChange={this.handleJobChange} />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-md-3">
-                                                        <div className="position-relative form-group">
-                                                            <label htmlFor="jobKeyword" className="">
-                                                                <span></span> Job Keyword</label>
-                                                            <input type="text" className="form-control" name="jobKeyword" id="jobKeyword" placeholder="Job Keyword" value={job.jobKeyword} onChange={this.handleJobChange} />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-md-3">
-                                                        <div className="position-relative form-group">
-                                                            <label htmlFor="jobLink" className="">
-                                                                <span></span> Job Link</label>
-                                                            <input type="text" className="form-control" name="jobLink" id="jobLink" placeholder="Job Link" value={job.jobLink} onChange={this.handleJobChange} />
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="mt-4 d-flex align-items-center">
                                                     <div className="ml-auto">
+                                                    <input type="button" onClick={this.handleBackStep} name="backinf" id="backinf" className="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg" value="Back" />
                                                         <input type="submit" name="register" id="register" className="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg" value="Register" />
                                                         {
                                                             campaigns.loading &&
                                                             <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                                                        }
-                                                        <input type="button" onClick={this.handleBackStep} name="backinf" id="backinf" className="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg" value="Back" />
-                                                        {/* <Link to="/login" className="btn btn-link">Cancel</Link> */}
+                                                        }                                                        
                                                     </div>
                                                 </div>
                                             </form>

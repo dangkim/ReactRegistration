@@ -12,6 +12,8 @@ export const campaignActions = {
 };
 
 function register(campaign,
+    fromDate,
+    toDate,
     job,
     selectedOptionLocation,
     selectedOptionInteresting,
@@ -23,6 +25,8 @@ function register(campaign,
         dispatch(request());
 
         const campaignLocal = createCampaign(campaign,
+            fromDate,
+            toDate,
             job,
             selectedOptionLocation,
             selectedOptionInteresting,

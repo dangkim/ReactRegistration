@@ -27,51 +27,48 @@ class InfluencerUpdateCostPage extends Component {
             influencer: props.influencers.items
         };
 
-        this.handleChange = this.handleChange.bind(this);
+        //this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         //this.handleSubmitJobs = this.handleSubmitJobs.bind(this);
     }
 
-    handleChange(e) {
+    // handleChange(values, e) {
+    //     debugger;
+    //     const { influencers } = this.props;
+    //     const { formattedValue, value } = values;
 
-        const { influencers } = this.props;
-        const { name, value } = e.target;
-
-        let influencer = influencers.items;
-        if (name == 'shareLink') {
-            influencer.shareLink = Number(value);
-        }
-        if (name == 'postImage') {
-            influencer.postImage = Number(value);
-        }
-        if (name == 'video') {
-            influencer.video = Number(value);
-        }
-        if (name == 'liveStream') {
-            influencer.liveStream = Number(value);
-        }
-        if (name == 'checkIn') {
-            influencer.checkIn = Number(value);
-        }
-        //const { influencer } = this.state;
-        this.setState({ influencer: influencer });
-    }
+    //     let influencer = influencers.items;
+    //     if (name == 'shareLink') {
+    //         influencer.shareLink = Number(value);
+    //     }
+    //     if (name == 'postImage') {
+    //         influencer.postImage = Number(value);
+    //     }
+    //     if (name == 'video') {
+    //         influencer.video = Number(value);
+    //     }
+    //     if (name == 'liveStream') {
+    //         influencer.liveStream = Number(value);
+    //     }
+    //     if (name == 'checkIn') {
+    //         influencer.checkIn = Number(value);
+    //     }
+    //     //const { influencer } = this.state;
+    //     this.setState({ influencer: influencer });
+    // }
 
     handleSubmit(e) {
         e.preventDefault();
 
         this.setState({ submitted: true });
         const { influencer } = this.state;
-        const { dispatch, influencers } = this.props;
-        var isValid = true;
+        const { dispatch } = this.props;
 
         if (influencer.shareLink &&
             influencer.postImage &&
             influencer.liveStream &&
             influencer.checkIn &&
             influencer.video) {
-
-            debugger;
             //let obj = JSON.parse(influencer.items);
             const { userName } = this.props.location.state;
             dispatch(infActions.updateInfluencers(influencer, userName));
@@ -90,8 +87,8 @@ class InfluencerUpdateCostPage extends Component {
     render() {
         const { influencers } = this.props;
         const userName = this.props.location.state;
-        const { submitted, shareLink, video, checkIn, liveStream, postImage } = this.state;
-        const influencer = influencers.items ? influencers.items : [];
+        const { submitted, influencer } = this.state;
+        //const influencer = influencers.items ? influencers.items : [];
         // const rates = influencer.items ?
         //     influencer.items.influencer[0].bag.contentItems.filter(value => Object.keys(value).length !== 0 && value.contentType == "Rates")
         //     : [];
@@ -119,24 +116,20 @@ class InfluencerUpdateCostPage extends Component {
                             </div>
                             <div className="main-card mb-3 card">
                                 <div className="card-body">
-                                    <form id="costForm" className="col-md-10 mx-auto" onSubmit={this.handleSubmit}>
+                                    <form id="costForm" className="col-md-10 mx-auto">
                                         <div className="form-row">
                                             <div className="col-md-2">
                                                 <label htmlFor="shareLink">Share Link</label>
                                                 <div>
-                                                    <input type="number" className="form-control" id="shareLink" name="shareLink" value={this.props.influencers.items ? this.props.influencers.items.shareLink : ''} onChange={this.handleChange} placeholder="Price..." />
-                                                    {/* <NumberFormat value={item.price} id={key} name={key} thousandSeparator={true} onChange={this.handleChange} className="form-control" suffix={'đ'}/> */}
+                                                    <NumberFormat className="form-control" id="shareLink" name="shareLink" thousandSeparator={true} suffix={'đ'} value={this.props.influencers.items ? this.props.influencers.items.shareLink : ''} placeholder="Price..." onValueChange={(values) => {
+                                                        const { formattedValue, value } = values;
+                                                        const influencer = this.props.influencers.items;
+                                                        if (influencer) {
+                                                            influencer.shareLink = value;
+                                                            this.setState({ influencer: influencer })
+                                                        }
+                                                    }} />
                                                     {submitted && !influencer.shareLink &&
-                                                        <div className="help-block" style={{ color: 'red' }}>Price is required</div>
-                                                    }
-                                                </div>
-                                            </div>
-                                            <div className="col-md-2">
-                                                <label htmlFor="video">Video</label>
-                                                <div>
-                                                    <input type="number" className="form-control" id="video" name="video" value={this.props.influencers.items ? this.props.influencers.items.video : ''} onChange={this.handleChange} placeholder="Price..." />
-                                                    {/* <NumberFormat value={item.price} id={key} name={key} thousandSeparator={true} onChange={this.handleChange} className="form-control" suffix={'đ'}/> */}
-                                                    {submitted && !influencer.video &&
                                                         <div className="help-block" style={{ color: 'red' }}>Price is required</div>
                                                     }
                                                 </div>
@@ -144,18 +137,46 @@ class InfluencerUpdateCostPage extends Component {
                                             <div className="col-md-2">
                                                 <label htmlFor="postImage">Post Image</label>
                                                 <div>
-                                                    <input type="number" className="form-control" id="postImage" name="postImage" value={this.props.influencers.items ? this.props.influencers.items.postImage : ''} onChange={this.handleChange} placeholder="Price..." />
-                                                    {/* <NumberFormat value={item.price} id={key} name={key} thousandSeparator={true} onChange={this.handleChange} className="form-control" suffix={'đ'}/> */}
+                                                    <NumberFormat className="form-control" id="postImage" name="postImage" thousandSeparator={true} suffix={'đ'} value={this.props.influencers.items ? this.props.influencers.items.postImage : ''} placeholder="Price..." onValueChange={(values) => {
+                                                        const { formattedValue, value } = values;
+                                                        const influencer = this.props.influencers.items;
+                                                        if (influencer) {
+                                                            influencer.postImage = value;
+                                                            this.setState({ influencer: influencer })
+                                                        }
+                                                    }} />
                                                     {submitted && !influencer.postImage &&
                                                         <div className="help-block" style={{ color: 'red' }}>Price is required</div>
                                                     }
                                                 </div>
                                             </div>
+                                            <div className="col-md-2">
+                                                <label htmlFor="video">Video</label>
+                                                <div>
+                                                    <NumberFormat className="form-control" id="video" name="video" thousandSeparator={true} suffix={'đ'} value={this.props.influencers.items ? this.props.influencers.items.video : ''} placeholder="Price..." onValueChange={(values) => {
+                                                        const { formattedValue, value } = values;
+                                                        const influencer = this.props.influencers.items;
+                                                        if (influencer) {
+                                                            influencer.video = value;
+                                                            this.setState({ influencer: influencer })
+                                                        }
+                                                    }} />
+                                                    {submitted && !influencer.video &&
+                                                        <div className="help-block" style={{ color: 'red' }}>Price is required</div>
+                                                    }
+                                                </div>
+                                            </div>                                            
                                             <div className="col-md-3">
                                                 <label htmlFor="checkIn">Check In</label>
                                                 <div>
-                                                    <input type="number" className="form-control" id="checkIn" name="checkIn" value={this.props.influencers.items ? this.props.influencers.items.checkIn : ''} onChange={this.handleChange} placeholder="Price..." />
-                                                    {/* <NumberFormat value={item.price} id={key} name={key} thousandSeparator={true} onChange={this.handleChange} className="form-control" suffix={'đ'}/> */}
+                                                    <NumberFormat className="form-control" id="checkIn" name="checkIn" thousandSeparator={true} suffix={'đ'} value={this.props.influencers.items ? this.props.influencers.items.checkIn : ''} placeholder="Price..." onValueChange={(values) => {
+                                                        const { formattedValue, value } = values;
+                                                        const influencer = this.props.influencers.items;
+                                                        if (influencer) {
+                                                            influencer.checkIn = value;
+                                                            this.setState({ influencer: influencer })
+                                                        }
+                                                    }} />
                                                     {submitted && !influencer.checkIn &&
                                                         <div className="help-block" style={{ color: 'red' }}>Price is required</div>
                                                     }
@@ -164,8 +185,14 @@ class InfluencerUpdateCostPage extends Component {
                                             <div className="col-md-3">
                                                 <label htmlFor="liveStream">Live Stream</label>
                                                 <div>
-                                                    <input type="number" className="form-control" id="liveStream" name="liveStream" value={this.props.influencers.items ? this.props.influencers.items.liveStream : ''} onChange={this.handleChange} placeholder="Price..." />
-                                                    {/* <NumberFormat value={item.price} id={key} name={key} thousandSeparator={true} onChange={this.handleChange} className="form-control" suffix={'đ'}/> */}
+                                                    <NumberFormat className="form-control" id="liveStream" name="liveStream" thousandSeparator={true} suffix={'đ'} value={this.props.influencers.items ? this.props.influencers.items.liveStream : ''} placeholder="Price..." onValueChange={(values) => {
+                                                        const { formattedValue, value } = values;
+                                                        const influencer = this.props.influencers.items;
+                                                        if (influencer) {
+                                                            influencer.liveStream = value;
+                                                            this.setState({ influencer: influencer })
+                                                        }
+                                                    }} />
                                                     {submitted && !influencer.liveStream &&
                                                         <div className="help-block" style={{ color: 'red' }}>Price is required</div>
                                                     }
@@ -175,7 +202,7 @@ class InfluencerUpdateCostPage extends Component {
                                         <div className="divider row"></div>
                                         <div className="d-flex align-items-center">
                                             <div className="ml-auto">
-                                                <button type="submit" className="btn btn-primary btn-lg">Confirm</button>
+                                                <button onClick={this.handleSubmit} className="btn btn-primary btn-lg">Confirm</button>
                                             </div>
                                         </div>
                                     </form>
@@ -191,7 +218,6 @@ class InfluencerUpdateCostPage extends Component {
 }
 
 function mapStateToProps(state) {
-    //debugger;
     const { influencers } = state;
     return {
         influencers

@@ -53,6 +53,8 @@ export function createCampaigns(brand, compaignType) {
 }
 
 export function createCampaign(campaign,
+  fromDate,
+  toDate,
   job,
   selectedOptionLocation,
   selectedOptionInteresting,
@@ -185,10 +187,10 @@ export function createCampaign(campaign,
         Text: campaign.campaignTarget
       },
       FromDate: {
-        Value: campaign.fromDate
+        Value: fromDate
       },
       ToDate: {
-        Value: campaign.toDate
+        Value: toDate
       },
       ProductInfo: {
         Text: campaign.productInfo

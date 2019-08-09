@@ -38,7 +38,6 @@ function getToken(username, password) {
 }
 
 function getContentType(token) {
-    debugger;
     const requestOptions = {
         method: 'GET',
         headers: {
@@ -69,6 +68,7 @@ function login(userName, password) {
 function logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
 }
 
 function getAll() {
@@ -132,7 +132,7 @@ function handleResponseRegisterUser(response) {
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
         }
-        debugger;
+
         return data;
     });
 }
@@ -170,7 +170,7 @@ function handleContentTypeResponse(response) {
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
         }
-        debugger;
+
         return data;
     });
 }

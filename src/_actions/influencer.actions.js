@@ -2,7 +2,8 @@ import { infConstants } from '../_constants';
 import { influencerService, userService } from '../_services';
 import { alertActions } from '.';
 import { history } from '../_helpers';
-import {createInfluencer} from '../_models/InfluencerType';
+import { createInfluencer } from '../_models/InfluencerType';
+import { toast } from "react-toastify";
 
 export const infActions = {
     register,
@@ -17,19 +18,6 @@ function register(infType, userType) {
     return dispatch => {
         dispatch(request(infType));
 
-        // influencerService.register(infType)
-        //     .then(
-        //         infType => { 
-        //             dispatch(success());
-        //             history.push('/Login');
-        //             dispatch(alertActions.success('Registration Influencer successful'));
-        //         },
-        //         error => {
-        //             dispatch(failure(error.toString()));
-        //             dispatch(alertActions.error(error.toString()));
-        //         }
-        //     );
-
         userService.register(userType)
             .then(user => {
                 userService.getToken(userType.UserName, userType.Password)
@@ -41,6 +29,7 @@ function register(infType, userType) {
                                     state: { userName: userType.UserName }
                                 })
                                 //dispatch(alertActions.success('Registration successful'));
+                                toast.success("Welcome" + influencer.fullName);
                             },
                                 error => {
                                     dispatch(failure(error.toString()));
@@ -74,16 +63,17 @@ function registerJobs(jobsType) {
 
         influencerService.registerJobs(jobsType)
             .then(
-                jobsType => { 
+                jobsType => {
                     dispatch(success());
                     //history.push('/registerInfluencerPage');
-                    dispatch(alertActions.success('Registration Job Successful'));
+                    //dispatch(alertActions.success('Registration Job Successful'));
+                    toast.success("Welcome");
                 },
                 error => {
                     dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));
                 }
-        );
+            );
     };
 
     function request() { return { type: infConstants.JOB_REGISTER_REQUEST } }
@@ -98,7 +88,12 @@ function getAll(first, skip) {
         influencerService.getAll(first, skip)
             .then(
                 influencers => dispatch(success(influencers)),
-                error => dispatch(failure(error.toString()))
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                    toast.error("Please login again");
+                    history.push('/Login');
+                }
             );
     };
 
@@ -129,7 +124,9 @@ function getCostByUserName(userName) {
 
         influencerService.getCostByUserName(userName)
             .then(
-                influencer => dispatch(success(influencer)),
+                influencer => {                    
+                    dispatch(success(influencer))
+                },
                 error => dispatch(failure(error.toString()))
             );
     };
@@ -140,7 +137,6 @@ function getCostByUserName(userName) {
 }
 
 function updateInfluencers(infType, userName) {
-    debugger;
     return dispatch => {
         dispatch(request(infType));
 
@@ -148,10 +144,12 @@ function updateInfluencers(infType, userName) {
 
         influencerService.updateInfluencers(influencerType)
             .then(
-                infType => { 
-                    dispatch(success());
+                infType => {
+                    debugger;
+                    dispatch(success(infType));
                     //history.push('/dashBoard');
-                    dispatch(alertActions.success('Registration Influencer successful'));
+                    //dispatch(alertActions.success('Registration Influencer successful'));
+                    toast.success("Update successful");
                 },
                 error => {
                     dispatch(failure(error.toString()));

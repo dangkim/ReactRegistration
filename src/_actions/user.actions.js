@@ -2,6 +2,7 @@ import { userConstants } from '../_constants';
 import { userService } from '../_services';
 import { alertActions } from './';
 import { history } from '../_helpers';
+import { toast } from "react-toastify";
 
 export const userActions = {
     login,
@@ -31,6 +32,7 @@ function getToken(userName, password) {
                                 state: { userName: userName }
                             })
                         }
+                        toast.success("Welcome " + userName);
                     },
                         error => {
                             dispatch(failure(error.toString()));

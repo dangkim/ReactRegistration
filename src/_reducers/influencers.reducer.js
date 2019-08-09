@@ -20,7 +20,7 @@ export function influencers(state = {}, action) {
       };
     case infConstants.INF_UPDATE_SUCCESS:
       return {
-        influencer: action.influencer
+        items: action.influencer
       };
     case infConstants.INF_UPDATE_FAILURE:
       return {
