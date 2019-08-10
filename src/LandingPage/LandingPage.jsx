@@ -6,13 +6,13 @@ import iphone3 from '../assets/images/template/iphone3.png'
 import mac from '../assets/images/template/mac.png'
 import big_logo from '../assets/images/big_logo.png'
 import citydark from '../assets/images/originals/citydark.jpg'
-import adobe from '../assets/images/logos/adobe.png'
-import ebay from '../assets/images/logos/ebay.png'
-import evernote from '../assets/images/logos/evernote.png'
-import airbnb from '../assets/images/logos/airbnb.png'
-import zappos from '../assets/images/logos/zappos.png'
-import zendesk from '../assets/images/logos/zendesk.png'
-
+import bogolive from '../assets/images/logos/bogolive.png'
+import momo from '../assets/images/logos/momo.png'
+import nct from '../assets/images/logos/nct.png'
+import sofy from '../assets/images/logos/sofy.png'
+import vnngaynay from '../assets/images/logos/vnngaynay.png'
+import gkitchen from '../assets/images/logos/gkitchen.png'
+import vinaphone from '../assets/images/logos/vinaphone.png'
 import home_33 from '../assets/images/template/examples/home_33.jpg'
 import home_22 from '../assets/images/template/examples/home_22.jpg'
 import home_11 from '../assets/images/template/examples/home_11.jpg'
@@ -99,7 +99,8 @@ class LandingPage extends Component {
                                 </div>
                                 <div className="col-md-6 col-md-offset-1">
                                     <div className="description">
-                                        <h2>Awesome platform page.</h2>
+                                        <h3>THẤU HIỂU KHÁCH HÀNG</h3>
+                                        <h3>AM HIỂU THỊ TRƯỜNG.</h3>
                                         <br />
                                         {/* <h5>Be amazed by the best looking bootstrap landing page on the web! Your new app deserves an amazing page to show all of its features. Clear visual, light colours and beautifully aligned elements - they all try to make the users aware of your great app features!</h5> */}
                                         <div className="">
@@ -112,19 +113,20 @@ class LandingPage extends Component {
                     </div>
                     <div className="section section-gray section-clients">
                         <div className="container text-center">
-                            <h4 className="header-text">Friends in high places</h4>
+                            <h4 className="header-text">GIỚI THIỆU DOANH NGHIỆP</h4>
                             <p>
-                                Build customer confidence by listing your users! Anyone who has used your service and has been pleased with it should have a place here! From Fortune 500 to start-ups, all your app enthusiasts will be glad to be featured in this section. Moreover, users will feel confident seing someone vouching for your product!
+                                KOLV tự tin cung cấp giải pháp Influencer Marketing hiệu quả đối với các nhãn hàng và mang đến nguồn thu nhập thỏa đáng cùng cơ hội trải nghiệm sản phẩm chất lượng cho Influencer. Với đội ngũ nhân sự giàu kinh nghiệm trong lĩnh vực truyền thông cùng nền tảng công nghệ hiện đại được đầu tư và phát triển hơn 2 năm.
                                 <br />
                             </p>
                             <div className="logos">
                                 <ul className="list-unstyled">
-                                    <li ><img src={adobe} /></li>
-                                    <li ><img src={zendesk} /></li>
-                                    <li ><img src={ebay} /></li>
-                                    <li ><img src={evernote} /></li>
-                                    <li ><img src={airbnb} /></li>
-                                    <li ><img src={zappos} /></li>
+                                    <li ><img src={bogolive} /></li>
+                                    <li ><img src={gkitchen} /></li>
+                                    <li ><img src={momo} /></li>
+                                    <li ><img src={nct} /></li>
+                                    <li ><img src={sofy} /></li>
+                                    <li ><img src={vnngaynay} /></li>
+                                    <li ><img src={vinaphone} /></li>
                                 </ul>
                             </div>
                         </div>
@@ -134,9 +136,8 @@ class LandingPage extends Component {
                             <div className="row">
                                 <div className="col-md-6">
                                     <div className="description">
-                                        <h4 className="header-text">It's beautiful</h4>
-                                        <p>And your app is also probably social, awesome, easy-to-use and vital to users. This is the place to enlist all the good things that your app has to share. Focus on the benefits that the uers will receive. Try to combine imaginery with text and show meaningful printscreens from your app, that will make it clear what exactly the basic functions are. </p>
-                                        <p>Try to make it very clear for the people browsing the page that this product will enrich their life and will make a nice addition to the homescreen.</p>
+                                        <h6 className="header-text">CÔNG NGHỆ HIỆN ĐẠI</h6>
+                                        <p>KOLV không chỉ được kế thừa các công nghệ dẫn đầu thị trường về xử lý dữ liệu lớn và phân tích ngôn ngữ tự động mà còn được định vị sẽ mang đến các giá trị nổi bật và khác biệt</p>
                                     </div>
                                 </div>
                                 <div className="col-md-5 col-md-offset-1 hidden-xs">
@@ -168,11 +169,12 @@ class LandingPage extends Component {
                                         </ol> */}
                                     </div>
                                 </div>
-                                <div className="col-md-5 col-md-offset-1">
-                                    <h4 className="header-text">Easy to integrate</h4>
-                                    <p>
-                                        With all the apps that users love! Make it easy for users to share, like, post and tweet their favourite things from the app. Be sure to let users know they continue to remain connected while using your app!
-                            </p>
+                                <div className="col-md-6 col-md-offset-1">
+                                    <h4 className="header-text">KẾT NỐI DÀI LÂU</h4>
+                                    <p>&bull;Kho dữ liệu lớn nhất: 10,000 Influencers và tiếp tục mở rộng</p>
+                                    <p>&bull;Hệ thống phân tích thống kê dữ liệu toàn diện - real-time</p>
+                                    <p>&bull;Các gói dịch vụ hỗ trợ triển khai chiến dịch toàn diện</p>
+                                    <p>&bull;Và hơn hết KOLV là cấu nối nhịp nhàng giữa nhãn hàng và các Influencer để tạo nên hiệu quả nhất cho chiến dịch</p>
                                     <Link to="/login" className="btn btn-fill btn-info">Get Free Access</Link>
                                     {/* <a href="http://www.creative-tim.com/product/awesome-landing-page" id="Demo3" className="btn btn-fill btn-info" data-button="info">Get Free Access</a> */}
                                 </div>
@@ -181,7 +183,7 @@ class LandingPage extends Component {
                     </div>
                     <div className="section section-features">
                         <div className="container">
-                            <h4 className="header-text text-center">Features</h4>
+                            <h4 className="header-text text-center">ĐIỀU GÌ LÀM CHO KOLV KHÁC BIỆT</h4>
                             <div className="row">
                                 <div className="col-md-4">
                                     <div className="card card-blue">
@@ -189,18 +191,11 @@ class LandingPage extends Component {
                                             <i className="pe-7s-note2"></i>
                                         </div>
                                         <div className="text">
-                                            <h4>Online Customers Management</h4>
-                                            <p>All appointments sync with your Google calendar so your availability is always up to date. See your schedule at a glance from any device.</p>
+                                            <h4>Active User Rate</h4>
+                                            <p>Giúp nhãn hàng chọn đúng Influencer khi vấn nạn “follower ảo” ngày càng cao</p>
+                                            <h4 style={{marginTop:'0px'}}>Relevance Score</h4>
+                                            <p style={{marginTop:'20px'}}>Thể hiện mức độ phù hợp của Influencer trong từng lĩnh vực, ngành hàng khác nhau.</p>
                                         </div>
-                                    </div>
-                                </div>
-                                <div className="col-md-4">
-                                    <div className="card card-blue">
-                                        <div className="icon">
-                                            <i className="pe-7s-bell"></i>
-                                        </div>
-                                        <h4>Smart Notifications on hands</h4>
-                                        <p>Automatic text and email reminders make sure customers always remember their upcoming appointments.</p>
                                     </div>
                                 </div>
                                 <div className="col-md-4">
@@ -208,9 +203,40 @@ class LandingPage extends Component {
                                         <div className="icon">
                                             <i className="pe-7s-graph1"></i>
                                         </div>
-                                        <h4>Know your business better now</h4>
-                                        <p>Take payments and run your business on the go, in your store and then see how it all adds up with analytics.</p>
+                                        <h4>Sentiment Score</h4>
+                                        <p>Chỉ số cảm xúc tích cực: phản ánh cảm xúc của người dùng thông qua các phản hồi tích cực, tình cảm, thái độ của followers đối với các nội dung do Influencer chia sẻ.</p>
                                     </div>
+                                </div>
+                                <div className="col-md-4">
+                                    <div className="card card-blue">
+                                        <div className="icon">
+                                            <i className="pe-7s-bell"></i>
+                                        </div>
+                                        <h4>Influence Score</h4>
+                                        <p>Chỉ số ảnh hưởng: tổng hợp từ các chỉ số trên và đã được thử nghiệm kỹ càng trên nhiều thuật toán. Vì vậy, Influence Score có thể phản ánh gần đúng nhất mức độ ảnh hưởng của Influencer trên từng chủ đề.</p>
+                                    </div>
+                                </div>
+                                <div className="col-md-2">
+                                </div>
+                                <div className="col-md-8">
+                                    <div className="card card-blue">
+                                        <div className="icon">
+                                            <i className="pe-7s-note2"></i>
+                                        </div>
+                                        <div className="text">
+                                            <h4>Resonance Score</h4>
+                                            <p>Chỉ số cộng hưởng: tỷ lệ tương đồng giữa nội dung bình luận với nội dung post. Trong Influencer Marketing, comment liên quan đến chủ đề, thương hiệu là một chỉ số quan trọng để hiểu rõ nhu cầu, hứng thú của followers đến sản phẩm/thông điệp cũng như giúp đánh giá hiệu quả của Influencer/Chiến dịch. Nhưng làm sao con người có thể đọc hiểu hàng ngàn comment của followers? <b>Công nghệ của KOLV làm giúp Marketers việc này.</b></p>
+                                        </div>
+                                    </div>
+                                </div>                                
+                                <div className="col-md-2">
+                                    {/* <div className="card card-blue">
+                                        <div className="icon">
+                                            <i className="pe-7s-graph1"></i>
+                                        </div>
+                                        <h4>Sentiment Score</h4>
+                                        <p>Chỉ số cảm xúc tích cực: phản ánh cảm xúc của người dùng thông qua các phản hồi tích cực, tình cảm, thái độ của followers đối với các nội dung do Influencer chia sẻ.</p>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -220,31 +246,13 @@ class LandingPage extends Component {
                             <h4 className="header-text text-center">What people think</h4>
                             <div id="carousel-example-generic" className="carousel fade" data-ride="carousel">
                                 <div className="carousel-inner" role="listbox">
-                                    <div className="item">
-                                        <div className="mask">
-                                            <img src={face4} />
-                                        </div>
-                                        <div className="carousel-testimonial-caption">
-                                            <p>Jay Z, Producer</p>
-                                            <h3>"I absolutely love your app! It's truly amazing and looks awesome!"</h3>
-                                        </div>
-                                    </div>
                                     <div className="item active">
-                                        <div className="mask">
+                                        {/* <div className="mask">
                                             <img src={face3} />
-                                        </div>
+                                        </div> */}
                                         <div className="carousel-testimonial-caption">
-                                            <p>Drake, Artist</p>
-                                            <h3>"This is one of the most awesome platform I've ever seen! Wish you luck KolsViet!"</h3>
-                                        </div>
-                                    </div>
-                                    <div className="item">
-                                        <div className="mask">
-                                            <img src={face2} />
-                                        </div>
-                                        <div className="carousel-testimonial-caption">
-                                            <p>Rick Ross, Musician</p>
-                                            <h3>"Loving this! Just picked it up the other day. Thank you for the work you put into this."</h3>
+                                            {/* <p>Drake, Artist</p> */}
+                                            <h3>"Đây là một trong những nền tảng tuyệt vời nhất tôi từng thấy! Chúc bạn may mắn KolsViet!"</h3>
                                         </div>
                                     </div>
                                 </div>

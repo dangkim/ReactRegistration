@@ -237,7 +237,7 @@ class RegisterInfluencerPage extends React.Component {
                                                         {
                                                             submitted && !influencer.phone &&
                                                             <div className="help-block text-danger">Phone is required</div>
-                                                        }                                                        
+                                                        }
                                                     </div>
                                                 </div>
                                                 <div className="col-md-6">
@@ -289,12 +289,15 @@ class RegisterInfluencerPage extends React.Component {
                                             </div>
                                             <div className="mt-3 position-relative form-check"><input name="check" id="exampleCheck" type="checkbox" className="form-check-input" /><label htmlFor="exampleCheck" className="form-check-label">Accept our <a href="javascript:void(0);">Terms
                                         and Conditions</a>.</label></div>
-                                            <div className="mt-4 d-flex align-items-center"><h5 className="mb-0">Already have an account? <a href="javascript:void(0);" className="text-primary">Sign in</a></h5>
+                                            <div className="mt-4 d-flex align-items-center">
+                                                <h5 className="mb-0">Already have an account?
+                                                <Link to="/login" className="text-primary">Sign in</Link>
+                                                </h5>
                                                 <div className="ml-auto">
                                                     {/* <button className="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg">Create Account</button> */}
                                                     <input type="submit" name="signup" id="signup" className="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg" value="Create Account" />
                                                     {
-                                                        influencers.registering &&
+                                                        influencers.loading &&
                                                         <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                                                     }
                                                 </div>
@@ -310,7 +313,8 @@ class RegisterInfluencerPage extends React.Component {
                                             <div className="position-relative h-100 d-flex justify-content-center align-items-center bg-premium-dark" tabIndex="-1">
                                                 <div className="slide-img-bg" style={{ backgroundImage: `url(${InfImg})` }}></div>
                                                 <div className="slider-content">
-                                                    <p>Easily exclude the components you don't require. Lightweight</p></div>
+                                                    <h4>Thấu Hiểu Khách Hàng Am Hiểu Thị Trường</h4>
+                                                    <p>Nền tảng thân thiện với người dùng, giúp bạn dễ dàng truy cập và làm việc mọi lúc mọi nơi</p></div>
                                             </div>
                                         </div>
                                     </div>

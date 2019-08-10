@@ -163,7 +163,13 @@ class RegisterBrandPage extends React.Component {
         const { brand, selectedOptionLocation, submitted } = this.state;
         const options = createLocations();
         const validator = require("email-validator");
-
+        const settings = {
+            dots: true,
+            infinite: true,
+            speed: 500,
+            slidesToShow: 1,
+            slidesToScroll: 1
+        };
         return (
             <div className="app-container app-theme-white body-tabs-shadow">
                 <div className="app-container">
@@ -298,7 +304,6 @@ class RegisterBrandPage extends React.Component {
                                             <div className="mt-4 d-flex align-items-center">
                                                 <h5 className="mb-0">Already have an account?
                                                 <Link to="/login" className="text-primary">Sign in</Link>
-                                                    {/* <a href="javascript:void(0);" className="text-primary">Sign in</a> */}
                                                 </h5>
                                                 <div className="ml-auto">
                                                     {/* <button className="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg">Create Account</button> */}
@@ -313,16 +318,32 @@ class RegisterBrandPage extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="d-lg-flex d-xs-none col-lg-4">
+                            <div className="d-none d-lg-block col-lg-4">
                                 <div className="slider-light">
                                     <div className="slick-slider slick-initialized">
-                                        <div>
-                                            <div className="position-relative h-100 d-flex justify-content-center align-items-center bg-premium-dark" tabIndex="-1">
-                                                <div className="slide-img-bg" style={{ backgroundImage: `url(${citynights})` }}></div>
-                                                <div className="slider-content"><h3>Scalable, Modular, Consistent</h3>
-                                                    <p>Easily exclude the components you don't require. Lightweight, consistent Bootstrap based styles across all elements and components</p></div>
+                                        <Slider {...settings}>
+                                            <div>
+                                                <div className="position-relative h-100 d-flex justify-content-center align-items-center bg-plum-plate" tabIndex="-1">
+                                                    <div className="slide-img-bg" style={{ backgroundImage: `url(${city})` }}></div>
+                                                    <div className="slider-content"><h3>Active User Rate</h3>
+                                                        <p>giúp nhãn hàng chọn đúng Influencer khi vấn nạn “follower ảo” ngày càng cao.</p></div>
+                                                </div>
                                             </div>
-                                        </div>
+                                            <div>
+                                                <div className="position-relative h-100 d-flex justify-content-center align-items-center bg-premium-dark" tabIndex="-1">
+                                                    <div className="slide-img-bg" style={{ backgroundImage: `url(${citynights})` }}></div>
+                                                    <div className="slider-content"><h3>Sentiment Score</h3>
+                                                        <p>Chỉ số phản ánh cảm xúc của người dùng thông qua các phản hồi tích cực/tình cảm/ thái độ của followers đối với các nội dung do Influencer chia sẻ.</p></div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className="position-relative h-100 d-flex justify-content-center align-items-center bg-sunny-morning" tabIndex="-1">
+                                                    <div className="slide-img-bg" style={{ backgroundImage: `url(${citydark})` }}></div>
+                                                    <div className="slider-content"><h3>Influence Score</h3>
+                                                        <p>Là chỉ số tổng hợp từ các chỉ số trên và đã được thử nghiệm kỹ càng trên nhiều thuật toán. Vì vậy, Influence Score có thể phản ánh gần đúng nhất mức độ ảnh hưởng của Influencer trên từng chủ đề.</p></div>
+                                                </div>
+                                            </div>
+                                        </Slider>
                                     </div>
                                 </div>
                             </div>
