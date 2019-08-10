@@ -14,6 +14,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import DateRangePicker from 'react-daterange-picker'
 import originalMoment from "moment";
 import { extendMoment } from "moment-range";
+var NumberFormat = require('react-number-format');
 import 'react-daterange-picker/dist/css/react-calendar.css'
 
 const moment = extendMoment(originalMoment);
@@ -66,9 +67,9 @@ class RegisterCampaignPage extends Component {
             selectedOptionJobCategory: [{ value: 'Share Link', label: 'Share Link' }, { value: 'Post Image', label: 'Post Image' }],
             selectedInfluencers: [],
             submitted: false,
-            isFormStep: false,
+            isFormStep: true,
             isInfluencerStep: false,
-            isJobStep: true,
+            isJobStep: false,
             isChecked: false,
             skip: 0,
             checkedInfluencers: new Map(),
@@ -472,7 +473,14 @@ class RegisterCampaignPage extends Component {
                                                         <div className="position-relative form-group">
                                                             <label htmlFor="pass" className="">
                                                                 <span className="text-danger">*</span> Budget</label>
-                                                            <input type="text" className="form-control" name="budget" id="budget" placeholder="Budget" value={campaign.budget} onChange={this.handleCampaignChange} />
+                                                            <NumberFormat className="form-control" name="budget" id="budget" thousandSeparator={true} suffix={'đ'} value={campaign.budget} placeholder="Price..." onValueChange={(values) => {
+                                                                const { value } = values;
+                                                                const { campaign } = this.state;
+                                                                const campaignLocal = campaign;
+                                                                campaignLocal.budget = value;
+                                                                this.setState({ campaign: campaignLocal })
+                                                            }} />
+                                                            {/* <input type="text" className="form-control" name="budget" id="budget" placeholder="Budget" value={campaign.budget} onChange={this.handleCampaignChange} /> */}
                                                             {
                                                                 submitted && !campaign.budget &&
                                                                 <div className="help-block text-danger">Budget is required</div>
@@ -685,12 +693,12 @@ class RegisterCampaignPage extends Component {
                                                 </div>
                                                 <div className="mt-4 d-flex align-items-center">
                                                     <div className="ml-auto">
-                                                    <input type="button" onClick={this.handleBackStep} name="backinf" id="backinf" className="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg" value="Back" />
+                                                        <input type="button" onClick={this.handleBackStep} name="backinf" id="backinf" className="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg" value="Back" />
                                                         <input type="submit" name="register" id="register" className="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg" value="Register" />
                                                         {
                                                             campaigns.loading &&
                                                             <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                                                        }                                                        
+                                                        }
                                                     </div>
                                                 </div>
                                             </form>

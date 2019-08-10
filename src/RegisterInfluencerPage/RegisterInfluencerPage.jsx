@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import InfImg from '../assets/images/Influencer.jpg'
 import { userActions, infActions } from '../_actions';
-import new_logo from '../assets/images/new_logo.png'
+import new_logo from '../assets/images/new_logo.png';
+var NumberFormat = require('react-number-format');
+
 class RegisterInfluencerPage extends React.Component {
     constructor(props) {
         super(props);
@@ -22,6 +24,8 @@ class RegisterInfluencerPage extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handlePassword = this.handlePassword.bind(this);
+        this.handleRepeatPassword = this.handleRepeatPassword.bind(this);
     }
 
     handleChange(event) {
@@ -34,6 +38,33 @@ class RegisterInfluencerPage extends React.Component {
             }
         });
     }
+
+    handleRepeatPassword = repeatPassword => {
+        const { influencer } = this.state;
+        if (influencer.password !== repeatPassword) {
+            return false;
+        } else {
+            return true;
+        };
+    }
+
+    handlePassword = password => {
+        const { influencer } = this.state;
+        var passwordValidator = require('password-validator');
+        // Create a schema
+        var schema = new passwordValidator();
+        schema
+            .is().min(8)
+            .is().max(20)
+            .has().uppercase()
+            .has().lowercase()
+            .has().digits()
+            .has().not().spaces()
+            .has().symbols()
+
+        const valid = schema.validate(password)
+        return valid;
+    };
 
     handleSubmit(event) {
         event.preventDefault();
@@ -156,7 +187,7 @@ class RegisterInfluencerPage extends React.Component {
     render() {
         const { influencers } = this.props;
         const { submitted, influencer } = this.state;
-        return (            
+        return (
             <div className="app-container app-theme-white body-tabs-shadow">
                 <div className="app-container">
                     <div className="h-100">
@@ -201,11 +232,12 @@ class RegisterInfluencerPage extends React.Component {
                                                         <label htmlFor="name" className="">
                                                             <span className="text-danger">*</span> Phone
                                                         </label>
-                                                        <input type="text" name="phone" id="phone" placeholder="Your Phone" value={influencer.phone} onChange={this.handleChange} className="form-control" />
+                                                        {/* <input type="text" name="phone" id="phone" placeholder="Your Phone" value={influencer.phone} onChange={this.handleChange} className="form-control" /> */}
+                                                        <NumberFormat className="form-control" name="phone" id="phone" format="+84 (####) ###-###" mask="_" value={influencer.phone} onChange={this.handleChange} placeholder="Your Phone" />
                                                         {
                                                             submitted && !influencer.phone &&
                                                             <div className="help-block text-danger">Phone is required</div>
-                                                        }
+                                                        }                                                        
                                                     </div>
                                                 </div>
                                                 <div className="col-md-6">
@@ -224,10 +256,14 @@ class RegisterInfluencerPage extends React.Component {
                                                     <div className="position-relative form-group">
                                                         <label htmlFor="pass" className="">
                                                             <span className="text-danger">*</span> Password</label>
-                                                        <input type="password" id="password" placeholder="Password" name="password" value={influencer.password} onChange={this.handleChange} className="form-control" />
+                                                        <input type="password" id="password" placeholder="Ex: @Bcd2019" name="password" value={influencer.password} onChange={this.handleChange} className="form-control" />
                                                         {
                                                             submitted && !influencer.password &&
                                                             <div className="help-block text-danger">Password is required</div>
+                                                        }
+                                                        {
+                                                            submitted && !this.handlePassword(influencer.password) &&
+                                                            <div className="help-block text-danger">Password minimum length 8, must have uppercase, lowercase, digits, special letters and not have space</div>
                                                         }
                                                     </div>
                                                 </div>
@@ -235,10 +271,18 @@ class RegisterInfluencerPage extends React.Component {
                                                     <div className="position-relative form-group">
                                                         <label htmlFor="pass" className="">
                                                             <span className="text-danger">*</span> Repeat Password</label>
-                                                        <input type="password" id="repeatPassword" placeholder="Repeat Password" name="repeatPassword" value={influencer.repeatPassword} onChange={this.handleChange} className="form-control" />
+                                                        <input type="password" id="repeatPassword" placeholder="Ex: @Bcd2019" name="repeatPassword" value={influencer.repeatPassword} onChange={this.handleChange} className="form-control" />
                                                         {
                                                             submitted && !influencer.repeatPassword &&
                                                             <div className="help-block text-danger">Repeat Password is required</div>
+                                                        }
+                                                        {
+                                                            submitted && !this.handlePassword(influencer.repeatPassword) &&
+                                                            <div className="help-block text-danger">Password incorrect</div>
+                                                        }
+                                                        {
+                                                            submitted && !this.handleRepeatPassword(influencer.repeatPassword) &&
+                                                            <div className="help-block text-danger">Password is not matched</div>
                                                         }
                                                     </div>
                                                 </div>

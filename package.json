@@ -26,6 +26,7 @@
     "babel-preset-latest": "^6.24.1",
     "css-loader": "^3.0.0",
     "dayjs": "^1.8.15",
+    "email-validator": "^2.0.4",
     "file-loader": "^4.0.0",
     "firebase": "^6.3.0",
     "flexslider": "^2.7.2",

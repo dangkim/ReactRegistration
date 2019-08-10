@@ -67,7 +67,7 @@ class App extends React.Component {
     return (
       <Router history={history}>
         <div>
-          <ToastContainer autoClose={2000} />
+          <ToastContainer autoClose={7000} />
           <PrivateRoute exact path="/" component={LoginPage} />
           <Route path="/landingPage" component={LandingPage} />
           <Route path="/login" component={LoginPage} />

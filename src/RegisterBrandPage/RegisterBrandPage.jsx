@@ -10,6 +10,7 @@ import { brandActions, campaignActions, userActions } from '../_actions';
 import Select from 'react-select';
 import new_logo from '../assets/images/new_logo.png'
 import { createLocations } from './../_models/CommonModels';
+var NumberFormat = require('react-number-format');
 
 class RegisterBrandPage extends React.Component {
     constructor(props) {
@@ -25,9 +26,9 @@ class RegisterBrandPage extends React.Component {
                 phone: '',
                 password: '',
                 repeatPassword: '',
-                location: 'TPHCM',                
+                location: 'TPHCM',
             },
-            selectedOptionLocation: [{ value: "TPHCM", label: "TPHCM" }],
+            selectedOptionLocation: { value: "TPHCM", label: "TPHCM" },
             submitted: false
         };
 
@@ -35,9 +36,11 @@ class RegisterBrandPage extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
+        this.handleRepeatPassword = this.handleRepeatPassword.bind(this);
     }
 
     handleOptionLocationChange = selectedOptionLocation => {
+        debugger;
         this.setState({ selectedOptionLocation });
         //console.log(`Option selected:`, selectedOptionLocation);
     };
@@ -59,20 +62,12 @@ class RegisterBrandPage extends React.Component {
         const { brand, selectedOptionLocation } = this.state;
         const { dispatch, users } = this.props;
 
-        let locationString = '';
-        var i;
-        for (i = 0; i < selectedOptionLocation.length; i++) {
-            locationString += selectedOptionLocation[i].value + ',';
-        }
-
-        const locationStrim = locationString.replace(/,\s*$/, "");
-
         if (brand.fullName
             && brand.email
             && brand.brandName
             && brand.businessAreas
             && brand.phone
-            && locationString
+            && selectedOptionLocation
             && brand.password
             && brand.repeatPassword) {
 
@@ -84,7 +79,7 @@ class RegisterBrandPage extends React.Component {
                 IsFluencer: false,
                 IsBrand: true
             }
-
+            debugger;
             const brandType = {
                 ContentItemId: '',
                 ContentItemVersionId: '',
@@ -117,7 +112,7 @@ class RegisterBrandPage extends React.Component {
                         Text: brand.password
                     },
                     Location: {
-                        Text: locationString
+                        Text: selectedOptionLocation.value
                     }
                 },
                 TitlePart: {
@@ -133,7 +128,17 @@ class RegisterBrandPage extends React.Component {
         const { dispatch } = this.props;
     }
 
+    handleRepeatPassword = repeatPassword => {
+        const { brand } = this.state;
+        if (brand.password !== repeatPassword) {
+            return false;
+        } else {
+            return true;
+        };
+    }
+
     handlePassword = password => {
+        const { brand } = this.state;
         var passwordValidator = require('password-validator');
         // Create a schema
         var schema = new passwordValidator();
@@ -146,7 +151,7 @@ class RegisterBrandPage extends React.Component {
             .has().not().spaces()
             .has().symbols()
 
-        const valid =  schema.validate(password)
+        const valid = schema.validate(password)
         return valid;
         //this.setState({ password });
         //console.log(`Option selected:`, selectedOptionLocation);
@@ -157,8 +162,8 @@ class RegisterBrandPage extends React.Component {
         const { brands, locations } = this.props;
         const { brand, selectedOptionLocation, submitted } = this.state;
         const options = createLocations();
+        const validator = require("email-validator");
 
-        
         return (
             <div className="app-container app-theme-white body-tabs-shadow">
                 <div className="app-container">
@@ -207,8 +212,8 @@ class RegisterBrandPage extends React.Component {
                                                             maxMenuHeight={200}
                                                             value={selectedOptionLocation}
                                                             onChange={this.handleOptionLocationChange}
-                                                            isMulti
-                                                            placeholder="Locations..."
+                                                            isMulti={false}
+                                                            placeholder="Location..."
                                                             options={options} />
                                                         {
                                                             submitted && !selectedOptionLocation &&
@@ -221,7 +226,8 @@ class RegisterBrandPage extends React.Component {
                                                         <label htmlFor="name" className="">
                                                             <span className="text-danger">*</span> Phone
                                                         </label>
-                                                        <input type="text" name="phone" id="phone" placeholder="Your Phone" value={brand.phone} onChange={this.handleChange} className="form-control" />
+                                                        {/* <input type="text" name="phone" id="phone" placeholder="Your Phone" value={brand.phone} onChange={this.handleChange} className="form-control" /> */}
+                                                        <NumberFormat className="form-control" name="phone" id="phone" format="+84 (####) ###-###" mask="_" value={brand.phone} onChange={this.handleChange} placeholder="Your Phone" />
                                                         {
                                                             submitted && !brand.phone &&
                                                             <div className="help-block text-danger">Phone is required</div>
@@ -245,7 +251,7 @@ class RegisterBrandPage extends React.Component {
                                                         <label htmlFor="name" className="">
                                                             <span className="text-danger">*</span> Business areas
                                                         </label>
-                                                        <input type="text" name="businessAreas" id="businessAreas" placeholder="Your Business Areas" value={brand.businessAreas} onChange={this.handleChange} className="form-control" />
+                                                        <input type="text" name="businessAreas" id="businessAreas" placeholder="Ex: Sport, Fashion" value={brand.businessAreas} onChange={this.handleChange} className="form-control" />
                                                         {
                                                             submitted && !brand.businessAreas &&
                                                             <div className="help-block text-danger">Business areas is required</div>
@@ -263,7 +269,7 @@ class RegisterBrandPage extends React.Component {
                                                         }
                                                         {
                                                             submitted && !this.handlePassword(brand.password) &&
-                                                            <div className="help-block text-danger">Password is not correct</div>
+                                                            <div className="help-block text-danger">Password incorrect</div>
                                                         }
                                                     </div>
                                                 </div>
@@ -277,15 +283,23 @@ class RegisterBrandPage extends React.Component {
                                                             <div className="help-block text-danger">Repeat Password is required</div>
                                                         }
                                                         {
-                                                            submitted && !brand.password &&
-                                                            <div className="help-block text-danger">Password is required</div>
+                                                            submitted && !this.handlePassword(brand.repeatPassword) &&
+                                                            <div className="help-block text-danger">Password incorrect</div>
+                                                        }
+                                                        {
+                                                            submitted && !this.handleRepeatPassword(brand.repeatPassword) &&
+                                                            <div className="help-block text-danger">Password is not matched</div>
                                                         }
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className="mt-3 position-relative form-check"><input name="check" id="exampleCheck" type="checkbox" className="form-check-input" /><label htmlFor="exampleCheck" className="form-check-label">Accept our <a href="javascript:void(0);">Terms
                                         and Conditions</a>.</label></div>
-                                            <div className="mt-4 d-flex align-items-center"><h5 className="mb-0">Already have an account? <a href="javascript:void(0);" className="text-primary">Sign in</a></h5>
+                                            <div className="mt-4 d-flex align-items-center">
+                                                <h5 className="mb-0">Already have an account?
+                                                <Link to="/login" className="text-primary">Sign in</Link>
+                                                    {/* <a href="javascript:void(0);" className="text-primary">Sign in</a> */}
+                                                </h5>
                                                 <div className="ml-auto">
                                                     {/* <button className="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg">Create Account</button> */}
                                                     <input type="submit" name="signup" id="signup" className="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg" value="Create Account" />

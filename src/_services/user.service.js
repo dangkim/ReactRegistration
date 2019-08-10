@@ -123,7 +123,7 @@ function handleResponseRegisterUser(response) {
     return response.text().then(text => {
         const data = text;
         if (!response.ok) {
-            if (response.status === 401) {
+            if (response.status === 401 || response.status === 204) {
                 // auto logout if 401 response returned from api
                 logout();
                 location.reload(true);

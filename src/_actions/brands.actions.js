@@ -2,6 +2,7 @@ import { brandConstants } from '../_constants';
 import { brandService, userService } from '../_services';
 import { alertActions } from '.';
 import { history } from '../_helpers';
+import { toast } from "react-toastify";
 
 export const brandActions = {
     register,
@@ -41,7 +42,8 @@ function register(brandType, userType) {
             },
                 error => {
                     dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
+                    //dispatch(alertActions.error(error.toString()));
+                    toast.warn(userType.UserName + " is existed please use other emails");
                 }
             );
     };
