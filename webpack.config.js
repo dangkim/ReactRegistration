@@ -11,7 +11,7 @@ const WebpackAssetsManifest = require('webpack-assets-manifest');
 //         key: 'gcm_sender_id',
 //         value: '103953800507',
 //       });
-  
+
 //       assets[ key ] = value;
 //     },
 // });
@@ -33,40 +33,40 @@ module.exports = {
                 loader: 'babel-loader'
             },
             {
-              test: /\.(sa|sc|c)ss$/,
-              use: [
-                  {
-                      loader: MiniCssExtractPlugin.loader
-                  },
-                  {
-                      loader: "css-loader",
-                  },
-                  // {
-                  //     loader: "postcss-loader"
-                  // },
-                  // {
-                  //     loader: "sass-loader",
-                  //     options: {
-                  //         implementation: require("sass")
-                  //     }
-                  // }
+                test: /\.(sa|sc|c)ss$/,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader
+                    },
+                    {
+                        loader: "css-loader",
+                    },
+                    // {
+                    //     loader: "postcss-loader"
+                    // },
+                    // {
+                    //     loader: "sass-loader",
+                    //     options: {
+                    //         implementation: require("sass")
+                    //     }
+                    // }
                 ]
-            },              
+            },
             {
-              // Now we apply rule for images
-              test: /\.(png|jpe?g|gif|svg)$/,
-              use: [
-                      {
+                // Now we apply rule for images
+                test: /\.(png|jpe?g|gif|svg)$/,
+                use: [
+                    {
                         // Using file-loader for these files
                         loader: "file-loader",
-        
+
                         // In options we can set different things like format
                         // and directory to save
                         options: {
-                          outputPath: 'images'
+                            outputPath: 'images'
                         }
-                      }
-                    ]
+                    }
+                ]
             },
             {
                 test: /\.(woff|woff2|ttf|otf|eot)$/,
@@ -87,30 +87,34 @@ module.exports = {
             // both options are optional
             filename: '[name].css',
             chunkFilename: '[id].css',
-          }),
-        new HtmlWebpackPlugin({template: './src/index.html'}),
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            hash: true,
+        }
+        ),
         new WebpackAssetsManifest({
             output: 'manifest.json',
             transform(assets, manifest) {
-              // Attach new properties to `assets` or return something else.
-              // Just be sure it can be JSON stringified.
-          
-            //   const { name, version } = require('./package.json');
-          
-            //   assets.package = {
-            //     name,
-            //     version,
-            //   };
-          
-              // You can call the customize hook if you need to.
-              const { key, value } = manifest.hooks.customize.call({
-                key: 'gcm_sender_id',
-                value: '103953800507',
-              });
-          
-              assets[ key ] = value;
+                // Attach new properties to `assets` or return something else.
+                // Just be sure it can be JSON stringified.
+
+                //   const { name, version } = require('./package.json');
+
+                //   assets.package = {
+                //     name,
+                //     version,
+                //   };
+
+                // You can call the customize hook if you need to.
+                const { key, value } = manifest.hooks.customize.call({
+                    key: 'gcm_sender_id',
+                    value: '103953800507',
+                });
+
+                assets[key] = value;
             },
-          }),
+        }),
     ],
     devServer: {
         historyApiFallback: true
@@ -118,12 +122,12 @@ module.exports = {
     externals: {
         // global app config object
         configContent: JSON.stringify({
-            //apiUrl: 'http://bdo8.com/'
-            apiUrl:'https://localhost:44300/'
+            apiUrl: 'http://bdo8.com/'
+            //apiUrl: 'https://localhost:44300/'
         }),
         configOrchardCore: JSON.stringify({
-            //apiUrl: 'http://bdo8.com/api/'
-            apiUrl:'https://localhost:44300/api/'
+            apiUrl: 'http://bdo8.com/api/'
+            //apiUrl: 'https://localhost:44300/api/'
         })
     }
 }

@@ -275,7 +275,7 @@ class RegisterBrandPage extends React.Component {
                                                         }
                                                         {
                                                             submitted && !this.handlePassword(brand.password) &&
-                                                            <div className="help-block text-danger">Password incorrect</div>
+                                                            <div className="help-block text-danger">Password minimum length 8, must have uppercase, lowercase, digits, special letters and not have space</div>
                                                         }
                                                     </div>
                                                 </div>

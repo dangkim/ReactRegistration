@@ -8,13 +8,71 @@ export const influencerService = {
     getCostByContentItemId,
     getCostByUserName,
     updateInfluencers,
-    registerJobs
+    registerJobs,
+    getInfluencersByName
 };
 
 function getAll(first, skip) {
     const GET_ALL_INFS = `
     {
         influencer(first: `+ first + `, skip: ` + skip + `){
+            author
+            checkIn
+            contentItemId
+            contentItemVersionId
+            contentType
+            createdUtc
+            description
+            displayText
+            email
+            fullName
+            genderDemorgraphic {
+              genderGraphicName
+              genderPercentage
+            }
+            geoDemorgraphic {
+              geoGraphicName
+              geoPercentage
+            }
+            latest
+            modifiedUtc
+            numberOfComment
+            numberOfLike
+            numberOfLove
+            owner
+            phone
+            ageDemorgraphic {
+              ageGraphicsName
+              agePercentage
+            }
+            photo {
+              paths
+              urls
+            }
+            published
+            publishedUtc
+          }
+    }
+    `;
+
+    const token = localStorage.getItem('token');
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/graphql',
+            'Authorization': token
+        },
+        body: GET_ALL_INFS
+    };
+
+    return fetch(`${configOrchardCore.apiUrl}graphql`, requestOptions).then(handleGraphInfResponse);
+
+}
+
+function getInfluencersByName(first, skip, userName) {
+    const GET_ALL_INFS = `
+    {
+        influencer(first: `+ first + `, skip: ` + skip + `, where: {displayText_contains: "`+ userName +`"}){
             author
             checkIn
             contentItemId
@@ -291,8 +349,7 @@ function handleGraphInfResponse(response) {
         }
     }
 
-    return response.json().then(text => {
-        debugger;
+    return response.json().then(text => {        
         const data = text.data;
         return data;
     });

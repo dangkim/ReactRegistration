@@ -38,6 +38,18 @@ export function influencers(state = {}, action) {
       return {
         error: action.error
       };
+    case infConstants.INFS_GETBYNAME_REQUEST:
+      return {
+        loading: true
+      };
+    case infConstants.INFS_GETBYNAME_SUCCESS:
+      return {
+        items: action.influencers
+      };
+    case infConstants.INFS_GETBYNAME_FAILURE:
+      return {
+        error: action.error
+      };
     case infConstants.JOB_REGISTER_REQUEST:
       return {
         loading: true

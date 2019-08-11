@@ -12,6 +12,7 @@ export const infActions = {
     getCostByUserName,
     registerJobs,
     updateInfluencers,
+    getInfluencersByName
 };
 
 function register(infType, userType) {
@@ -101,6 +102,27 @@ function getAll(first, skip) {
     function request() { return { type: infConstants.INFS_GETALL_REQUEST } }
     function success(influencers) { return { type: infConstants.INFS_GETALL_SUCCESS, influencers } }
     function failure(error) { return { type: infConstants.INFS_GETALL_FAILURE, error } }
+}
+
+function getInfluencersByName(first, skip, userName) {
+    return dispatch => {
+        dispatch(request());
+
+        influencerService.getInfluencersByName(first, skip, userName)
+            .then(
+                influencers => dispatch(success(influencers)),
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                    toast.error("Please login again");
+                    history.push('/Login');
+                }
+            );
+    };
+
+    function request() { return { type: infConstants.INFS_GETBYNAME_REQUEST } }
+    function success(influencers) { return { type: infConstants.INFS_GETBYNAME_SUCCESS, influencers } }
+    function failure(error) { return { type: infConstants.INFS_GETBYNAME_FAILURE, error } }
 }
 
 function getAllJobCategories() {

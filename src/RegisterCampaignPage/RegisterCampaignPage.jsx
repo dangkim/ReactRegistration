@@ -19,6 +19,7 @@ import 'react-daterange-picker/dist/css/react-calendar.css'
 import JwPagination from 'jw-react-pagination';
 import { SearchBox } from '../SearchBox';
 import cx from 'classnames';
+import Skeleton from 'react-loading-skeleton';
 
 const moment = extendMoment(originalMoment);
 
@@ -72,8 +73,8 @@ class RegisterCampaignPage extends Component {
             selectedOptionJobCategory: [{ value: 'Share Link', label: 'Share Link' }, { value: 'Post Image', label: 'Post Image' }],
             selectedInfluencers: [],
             submitted: false,
-            isFormStep: false,
-            isInfluencerStep: true,
+            isFormStep: true,
+            isInfluencerStep: false,
             isJobStep: false,
             isChecked: false,
             skip: 0,
@@ -84,6 +85,7 @@ class RegisterCampaignPage extends Component {
             pageOfItems: [],
             exampleItems,
             first: 9,
+            searchValue: '',
             dateValue: moment.range(today.clone(), today.clone().add(7, "days"))
         };
 
@@ -100,17 +102,7 @@ class RegisterCampaignPage extends Component {
         this.nextPageFluencers = this.nextPageFluencers.bind(this);
         this.prePageFluencers = this.prePageFluencers.bind(this);
         this.onChangePage = this.onChangePage.bind(this);
-    }
-
-    onChangePage(pageOfItems) {
-        debugger;
-        const { dispatch } = this.props;
-        const { first } = this.state;
-        const length = pageOfItems.length;
-        const currentPage = Math.ceil(pageOfItems[length - 1].id / first);
-        dispatch(infActions.getAll(first, first * currentPage));
-        // update local state with new page of items
-        this.setState({ pageOfItems });
+        this.handleSearch = this.handleSearch.bind(this);
     }
 
     nextPageFluencers() {
@@ -192,7 +184,7 @@ class RegisterCampaignPage extends Component {
     handleInfluencerStep(event) {
         const { campaign, dateValue, selectedOptionLocation, selectedOptionInteresting } = this.state;
         event.preventDefault();
-        debugger
+
         this.setState({ submitted: true });
         if (campaign.campaignName &&
             campaign.campaignTarget &&
@@ -323,6 +315,28 @@ class RegisterCampaignPage extends Component {
         this.setState({ isOpen: !isOpen });
     };
 
+    handleSearch(searchValue) {
+        const { dispatch } = this.props;
+        const { first } = this.state;
+        this.setState({ searchValue: searchValue });
+        if (searchValue !== '') {
+            dispatch(infActions.getInfluencersByName(first, 0, searchValue));
+        } else {
+            dispatch(infActions.getAll(first, 0));
+        }
+    }
+
+    onChangePage(pageOfItems) {
+        const { dispatch } = this.props;
+        const { first, searchValue } = this.state;
+        const length = pageOfItems.length;
+        const currentPage = Math.ceil(pageOfItems[length - 1].id / first);
+        debugger;
+        dispatch(infActions.getInfluencersByName(first, first * (currentPage - 1), searchValue));
+        // update local state with new page of items
+        this.setState({ pageOfItems });
+    }
+
     render() {
         const { submitted,
             campaign,
@@ -353,7 +367,7 @@ class RegisterCampaignPage extends Component {
             }
         }
 
-        return true ? (
+        return (
             <div className="app-container app-theme-white body-tabs-shadow">
                 <div className="app-container">
                     <div className="h-100">
@@ -538,10 +552,7 @@ class RegisterCampaignPage extends Component {
                                                 "app-header__content",
                                             )}>
                                                 <div className="app-header-left">
-                                                    <SearchBox />
-                                                </div>
-                                                <div className="app-header-right">
-                                                    <JwPagination disableDefaultStyles={true} pageSize={first} items={exampleItems} onChangePage={this.onChangePage} />
+                                                    <SearchBox handlerFromParent={this.handleSearch} />
                                                 </div>
                                             </div>
                                         </div>
@@ -553,92 +564,91 @@ class RegisterCampaignPage extends Component {
                                             transitionEnter={false}
                                             transitionLeave={false}>
                                             {
-                                                <Row>
-                                                    {
-                                                        influencers.items && influencers.items.influencer.map((item, key) => {
-                                                            return (
-                                                                <Col key={key} md="4">
-                                                                    <div className="card mb-3 widget-chart bg-tempting-azure card-border">
-                                                                        <div className="rounded-circle">
-                                                                            <img className="mx-auto rounded-circle" style={{ width: '88px', height: '88px' }} src={imgSrc} alt="" />
+                                                influencers.loading ?
+                                                    <Skeleton count={30} /> :
+                                                    <Row>
+                                                        {
+                                                            influencers.items && influencers.items.influencer.map((item, key) => {
+                                                                return (
+                                                                    <Col key={key} md="4">
+                                                                        <div className="card mb-3 widget-chart bg-tempting-azure card-border">
+                                                                            <div className="rounded-circle">
+                                                                                <img className="mx-auto rounded-circle" style={{ width: '88px', height: '88px' }} src={imgSrc} alt="" />
+                                                                            </div>
+                                                                            <div className="divide" style={{ marginBottom: '5px' }} />
+                                                                            <div className="widget-heading">
+                                                                                {item.fullName} - {item.description}
+                                                                            </div>
+                                                                            <Row>
+                                                                                <Col>
+                                                                                    <div className="widget-subheading" style={{ textAlign: 'left' }}>
+                                                                                        Hướng về lứa: {item.ageDemorgraphic.ageGraphicsName}
+                                                                                    </div>
+                                                                                </Col>
+                                                                                <Col>
+                                                                                    <div className="widget-subheading" style={{ textAlign: 'left' }}>
+                                                                                        Share Link: {item.shareLink}
+                                                                                    </div>
+                                                                                </Col>
+                                                                            </Row>
+                                                                            <Row>
+                                                                                <Col>
+                                                                                    <div className="widget-subheading" style={{ textAlign: 'left' }}>
+                                                                                        Hướng về giới: {item.genderDemorgraphic.genderGraphicsName}
+                                                                                    </div>
+                                                                                </Col>
+                                                                                <Col>
+                                                                                    <div className="widget-subheading" style={{ textAlign: 'left' }}>
+                                                                                        Post Image: {item.postImage}
+                                                                                    </div>
+                                                                                </Col>
+                                                                            </Row>
+                                                                            <Row>
+                                                                                <Col>
+                                                                                    <div className="widget-subheading" style={{ textAlign: 'left' }}>
+                                                                                        Hướng về nơi: {item.geoDemorgraphic.geoGraphicName}
+                                                                                    </div>
+                                                                                </Col>
+                                                                                <Col>
+                                                                                    <div className="widget-subheading" style={{ textAlign: 'left' }}>
+                                                                                        Video: {item.video}
+                                                                                    </div>
+                                                                                </Col>
+                                                                            </Row>
+                                                                            <Row>
+                                                                                <Col>
+                                                                                </Col>
+                                                                                <Col>
+                                                                                    <div className="widget-subheading" style={{ textAlign: 'left' }}>
+                                                                                        Video: {item.checkIn}
+                                                                                    </div>
+                                                                                </Col>
+                                                                            </Row>
+                                                                            <Row>
+                                                                                <Col>
+                                                                                </Col>
+                                                                                <Col>
+                                                                                    <div className="widget-subheading" style={{ textAlign: 'left' }}>
+                                                                                        LiveStream: {item.liveStream}
+                                                                                    </div>
+                                                                                </Col>
+                                                                            </Row>
+                                                                            <div className="widget-description text-success">
+                                                                                <CustomInput type="checkbox" id={item.contentItemId} name={item.contentItemId} onChange={this.handleCheckBoxChange} checked={this.state.checkedInfluencers.get(item.contentItemId) ? this.state.checkedInfluencers.get(item.contentItemId) : false}
+                                                                                    label="Select" />
+                                                                            </div>
                                                                         </div>
-                                                                        <div className="divide" style={{ marginBottom: '5px' }} />
-                                                                        <div className="widget-heading">
-                                                                            {item.fullName} - {item.description}
-                                                                        </div>
-                                                                        <Row>
-                                                                            <Col>
-                                                                                <div className="widget-subheading" style={{ textAlign: 'left' }}>
-                                                                                    Hướng về lứa: {item.ageDemorgraphic.ageGraphicsName}
-                                                                                </div>
-                                                                            </Col>
-                                                                            <Col>
-                                                                                <div className="widget-subheading" style={{ textAlign: 'left' }}>
-                                                                                    Share Link: {item.shareLink}
-                                                                                </div>
-                                                                            </Col>
-                                                                        </Row>
-                                                                        <Row>
-                                                                            <Col>
-                                                                                <div className="widget-subheading" style={{ textAlign: 'left' }}>
-                                                                                    Hướng về giới: {item.genderDemorgraphic.genderGraphicsName}
-                                                                                </div>
-                                                                            </Col>
-                                                                            <Col>
-                                                                                <div className="widget-subheading" style={{ textAlign: 'left' }}>
-                                                                                    Post Image: {item.postImage}
-                                                                                </div>
-                                                                            </Col>
-                                                                        </Row>
-                                                                        <Row>
-                                                                            <Col>
-                                                                                <div className="widget-subheading" style={{ textAlign: 'left' }}>
-                                                                                    Hướng về nơi: {item.geoDemorgraphic.geoGraphicName}
-                                                                                </div>
-                                                                            </Col>
-                                                                            <Col>
-                                                                                <div className="widget-subheading" style={{ textAlign: 'left' }}>
-                                                                                    Video: {item.video}
-                                                                                </div>
-                                                                            </Col>
-                                                                        </Row>
-                                                                        <Row>
-                                                                            <Col>
-                                                                            </Col>
-                                                                            <Col>
-                                                                                <div className="widget-subheading" style={{ textAlign: 'left' }}>
-                                                                                    Video: {item.checkIn}
-                                                                                </div>
-                                                                            </Col>
-                                                                        </Row>
-                                                                        <Row>
-                                                                            <Col>
-                                                                            </Col>
-                                                                            <Col>
-                                                                                <div className="widget-subheading" style={{ textAlign: 'left' }}>
-                                                                                    LiveStream: {item.liveStream}
-                                                                                </div>
-                                                                            </Col>
-                                                                        </Row>
-                                                                        <div className="widget-description text-success">
-                                                                            <CustomInput type="checkbox" id={item.contentItemId} name={item.contentItemId} onChange={this.handleCheckBoxChange} checked={this.state.checkedInfluencers.get(item.contentItemId) ? this.state.checkedInfluencers.get(item.contentItemId) : false}
-                                                                                label="Select" />
-                                                                        </div>
-                                                                    </div>
-                                                                </Col>
-                                                            )
-                                                        })
-                                                    }
-                                                </Row>
+                                                                    </Col>
+                                                                )
+                                                            })
+                                                        }
+                                                    </Row>
                                             }
                                         </ReactCSSTransitionGroup>
-                                        <div className="app-header bg-strong-bliss header-text-light header-shadow">
+                                        <div className="app-header header-text-light header-shadow">
                                             <div className={cx(
                                                 "app-header__content",
                                             )}>
-                                                <div className="app-header-left">
-                                                    <SearchBox />
-                                                </div>
                                                 <div className="app-header-right">
                                                     <JwPagination disableDefaultStyles={true} pageSize={first} items={exampleItems} onChangePage={this.onChangePage} />
                                                 </div>
@@ -749,12 +759,13 @@ class RegisterCampaignPage extends Component {
                         }
                     </div>
                 </div>
-            </div>) : '';
+            </div>
+        );
     }
 }
 
 function mapStateToProps(state) {
-    //debugger;
+
     const { campaigns, influencers, locations, interestings, jobCategories, jobs, brands } = state;
     //const { brand } = influencers;
     return {
