@@ -123,13 +123,18 @@ function handleResponseRegisterUser(response) {
     return response.text().then(text => {
         const data = text;
         if (!response.ok) {
-            if (response.status === 401 || response.status === 204) {
+            if (response.status === 401) {
                 // auto logout if 401 response returned from api
                 logout();
                 location.reload(true);
             }
-
             const error = (data && data.message) || response.statusText;
+            return Promise.reject(error);
+        }
+
+        if(response.status === 204)
+        {
+            const error = response.statusText;
             return Promise.reject(error);
         }
 

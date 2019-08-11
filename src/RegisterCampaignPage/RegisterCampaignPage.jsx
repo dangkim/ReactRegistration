@@ -16,6 +16,9 @@ import originalMoment from "moment";
 import { extendMoment } from "moment-range";
 var NumberFormat = require('react-number-format');
 import 'react-daterange-picker/dist/css/react-calendar.css'
+import JwPagination from 'jw-react-pagination';
+import { SearchBox } from '../SearchBox';
+import cx from 'classnames';
 
 const moment = extendMoment(originalMoment);
 
@@ -40,6 +43,8 @@ class RegisterCampaignPage extends Component {
         const today = moment();
         //const startDate = today;
         //const dateValue = today;
+        // an example array of items to be paged
+        var exampleItems = [...Array(45).keys()].map(i => ({ id: (i + 1), name: 'Item ' + (i + 1) }));
 
         this.state = {
             campaign: {
@@ -67,8 +72,8 @@ class RegisterCampaignPage extends Component {
             selectedOptionJobCategory: [{ value: 'Share Link', label: 'Share Link' }, { value: 'Post Image', label: 'Post Image' }],
             selectedInfluencers: [],
             submitted: false,
-            isFormStep: true,
-            isInfluencerStep: false,
+            isFormStep: false,
+            isInfluencerStep: true,
             isJobStep: false,
             isChecked: false,
             skip: 0,
@@ -76,6 +81,9 @@ class RegisterCampaignPage extends Component {
             startDate: today,
             endDate: today,
             isOpen: false,
+            pageOfItems: [],
+            exampleItems,
+            first: 9,
             dateValue: moment.range(today.clone(), today.clone().add(7, "days"))
         };
 
@@ -91,6 +99,18 @@ class RegisterCampaignPage extends Component {
         this.handleJobStep = this.handleJobStep.bind(this);
         this.nextPageFluencers = this.nextPageFluencers.bind(this);
         this.prePageFluencers = this.prePageFluencers.bind(this);
+        this.onChangePage = this.onChangePage.bind(this);
+    }
+
+    onChangePage(pageOfItems) {
+        debugger;
+        const { dispatch } = this.props;
+        const { first } = this.state;
+        const length = pageOfItems.length;
+        const currentPage = Math.ceil(pageOfItems[length - 1].id / first);
+        dispatch(infActions.getAll(first, first * currentPage));
+        // update local state with new page of items
+        this.setState({ pageOfItems });
     }
 
     nextPageFluencers() {
@@ -139,7 +159,7 @@ class RegisterCampaignPage extends Component {
             checkedInfluencers } = this.state;
         const { dispatch, brands } = this.props;
         const brand = brands.brand;
-        debugger;
+
         if (campaign.campaignName &&
             campaign.campaignTarget &&
             dateValue.start &&
@@ -273,8 +293,8 @@ class RegisterCampaignPage extends Component {
     };
 
     componentDidMount() {
-        const first = 9;
         const { dispatch } = this.props;
+        const { first } = this.state;
 
         if (this.props.location.state) {
             //debugger;
@@ -293,18 +313,10 @@ class RegisterCampaignPage extends Component {
         //debugger;
         const { campaign } = this.state;
 
-        //console.log(({ startDate, endDate }));
-
         if (dateValue) {
             this.setState({ isOpen: false, dateValue: dateValue });
-            //campaign.fromDate = dateValue.start.format("DD-MM-YYYY");
-            //campaign.toDate = dateValue.end.format("DD-MM-YYYY");
         }
     }
-
-    // onSelect = (dateValue, states) => {
-    //     this.setState({ isOpen: false, dateValue: dateValue });
-    // };
 
     onToggle = () => {
         const { isOpen } = this.state;
@@ -322,9 +334,11 @@ class RegisterCampaignPage extends Component {
             isInfluencerStep,
             isJobStep,
             isOpen,
-            dateValue } = this.state;
+            dateValue,
+            exampleItems,
+            first } = this.state;
         const { influencers, campaigns } = this.props;
-
+        const infItems = influencers.items ? influencers.items.influencer : [];
         let imgSrc = defaultAvatar;
 
         const locations = createLocations();
@@ -338,6 +352,7 @@ class RegisterCampaignPage extends Component {
                 imgSrc = item.photo.urls.length == 0 ? defaultAvatar : configContent.apiUrl + item.photo.urls[0] + '?&width=240&height=240&rmode=';
             }
         }
+
         return true ? (
             <div className="app-container app-theme-white body-tabs-shadow">
                 <div className="app-container">
@@ -516,8 +531,20 @@ class RegisterCampaignPage extends Component {
                         {
                             isInfluencerStep &&
                             <div className="h-100 no-gutters row">
-                                <div className="d-lg-flex d-xs-none col-lg-12">
-                                    <div className="form-row">
+                                <div className="h-200 d-md-flex d-sm-block bg-white justify-content-center align-items-center col-md-12 col-lg-12">
+                                    <div className="mx-auto app-login-box col-sm-12 col-md-10 col-lg-12">
+                                        <div className="app-header bg-strong-bliss header-text-light header-shadow">
+                                            <div className={cx(
+                                                "app-header__content",
+                                            )}>
+                                                <div className="app-header-left">
+                                                    <SearchBox />
+                                                </div>
+                                                <div className="app-header-right">
+                                                    <JwPagination disableDefaultStyles={true} pageSize={first} items={exampleItems} onChangePage={this.onChangePage} />
+                                                </div>
+                                            </div>
+                                        </div>
                                         <ReactCSSTransitionGroup
                                             component="div"
                                             transitionName="TabsAnimation"
@@ -533,14 +560,9 @@ class RegisterCampaignPage extends Component {
                                                                 <Col key={key} md="4">
                                                                     <div className="card mb-3 widget-chart bg-tempting-azure card-border">
                                                                         <div className="rounded-circle">
-                                                                            {/* <div className="icon-wrapper-bg bg-white opacity-1" /> */}
-                                                                            {/* <i className="lnr-cog text-white" /> */}
                                                                             <img className="mx-auto rounded-circle" style={{ width: '88px', height: '88px' }} src={imgSrc} alt="" />
                                                                         </div>
                                                                         <div className="divide" style={{ marginBottom: '5px' }} />
-                                                                        {/* <div className="widget-numbers">
-                                                                            45.8k
-                                                                        </div> */}
                                                                         <div className="widget-heading">
                                                                             {item.fullName} - {item.description}
                                                                         </div>
@@ -599,28 +621,33 @@ class RegisterCampaignPage extends Component {
                                                                             </Col>
                                                                         </Row>
                                                                         <div className="widget-description text-success">
-                                                                            {/* <FontAwesomeIcon icon={faAngleUp} />
-                                                                            <span className="pl-1">175.5%</span> */}
                                                                             <CustomInput type="checkbox" id={item.contentItemId} name={item.contentItemId} onChange={this.handleCheckBoxChange} checked={this.state.checkedInfluencers.get(item.contentItemId) ? this.state.checkedInfluencers.get(item.contentItemId) : false}
                                                                                 label="Select" />
                                                                         </div>
                                                                     </div>
                                                                 </Col>
-
                                                             )
                                                         })
                                                     }
                                                 </Row>
                                             }
                                         </ReactCSSTransitionGroup>
+                                        <div className="app-header bg-strong-bliss header-text-light header-shadow">
+                                            <div className={cx(
+                                                "app-header__content",
+                                            )}>
+                                                <div className="app-header-left">
+                                                    <SearchBox />
+                                                </div>
+                                                <div className="app-header-right">
+                                                    <JwPagination disableDefaultStyles={true} pageSize={first} items={exampleItems} onChangePage={this.onChangePage} />
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div className="mt-4 d-flex align-items-center">
                                             <div className="ml-auto">
-                                                {/* <input type="submit" name="nextStep" id="nextStep" className="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg" value="Next Step" /> */}
                                                 <input type="button" onClick={this.handleBackStep} name="backinf" id="backinf" className="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg" value="Back" />
                                                 <input type="button" onClick={this.handleJobStep} name="job" id="job" className="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg" value="Last Step" />
-
-                                                {/* <Link to="/login" className="btn btn-link">Cancel</Link> */}
-                                                {/* <Link to="/login" className="btn btn-link">Cancel</Link> */}
                                             </div>
                                         </div>
                                     </div>
