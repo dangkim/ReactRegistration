@@ -36,7 +36,8 @@ class DashBoardPage extends Component {
         super(props);
 
         this.state = {
-            userName: ''
+            userName: '',
+            type:''
         };
 
         this.handleCampaignChange = this.handleCampaignChange.bind(this);
@@ -183,8 +184,8 @@ class DashBoardPage extends Component {
     componentDidMount() {
         const { dispatch } = this.props;
         if (this.props.location.state) {
-            const { userName } = this.props.location.state;
-            this.setState({ userName: userName });
+            const { userName, type } = this.props.location.state;
+            this.setState({ userName: userName, type: type });
             //dispatch(brandActions.getBrandFromBrandPage(brand));
             //dispatch(campaignActions.getAll());
             //dispatch(infActions.getAllJobCategories());
@@ -200,13 +201,12 @@ class DashBoardPage extends Component {
     // }
 
     render() {
-        const { userName } = this.state;
-
+        const { userName, type } = this.state;
         return (
             <div>
                 <TopHeaderPage />
                 <div className="app-main">
-                    <LeftMenuPage userName={userName} />
+                    <LeftMenuPage userName={userName} type={type} />
                     <div className="app-main__outer">
                         <div className="app-main__inner">
                             <div className="app-page-title">

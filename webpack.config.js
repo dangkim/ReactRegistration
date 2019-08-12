@@ -89,8 +89,8 @@ module.exports = {
             chunkFilename: '[id].css',
         }),
         new HtmlWebpackPlugin({
-            template: './src/index.html',
             hash: true,
+            template: './src/index.html',            
         }
         ),
         new WebpackAssetsManifest({

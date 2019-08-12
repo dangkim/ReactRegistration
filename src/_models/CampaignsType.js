@@ -1,38 +1,38 @@
-export function createCampaigns(brand, compaignType) {
+export function createCampaigns(brandName, brandFullName, businessAreas, brandLocation, compaignType) {
 
   const campaignsType = {
     ContentItemId: '',
     ContentItemVersionId: '',
     ContentType: 'Campaigns',
-    DisplayText: brand.Brand.BrandName.Text,
+    DisplayText: brandName + ';' + businessAreas+ ';' + brandFullName + ';' + brandLocation,//brand.Brand.BrandName.Text,
     Latest: true,
     Published: false,
     ModifiedUtc: '',
     PublishedUtc: '',
     CreatedUtc: '',
-    Owner: 'admin',
-    Author: 'admin',
+    Owner: brandName,
+    Author: brandName,
     Campaigns: {
       FullName: {
-        Text: brand.Brand.FullName.Text
+        Text: brandFullName,//brand.Brand.FullName.Text
       },
       Email: {
-        Text: brand.Brand.Email.Text
+        Text: ''
       },
       BrandName: {
-        Text: brand.Brand.BrandName.Text
+        Text: brandName,//brand.Brand.BrandName.Text
       },
       BusinessAreas: {
-        Text: brand.Brand.BusinessAreas.Text
+        Text: businessAreas,//brand.Brand.BusinessAreas.Text
       },
       Phone: {
-        Text: brand.Brand.Phone.Text
+        Text: ''
       },
       Password: {
-        Text: brand.Brand.Password.Text
+        Text: ''
       },
       Location: {
-        Text: brand.Brand.Location.Text
+        Text: brandLocation//brand.Brand.Location.Text
       }
     },
     AutoroutePart: {
@@ -45,7 +45,7 @@ export function createCampaigns(brand, compaignType) {
       ]
     },
     TitlePart: {
-      Title: brand.TitlePart.Title
+      Title: brandName + ';' + businessAreas+ ';' + brandFullName + ';' + brandLocation
     }
   }
   debugger;
@@ -58,10 +58,9 @@ export function createCampaign(campaign,
   job,
   selectedOptionLocation,
   selectedOptionInteresting,
-  brand,
+  selectedOptionJobCategory,
+  brandName,
   selectedInfluencers) {
-
-  debugger;
 
   let locationString = '';
   var i;
@@ -75,10 +74,65 @@ export function createCampaign(campaign,
     interestingString += selectedOptionInteresting[i].value + ',';
   }
 
+  let shareLinkCost = 0;
+  let postImageCost = 0;
+  let videoCost = 0;
+  let checkInCost = 0;
+  let liveStreamCost = 0;
+  let isShareLink = 0;
+  let isPostImage = 0;
+  let isVideo = 0;
+  let isCheckIn = 0;
+  let isLiveStream = 0;
+
+  // Calculate Total Cost each
+  if (selectedInfluencers) {
+    selectedInfluencers.forEach(function (influencer, key) {
+      if (influencer.shareLink) {
+        shareLinkCost = shareLinkCost + Number(influencer.shareLink);
+      }
+      if (influencer.postImage) {
+        postImageCost = postImageCost + Number(influencer.postImage);
+      }
+      if (influencer.video) {
+        videoCost = videoCost + Number(influencer.video);
+      }
+      if (influencer.checkIn) {
+        checkInCost = checkInCost + Number(influencer.checkIn);
+      }
+      if (influencer.liveStream) {
+        liveStreamCost = liveStreamCost + Number(influencer.liveStream);
+      }
+    })
+  }
+  ///////////////////////
+
+  // Check Cost of each job
+  var i;
+  for (i = 0; i < selectedOptionJobCategory.length; i++) {
+    if (selectedOptionJobCategory[i].value == "Share Link") {
+      isShareLink = true;
+    }
+    if (selectedOptionJobCategory[i].value == "Post Image") {
+      isPostImage = true;
+    }
+    if (selectedOptionJobCategory[i].value == "Live Stream") {
+      isLiveStream = true;
+    }
+    if (selectedOptionJobCategory[i].value == "Check In") {
+      isCheckIn = true;
+    }
+    if (selectedOptionJobCategory[i].value == "Video") {
+      isVideo = true;
+    }
+  }
+  ///////////////////////////
+
   var campaignContentItems = [];
 
   if (selectedInfluencers) {
     selectedInfluencers.forEach(function (influencer, key) {
+      debugger;
       const influencerLocal = {
         ContentItemId: influencer.contentItemId,
         ContentItemVersionId: influencer.contentItemVersionId,
@@ -118,7 +172,7 @@ export function createCampaign(campaign,
             Text: influencer.liveStream
           },
           CheckIn: {
-            Text: influencer.sheckIn
+            Text: influencer.checkIn
           },
           Video: {
             Text: influencer.video
@@ -174,7 +228,7 @@ export function createCampaign(campaign,
     ContentItemId: '',
     ContentItemVersionId: '',
     ContentType: 'Campaign',
-    DisplayText: "Campaign " + brand.Brand.BrandName.Text,
+    DisplayText: campaign.campaignName + ';' + brandName,
     Latest: true,
     Published: false,
     ModifiedUtc: '',
@@ -233,34 +287,34 @@ export function createCampaign(campaign,
       }
     },
     TitlePart: {
-      Title: "Campaign " + brand.Brand.BrandName.Text,
+      Title: campaign.campaignName + ';' + brandName,
     },
     BagPart: {
       ContentItems: campaignContentItems
     },
     CheckIn: {
       Cost: {
-        Text: ''
+        Text: isCheckIn ? checkInCost : 0
       }
     },
     LiveStream: {
       Cost: {
-        Text: ''
+        Text: isLiveStream ? liveStreamCost : 0
       }
     },
     PostImage: {
       Cost: {
-        Text: ''
+        Text: isPostImage ? postImageCost : 0
       }
     },
     ShareLink: {
       Cost: {
-        Text: ''
+        Text: isShareLink ? shareLinkCost : 0
       }
     },
     Video: {
       Cost: {
-        Text: ''
+        Text: isVideo ? videoCost : 0
       }
     }
   }

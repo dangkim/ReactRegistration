@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 export const brandActions = {
     register,
     getAll,
-    getBrandFromBrandPage
+    getBrandByName
 };
 
 function register(brandType, userType) {
@@ -69,20 +69,25 @@ function getAll() {
     function failure(error) { return { type: brandConstants.BRANDS_GETALL_FAILURE, error } }
 }
 
-function getBrandFromBrandPage(brand) {
+function getBrandByName(userName) {
     return dispatch => {
         dispatch(request());
-        if (brand) {
-            dispatch(success(brand));
+        if (userName) {            
+            brandService.getBrandByName(userName)
+            .then(
+                brand => dispatch(success(brand)),
+                error => toast.warn(error.toString())
+            )
+            //dispatch(success(brand));
         }
         else {
             const error = "cannot get from brand";
             dispatch(failure(error.toString()));
-            dispatch(alertActions.error(error.toString()));
+            //dispatch(alertActions.error(error.toString()));
         }
     };
 
-    function request() { return { type: brandConstants.FROM_BRAND_REQUEST } }
-    function success(brand) { return { type: brandConstants.FROM_BRAND_SUCCESS, brand } }
-    function failure(error) { return { type: brandConstants.FROM_BRAND_FAILURE, error } }
+    function request() { return { type: brandConstants.GET_BRANDBYNAME_REQUEST } }
+    function success(brand) { return { type: brandConstants.GET_BRANDBYNAME_SUCCESS, brand } }
+    function failure(error) { return { type: brandConstants.GET_BRANDBYNAME_FAILURE, error } }
 }

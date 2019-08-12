@@ -4,7 +4,35 @@ import { authHeader } from '../_helpers';
 export const brandService = {
     register,
     getAll,
+    getBrandByName
 };
+
+function getBrandByName(userName) {
+    const GET_BRANDBYNAME = `
+    {
+        brand(where: {displayText_contains: "` + userName + `"}, status: ALL) {
+          contentItemId
+          brandName
+          businessAreas
+          fullName
+          location
+          createdUtc
+          published
+        }
+      }
+    `;
+    const token = localStorage.getItem('token');
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/graphql',
+            'Authorization': token
+        },
+        body: GET_BRANDBYNAME
+    };
+
+    return fetch(`${configOrchardCore.apiUrl}graphql`, requestOptions).then(handleGraphResponse);
+}
 
 function getAll() {
     const GET_ALL_BRAND = `
@@ -24,9 +52,14 @@ function getAll() {
           }
     }
     `;
+
+    const token = localStorage.getItem('token');
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/graphql' },
+        headers: {
+            'Content-Type': 'application/graphql',
+            'Authorization': token
+        },
         body: GET_ALL_BRAND
     };
 
@@ -49,7 +82,7 @@ function register(brandType) {
 function handleGraphResponse(response) {
     return response.json().then(text => {
         const data = text.data;
-        
+
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
@@ -67,7 +100,6 @@ function handleGraphResponse(response) {
 
 function handleContentResponse(response) {
     return response.text().then(text => {
-        debugger;
         const data = text && JSON.parse(text);
         if (!response.ok) {
             if (response.status === 401) {
@@ -81,5 +113,5 @@ function handleContentResponse(response) {
         }
 
         return data;
-    });    
+    });
 }

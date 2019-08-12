@@ -66,7 +66,8 @@ class RegisterCampaignPage extends Component {
                 jobHashTag: '',
                 jobKeyword: '',
                 jobDescription: '',
-                jobLink: ''
+                jobLink: '',
+                jobTasks:[]
             },
             selectedOptionLocation: [{ value: "TPHCM", label: "TPHCM" }],
             selectedOptionInteresting: [{ value: "Fashion", label: "Fashion" }],
@@ -88,7 +89,7 @@ class RegisterCampaignPage extends Component {
             searchValue: '',
             dateValue: moment.range(today.clone(), today.clone().add(7, "days"))
         };
-
+        debugger;
         this.handleCampaignChange = this.handleCampaignChange.bind(this);
         this.handleJobChange = this.handleJobChange.bind(this);
         this.handleSubmitJobs = this.handleSubmitJobs.bind(this);
@@ -147,11 +148,14 @@ class RegisterCampaignPage extends Component {
             job,
             selectedOptionLocation,
             selectedOptionInteresting,
+            selectedOptionJobCategory,
             selectedInfluencers,
-            checkedInfluencers } = this.state;
+            checkedInfluencers,
+            dateValue } = this.state;
         const { dispatch, brands } = this.props;
-        const brand = brands.brand;
-
+        const { brand, userName } = this.props.location.state;
+        const brandObject = brand? brand: brands.brand;
+        debugger;
         if (campaign.campaignName &&
             campaign.campaignTarget &&
             dateValue.start &&
@@ -163,6 +167,7 @@ class RegisterCampaignPage extends Component {
             campaign.budget &&
             selectedOptionLocation &&
             selectedOptionInteresting &&
+            selectedOptionJobCategory &&
             job.jobDescription &&
             job.jobName &&
             selectedInfluencers.length > 0) {
@@ -175,7 +180,11 @@ class RegisterCampaignPage extends Component {
                 job,
                 selectedOptionLocation,
                 selectedOptionInteresting,
-                brand,
+                selectedOptionJobCategory,
+                brandObject.brandName,
+                brandObject.fullName,
+                brandObject.businessAreas,
+                brandObject.location,
                 selectedInfluencers,
                 checkedInfluencers));
         }
@@ -289,13 +298,23 @@ class RegisterCampaignPage extends Component {
         const { first } = this.state;
 
         if (this.props.location.state) {
-            //debugger;
-            const { brand } = this.props.location.state;
-            dispatch(infActions.getAll(first, 0));
-            dispatch(brandActions.getBrandFromBrandPage(brand));
+            const { brand, userName } = this.props.location.state;
+
+            if (brand) {
+                //const { brand } = this.props.location.state;
+                dispatch(infActions.getAll(first, 0));
+                //dispatch(brandActions.getBrandFromBrandPage(brand));
+            }
+            else {
+                if (userName) {
+                    dispatch(brandActions.getBrandByName(userName));
+                }
+                else {
+                    history.push('/registerBrandPage');
+                }
+            }
         }
         else {
-            //dispatch(infActions.getAll(first, 0));
             history.push('/registerBrandPage');
         }
 
@@ -360,7 +379,7 @@ class RegisterCampaignPage extends Component {
         const jobs = createJobs();
 
         if (this.props.location.state) {
-            const { brand } = this.props.location.state;
+            const { brand, userName } = this.props.location.state;
 
             if (brand && brand.published) {
                 imgSrc = item.photo.urls.length == 0 ? defaultAvatar : configContent.apiUrl + item.photo.urls[0] + '?&width=240&height=240&rmode=';

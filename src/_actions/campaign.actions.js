@@ -17,7 +17,11 @@ function register(campaign,
     job,
     selectedOptionLocation,
     selectedOptionInteresting,
-    brand,
+    selectedOptionJobCategory,
+    brandName,
+    brandFullName,
+    businessAreas,
+    brandLocation,
     selectedInfluencers,
     checkedInfluencers) {
     return dispatch => {
@@ -30,12 +34,17 @@ function register(campaign,
             job,
             selectedOptionLocation,
             selectedOptionInteresting,
-            brand,
+            selectedOptionJobCategory,
+            brandName,
             selectedInfluencers);
 
         campaignService.register(campaignLocal)
             .then(campaignType => {
-                const campaignsLocal = createCampaigns(brand, campaignType);
+                const campaignsLocal = createCampaigns(brandName,
+                    brandFullName,
+                    businessAreas,
+                    brandLocation,
+                    campaignType);
                 campaignService.register(campaignsLocal)
                     .then(campaignsType => {
                         dispatch(success());

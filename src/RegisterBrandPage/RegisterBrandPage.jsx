@@ -84,7 +84,7 @@ class RegisterBrandPage extends React.Component {
                 ContentItemId: '',
                 ContentItemVersionId: '',
                 ContentType: 'Brand',
-                DisplayText: 'Brand ' + brand.brandName,
+                DisplayText: brand.brandName + ';' + brand.email + ';' + brand.fullName,
                 Latest: false,
                 Published: false,
                 ModifiedUtc: null,

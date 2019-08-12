@@ -22,14 +22,14 @@ function getToken(userName, password) {
                     .then(type => {
                         if (type == "Brand") {
                             history.push({
-                                pathname: '/registerCampaignPage',
-                                state: { userName: userName }
+                                pathname: '/dashBoardPage',
+                                state: { userName: userName, type: type }
                             })
                         }
                         else if (type == "Influencer") {
                             history.push({
                                 pathname: '/dashBoardPage',
-                                state: { userName: userName }
+                                state: { userName: userName, type: type }
                             })
                         }
                         toast.success("Welcome " + userName);

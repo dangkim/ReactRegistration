@@ -34,12 +34,12 @@ class LeftMenuPage extends Component {
         super(props);
 
         this.state = {
-            
+
         };
     }
 
     render() {
-        const { userName } = this.props;
+        const { userName, type } = this.props;
 
         return (
             <div className="app-sidebar sidebar-shadow">
@@ -103,11 +103,14 @@ class LeftMenuPage extends Component {
                                 </a>
                                 <ul>
                                     <li>
-                                        {/* <a href="pages-forgot-password-boxed.html">
-                                                <i className="metismenu-icon">
-                                                </i>Update Cost
-                                            </a> */}
-                                        <Link className="metismenu-icon" to={{ pathname: '/InfluencerUpdateCostPage', state: { userName: userName } }}>Update Cost</Link>
+                                        {
+                                            type == 'Influencer' && <Link className="metismenu-icon" to={{ pathname: '/InfluencerUpdateCostPage', state: { userName: userName } }}>Update Cost</Link>
+                                        }
+                                    </li>
+                                    <li>
+                                        {
+                                            type == 'Brand' && <Link className="metismenu-icon" to={{ pathname: '/RegisterCampaignPage', state: { userName: userName } }}>Create Campaign</Link>
+                                        }
                                     </li>
                                 </ul>
                             </li>
@@ -117,14 +120,6 @@ class LeftMenuPage extends Component {
                                     Applications
                                         <i className="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
-                                {/* <ul className="mm-show" >
-                                        <li>
-                                            <a href="dashboards-crm.html" className="mm-active">
-                                                <i className="metismenu-icon"></i>
-                                                CRM
-                                            </a>
-                                        </li>
-                                    </ul> */}
                             </li>
                         </ul>
                     </div>
