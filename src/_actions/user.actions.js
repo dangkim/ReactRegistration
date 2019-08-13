@@ -36,13 +36,15 @@ function getToken(userName, password) {
                     },
                         error => {
                             dispatch(failure(error.toString()));
-                            dispatch(alertActions.error(error.toString()));
+                            //dispatch(alertActions.error(error.toString()));
+                            toast.warn("User name or password is incorrect");
                         }
                     );
             },
                 error => {
                     dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
+                    //dispatch(alertActions.error(error.toString()));
+                    toast.warn("User name or password is incorrect");
                 }
             );
     };

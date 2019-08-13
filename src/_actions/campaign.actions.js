@@ -3,6 +3,7 @@ import { campaignService, influencerService } from '../_services';
 import { alertActions } from '.';
 import { history } from '../_helpers';
 import { createCampaign, createCampaigns } from '../_models/CampaignsType';
+import { toast } from "react-toastify";
 
 export const campaignActions = {
     register,
@@ -47,24 +48,25 @@ function register(campaign,
                     campaignType);
                 campaignService.register(campaignsLocal)
                     .then(campaignsType => {
-                        dispatch(success());
+                        dispatch(success(campaignsType));
                         history.push('/registerBrandPage');
-                        dispatch(alertActions.success('Registration Campaigns Successful'));
+                        //dispatch(alertActions.success('Registration Campaigns Successful'));
+                        toast.success("Registration Campaigns Successful");
                     }),
                     error => {
                         dispatch(failure(error.toString()));
                         dispatch(alertActions.error(error.toString()));
                     }
 
-                dispatch(alertActions.success('Registration Campaign successful'));
+                //dispatch(alertActions.success('Registration Campaign successful'));
             },
                 error => {
                     dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
+                    //dispatch(alertActions.error(error.toString()));
                 }
             );
 
-        dispatch(alertActions.success('Registration Job Successful'));
+        //dispatch(alertActions.success('Registration Job Successful'));
     };
 
     function request() { return { type: campaignConstants.CAM_REGISTER_REQUEST } }

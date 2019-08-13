@@ -20,6 +20,7 @@ import JwPagination from 'jw-react-pagination';
 import { SearchBox } from '../SearchBox';
 import cx from 'classnames';
 import Skeleton from 'react-loading-skeleton';
+import new_logo from '../assets/images/new_logo.png'
 
 const moment = extendMoment(originalMoment);
 
@@ -67,7 +68,7 @@ class RegisterCampaignPage extends Component {
                 jobKeyword: '',
                 jobDescription: '',
                 jobLink: '',
-                jobTasks:[]
+                jobTasks: []
             },
             selectedOptionLocation: [{ value: "TPHCM", label: "TPHCM" }],
             selectedOptionInteresting: [{ value: "Fashion", label: "Fashion" }],
@@ -156,25 +157,24 @@ class RegisterCampaignPage extends Component {
         const { brand, userName } = this.props.location.state;
         //const brandObject = brand? brand.Brand: brands.brand;
         let brandObject = {};
-        
-        if(brand)
-        {
+
+        if (brand) {
             brandObject = {
-                brandName : brand.Brand.BrandName.Text,
-                fullName : brand.Brand.FullName.Text,
-                businessAreas : brand.Brand.BusinessAreas.Text,
-                location : brand.Brand.Location.Text,
+                brandName: brand.Brand.BrandName.Text,
+                fullName: brand.Brand.FullName.Text,
+                businessAreas: brand.Brand.BusinessAreas.Text,
+                location: brand.Brand.Location.Text,
             }
         }
-        else{
+        else {
             brandObject = {
-                brandName : brands.brand.brandName,
-                fullName : brands.brand.fullName,
-                businessAreas : brands.brand.businessAreas,
-                location : brands.brand.location,
+                brandName: brands.brand.brandName,
+                fullName: brands.brand.fullName,
+                businessAreas: brands.brand.businessAreas,
+                location: brands.brand.location,
             }
         }
-  
+
         if (campaign.campaignName &&
             campaign.campaignTarget &&
             dateValue.start &&
@@ -232,7 +232,7 @@ class RegisterCampaignPage extends Component {
 
     handleJobStep(event) {
         event.preventDefault();
-        this.setState({ submitted: true });
+        //this.setState({ submitted: true });
         const { campaign,
             job,
             dateValue,
@@ -396,6 +396,17 @@ class RegisterCampaignPage extends Component {
         const locations = createLocations();
         const interestings = createInterestings();
         const jobs = createJobs();
+        const colors = [
+            "bg-mean-fruit",
+            "bg-tempting-azure",
+            "bg-amy-crisp",
+            "bg-arielle-smile",
+            "bg-happy-itmeo",
+            "bg-strong-bliss",
+            "bg-mean-fruit",
+            "bg-tempting-azure",
+            "bg-amy-crisp",
+        ];
 
         if (this.props.location.state) {
             const { brand, userName } = this.props.location.state;
@@ -414,7 +425,9 @@ class RegisterCampaignPage extends Component {
                             <div className="h-100 no-gutters row">
                                 <div className="h-100 d-md-flex d-sm-block bg-white justify-content-center align-items-center col-md-12 col-lg-8">
                                     <div className="mx-auto app-login-box col-sm-12 col-md-10 col-lg-9">
-                                        <div className="app-logo"></div>
+                                        <div style={{ marginBottom: '3rem', width: '97px', height: '23px' }}>
+                                            <img src={new_logo} alt="Kols Viet" />
+                                        </div>
                                         <h4>
                                             <div>Welcome,</div>
                                             <span>It only takes a <span className="text-success">few minutes</span> to create your Campaign</span></h4>
@@ -607,9 +620,10 @@ class RegisterCampaignPage extends Component {
                                                     <Row>
                                                         {
                                                             influencers.items && influencers.items.influencer.map((item, key) => {
+                                                                debugger;
                                                                 return (
                                                                     <Col key={key} md="4">
-                                                                        <div className="card mb-3 widget-chart bg-tempting-azure card-border">
+                                                                        <div className={"card mb-3 widget-chart " + colors[key] + " card-border"}>
                                                                             <div className="rounded-circle">
                                                                                 <img className="mx-auto rounded-circle" style={{ width: '88px', height: '88px' }} src={imgSrc} alt="" />
                                                                             </div>

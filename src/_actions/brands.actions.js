@@ -20,10 +20,12 @@ function register(brandType, userType) {
                     .then(token => {
                         brandService.register(brandType)
                             .then(brand => {
+                                dispatch(success(brand));
                                 history.push({
                                     pathname: '/registerCampaignPage',
                                     state: { brand: brand }
                                 })
+                                toast.success("Welcome " + userType.UserName + " Let create a Campaign");
                                 //dispatch(alertActions.success('Registration successful'));
                             },
                                 error => {
@@ -76,7 +78,10 @@ function getBrandByName(userName) {
             brandService.getBrandByName(userName)
             .then(
                 brand => dispatch(success(brand)),
-                error => toast.warn(error.toString())
+                error => {
+                    toast.warn(error.toString() + " Please login again");
+                    history.push('/login');
+                }
             )
             //dispatch(success(brand));
         }
