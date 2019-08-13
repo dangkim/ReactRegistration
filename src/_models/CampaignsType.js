@@ -48,7 +48,7 @@ export function createCampaigns(brandName, brandFullName, businessAreas, brandLo
       Title: brandName + ';' + businessAreas+ ';' + brandFullName + ';' + brandLocation
     }
   }
-  debugger;
+
   return campaignsType;
 }
 
@@ -270,17 +270,20 @@ export function createCampaign(campaign,
       Gender: {
         Value: campaign.gender
       },
+      JobName:{
+        Text: job.jobName
+      },
       HashTag: {
-        Text: job.hashTag
+        Text: job.jobHashTag
       },
       Keyword: {
-        Text: job.keyword
+        Text: job.jobKeyword
       },
       Link: {
         Text: job.jobLink
       },
       Description: {
-        Text: job.description
+        Text: job.jobDescription
       },
       Interesting: {
         Text: interestingString
@@ -318,10 +321,8 @@ export function createCampaign(campaign,
       }
     }
   }
-
-  var myJSON = JSON.stringify(compaignType);
-
   debugger;
+  //var myJSON = JSON.stringify(compaignType);
 
   return compaignType;
 }

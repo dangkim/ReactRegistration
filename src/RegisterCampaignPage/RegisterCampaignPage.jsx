@@ -154,8 +154,27 @@ class RegisterCampaignPage extends Component {
             dateValue } = this.state;
         const { dispatch, brands } = this.props;
         const { brand, userName } = this.props.location.state;
-        const brandObject = brand? brand: brands.brand;
-        debugger;
+        //const brandObject = brand? brand.Brand: brands.brand;
+        let brandObject = {};
+        
+        if(brand)
+        {
+            brandObject = {
+                brandName : brand.Brand.BrandName.Text,
+                fullName : brand.Brand.FullName.Text,
+                businessAreas : brand.Brand.BusinessAreas.Text,
+                location : brand.Brand.Location.Text,
+            }
+        }
+        else{
+            brandObject = {
+                brandName : brands.brand.brandName,
+                fullName : brands.brand.fullName,
+                businessAreas : brands.brand.businessAreas,
+                location : brands.brand.location,
+            }
+        }
+  
         if (campaign.campaignName &&
             campaign.campaignTarget &&
             dateValue.start &&
