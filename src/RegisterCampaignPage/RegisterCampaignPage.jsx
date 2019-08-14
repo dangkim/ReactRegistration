@@ -671,7 +671,7 @@ class RegisterCampaignPage extends Component {
                                                                                 </Col>
                                                                                 <Col>
                                                                                     <div className="widget-subheading" style={{ textAlign: 'left' }}>
-                                                                                        Video: {item.checkIn}
+                                                                                        CheckIn: {item.checkIn}
                                                                                     </div>
                                                                                 </Col>
                                                                             </Row>
