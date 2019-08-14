@@ -33,7 +33,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faAngleUp
 } from '@fortawesome/free-solid-svg-icons';
-import {configContent} from 'configContent';
+//import {configContent} from 'configContent';
 
 import { history } from '../_helpers';
 
@@ -618,7 +618,7 @@ class RegisterCampaignPage extends Component {
                                                             influencers.items && influencers.items.influencer.map((item, key) => {
                                                                 debugger;
                                                                 if ((brand && brand.published) || (brandFromLoading && brandFromLoading.published)) {
-                                                                    imgSrc = item.photo.urls.length == 0 ? defaultAvatar : configContent.apiUrl + item.photo.urls[0] + '?&width=240&height=240&rmode=';
+                                                                    imgSrc = item.photo.urls.length == 0 ? defaultAvatar : "http://bdo8.com" + item.photo.urls[0] + '?&width=240&height=240&rmode=';
                                                                 }
                                                                 return (
                                                                     <Col key={key} md="4">
