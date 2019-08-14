@@ -33,7 +33,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faAngleUp
 } from '@fortawesome/free-solid-svg-icons';
-//import {configContent} from 'configContent';
+import {configContent} from 'configContent';
 
 import { history } from '../_helpers';
 
@@ -90,7 +90,7 @@ class RegisterCampaignPage extends Component {
             searchValue: '',
             dateValue: moment.range(today.clone(), today.clone().add(7, "days"))
         };
-        debugger;
+
         this.handleCampaignChange = this.handleCampaignChange.bind(this);
         this.handleJobChange = this.handleJobChange.bind(this);
         this.handleSubmitJobs = this.handleSubmitJobs.bind(this);
@@ -369,7 +369,7 @@ class RegisterCampaignPage extends Component {
         const { first, searchValue } = this.state;
         const length = pageOfItems.length;
         const currentPage = Math.ceil(pageOfItems[length - 1].id / first);
-        debugger;
+
         dispatch(infActions.getInfluencersByName(first, first * (currentPage - 1), searchValue));
         // update local state with new page of items
         this.setState({ pageOfItems });
@@ -408,13 +408,9 @@ class RegisterCampaignPage extends Component {
             "bg-amy-crisp",
         ];
 
-        if (this.props.location.state) {
-            const { brand, userName } = this.props.location.state;
+        const { brand, userName } = this.props.location.state;
 
-            if (brand && brand.published) {
-                imgSrc = item.photo.urls.length == 0 ? defaultAvatar : configContent.apiUrl + item.photo.urls[0] + '?&width=240&height=240&rmode=';
-            }
-        }
+        const brandFromLoading = this.props.brands.brand;
 
         return (
             <div className="app-container app-theme-white body-tabs-shadow">
@@ -621,6 +617,9 @@ class RegisterCampaignPage extends Component {
                                                         {
                                                             influencers.items && influencers.items.influencer.map((item, key) => {
                                                                 debugger;
+                                                                if ((brand && brand.published) || (brandFromLoading && brandFromLoading.published)) {
+                                                                    imgSrc = item.photo.urls.length == 0 ? defaultAvatar : configContent.apiUrl + item.photo.urls[0] + '?&width=240&height=240&rmode=';
+                                                                }
                                                                 return (
                                                                     <Col key={key} md="4">
                                                                         <div className={"card mb-3 widget-chart " + colors[key] + " card-border"}>

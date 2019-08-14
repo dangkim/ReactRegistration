@@ -343,7 +343,7 @@ function handleGraphInfResponse(response) {
         if (response.status === 401) {
             // auto logout if 401 response returned from api
             logout();
-            //location.reload(true);
+            location.reload(true);
             const error = response.statusText;            
             return Promise.reject(error);
         }
