@@ -24,7 +24,12 @@ module.exports = {
         filename: 'index_bundle.js'
     },
     resolve: {
-        extensions: ['.js', '.jsx']
+        extensions: ['.js', '.jsx'],
+        // alias: {
+		// 	'react': 'preact-compat',
+		// 	'react-dom': 'preact-compat',
+		// 	'react-addons-css-transition-group': 'rc-css-transition-group'
+		// }
     },
     module: {
         rules: [
@@ -115,6 +120,7 @@ module.exports = {
                 assets[key] = value;
             },
         }),
+        
     ],
     devServer: {
         historyApiFallback: true

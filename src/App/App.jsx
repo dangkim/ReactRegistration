@@ -23,16 +23,16 @@ import css from './app.css';
 import landing_page_css from './landing-page.css';
 import pe_icon_7_stroke_css from './pe-icon-7-stroke.css';
 
-const renderNotification = (notification, i) => <li key={i}>{notification}</li>;
+// const renderNotification = (notification, i) => <li key={i}>{notification}</li>;
 
-const registerPushListener = pushNotification =>
-  navigator.serviceWorker.addEventListener("message", ({ data }) =>
-    pushNotification(
-      data.data
-        ? data.data.message
-        : data["firebase-messaging-msg-data"].data.message
-    )
-  );
+// const registerPushListener = pushNotification =>
+//   navigator.serviceWorker.addEventListener("message", ({ data }) =>
+//     pushNotification(
+//       data.data
+//         ? data.data.message
+//         : data["firebase-messaging-msg-data"].data.message
+//     )
+//   );
 
 class App extends React.Component {
   constructor(props) {
@@ -46,7 +46,7 @@ class App extends React.Component {
   }
 
   async componentDidMount() {
-    const { pushNotification, setToken } = this.props;
+    //const { pushNotification, setToken } = this.props;
 
     // messaging
     //   .requestPermission()

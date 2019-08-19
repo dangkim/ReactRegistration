@@ -616,7 +616,6 @@ class RegisterCampaignPage extends Component {
                                                     <Row>
                                                         {
                                                             influencers.items && influencers.items.influencer.map((item, key) => {
-                                                                debugger;
                                                                 if ((brand && brand.published) || (brandFromLoading && brandFromLoading.published)) {
                                                                     imgSrc = item.photo.urls.length == 0 ? defaultAvatar : "http://bdo8.com" + item.photo.urls[0] + '?&width=240&height=240&rmode=';
                                                                 }
@@ -638,7 +637,10 @@ class RegisterCampaignPage extends Component {
                                                                                 </Col>
                                                                                 <Col>
                                                                                     <div className="widget-subheading" style={{ textAlign: 'left' }}>
-                                                                                        Share Link: {item.shareLink}
+                                                                                        {
+                                                                                            ((brand && brand.published) || (brandFromLoading && brandFromLoading.published)) ?
+                                                                                                'Share Link: ' + (item.shareLink ? item.shareLink : 'Call') : 'Share Link: 1000000'
+                                                                                        }
                                                                                     </div>
                                                                                 </Col>
                                                                             </Row>
@@ -650,7 +652,10 @@ class RegisterCampaignPage extends Component {
                                                                                 </Col>
                                                                                 <Col>
                                                                                     <div className="widget-subheading" style={{ textAlign: 'left' }}>
-                                                                                        Post Image: {item.postImage}
+                                                                                        {
+                                                                                            ((brand && brand.published) || (brandFromLoading && brandFromLoading.published)) ?
+                                                                                                'Post Image: ' + (item.postImage ? item.postImage : 'Call') : 'Post Image: 1000000'
+                                                                                        }
                                                                                     </div>
                                                                                 </Col>
                                                                             </Row>
@@ -662,7 +667,10 @@ class RegisterCampaignPage extends Component {
                                                                                 </Col>
                                                                                 <Col>
                                                                                     <div className="widget-subheading" style={{ textAlign: 'left' }}>
-                                                                                        Video: {item.video}
+                                                                                        {
+                                                                                            ((brand && brand.published) || (brandFromLoading && brandFromLoading.published)) ?
+                                                                                                'Video: ' + (item.video ? item.video : 'Call') : 'Video: 1000000'
+                                                                                        }
                                                                                     </div>
                                                                                 </Col>
                                                                             </Row>
@@ -671,7 +679,10 @@ class RegisterCampaignPage extends Component {
                                                                                 </Col>
                                                                                 <Col>
                                                                                     <div className="widget-subheading" style={{ textAlign: 'left' }}>
-                                                                                        CheckIn: {item.checkIn}
+                                                                                        {
+                                                                                            ((brand && brand.published) || (brandFromLoading && brandFromLoading.published)) ?
+                                                                                                'CheckIn: ' + (item.checkIn ? item.checkIn : 'Call') : 'CheckIn: 1000000'
+                                                                                        }
                                                                                     </div>
                                                                                 </Col>
                                                                             </Row>
@@ -680,7 +691,10 @@ class RegisterCampaignPage extends Component {
                                                                                 </Col>
                                                                                 <Col>
                                                                                     <div className="widget-subheading" style={{ textAlign: 'left' }}>
-                                                                                        LiveStream: {item.liveStream}
+                                                                                        {
+                                                                                            ((brand && brand.published) || (brandFromLoading && brandFromLoading.published)) ?
+                                                                                                'LiveStream: ' + (item.liveStream ? item.liveStream : 'Call') : 'LiveStream: 1000000'
+                                                                                        }
                                                                                     </div>
                                                                                 </Col>
                                                                             </Row>
