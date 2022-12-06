@@ -47,7 +47,7 @@
     "preact": "^8.5.2",
     "preact-compat": "^3.19.0",
     "prop-types": "^15.7.2",
-    "qs": "^6.7.0",
+    "qs": "^6.7.3",
     "rc-css-transition-group": "^2.1.4",
     "react": "^16.8.6",
     "react-addons-css-transition-group": "^15.6.2",
